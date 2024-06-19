@@ -53,3 +53,26 @@ func testRemoveElement(input: [[Int]], expected: [[Int]]) throws {
 	#expect(removed == k)
 	#expect(nums[..<k].sorted() == expected[0].sorted())
 }
+
+@Test("Remove duplicates from sorted array", arguments: zip([
+	[1,1,2],
+	[0,0,1,1,1,2,2,3,3,4],
+	[1],
+	[1,1],
+	[],
+], [
+	[2,1,2],
+	[5,0,1,2,3,4],
+	[1,1],
+	[1,1],
+	[0],
+]))
+func testRemoveDuplicates(nums: [Int], expected: [Int]) throws {
+	try #require(nums == nums.sorted())
+	try #require(!expected.isEmpty)
+	var nums = nums
+	let (k, expected) = (expected.first!, expected[1...])
+	let kActual = removeDuplicates(&nums)
+	#expect(kActual == k)
+	#expect(nums[..<k] == expected)
+}
