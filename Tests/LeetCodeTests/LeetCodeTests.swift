@@ -29,3 +29,27 @@ func testMergeSortedArrays(input: [[Int]], expected: [Int]) throws {
 	mergeSortedArrays(&nums1, m, nums2, n)
 	#expect(nums1 == expected)
 }
+
+@Test("Remove element", arguments: zip([
+	[[3,2,2,3], [3]],
+	[[0,1,2,2,3,0,4,2], [2]],
+	[[], [1]],
+	[[2], [1]],
+	[[3, 3], [3]],
+], [
+	[[2,2], [2]],
+	[[0,1,4,0,3], [5]],
+	[[], [0]],
+	[[2], [1]],
+	[[], [0]],
+]))
+func testRemoveElement(input: [[Int]], expected: [[Int]]) throws {
+	try #require(input.count == 2 && input[1].count == 1)
+	try #require(expected.count == 2 && expected[1].count == 1)
+	var nums = input[0]
+	let (value, k) = (input[1][0], expected[1][0])
+	try #require(value >= 0 && value <= 100)
+	let removed = removeElement(&nums, value)
+	#expect(removed == k)
+	#expect(nums[..<k].sorted() == expected[0].sorted())
+}
