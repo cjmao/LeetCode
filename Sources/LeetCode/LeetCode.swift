@@ -90,3 +90,40 @@ func removeDuplicates(_ nums: inout [Int]) -> Int {
 
 	return k + 1
 }
+
+/// Remove duplicates from sorted array II.
+///
+/// Given an integer array `nums` sorted in **non-decreasing order**, remove
+/// some duplicates **in-place** such that each unique element appears at most
+/// twice. The relative order of the elements should be kept the same.
+///
+/// Since it is impossible to change the length of the array in some languages,
+/// you must instead have the result be placed in the **first part** of the
+/// array `nums`. More formally, if there are `k` elements after removing the
+/// duplicates, then the first `k` elements of `nums` should hold the final
+/// result. It does not matter what you leave beyond the first `k` elements.
+///
+/// Return `k` *after placing the final result in the first `k` slots of `nums`*.
+/// 
+/// Do **not** allocate extra space for another array. You must do this by
+/// **modifying the input array in-place** with `O(1)` extra memory.
+func removeDuplicatesWhileKeepingAtMostTwo(_ nums: inout [Int]) -> Int {
+	if nums.count < 3 {
+		return nums.count
+	}
+
+	var k = 1
+
+	for i in nums[2...].indices {
+		let previous = nums[k - 1]
+		let current = nums[k]
+		let next = nums[i]
+
+		if previous != current || current != next {
+			k += 1
+			nums[k] = next
+		}
+	}
+
+	return k + 1
+}

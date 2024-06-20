@@ -76,3 +76,34 @@ func testRemoveDuplicates(nums: [Int], expected: [Int]) throws {
 	#expect(kActual == k)
 	#expect(nums[..<k] == expected)
 }
+
+@Test(
+	"Remove duplicates from sorted array while keeping at most two",
+	arguments: zip([
+		[1,1,1,2,2,3],
+		[0,0,1,1,1,1,2,3,3],
+		[],
+		[1],
+		[1,1],
+		[1,1,1],
+	], [
+		[5,1,1,2,2,3],
+		[7,0,0,1,1,2,3,3],
+		[0],
+		[1,1],
+		[2,1,1],
+		[2,1,1],
+	])
+)
+func testRemoveDuplicatesWhileKeepingAtMostTwo(
+	nums: [Int],
+	expected: [Int]
+) throws {
+	try #require(nums == nums.sorted())
+	try #require(!expected.isEmpty)
+	var nums = nums
+	let (k, expected) = (expected.first!, expected[1...])
+	let kActual = removeDuplicatesWhileKeepingAtMostTwo(&nums)
+	#expect(kActual == k)
+	#expect(nums[..<k] == expected)
+}
