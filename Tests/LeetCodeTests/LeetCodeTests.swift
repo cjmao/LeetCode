@@ -111,3 +111,21 @@ func testMajorityElement(t: TestCase<Int>) throws {
 	let m = majorityElement(nums)
 	#expect(m == expected)
 }
+
+@Test("Rotate array", arguments: [
+	.init(
+		given: .oneAndMany(3, [1, 2, 3, 4, 5, 6, 7]),
+		expected: .many([5, 6, 7, 1, 2, 3, 4])
+	),
+	.init(
+		given: .oneAndMany(2, [-1, -100, 3, 99]),
+		expected: .many([3, 99, -1, -100])
+	),
+] as [TestCase<Int>])
+func testRotateArray(t: TestCase<Int>) throws {
+	var (k, nums) = try #require(t.given.getOneAndMany)
+	let expected = try #require(t.expected.getMany)
+	try #require(k >= 0 && nums.count > 0)
+	rotate(&nums, k)
+	#expect(nums == expected)
+}

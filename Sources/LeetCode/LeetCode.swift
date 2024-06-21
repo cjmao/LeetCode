@@ -148,3 +148,11 @@ func majorityElement(_ nums: [Int]) -> Int {
 
 	return k
 }
+
+/// Rotate array.
+///
+/// Given an integer array `nums`, rotate the array to the right by `k` steps,
+/// where `k` is non-negative.
+func rotate(_ nums: inout [Int], _ k: Int) {
+
+}
