@@ -104,7 +104,7 @@ func removeDuplicates(_ nums: inout [Int]) -> Int {
 /// result. It does not matter what you leave beyond the first `k` elements.
 ///
 /// Return `k` *after placing the final result in the first `k` slots of `nums`*.
-/// 
+///
 /// Do **not** allocate extra space for another array. You must do this by
 /// **modifying the input array in-place** with `O(1)` extra memory.
 func removeDuplicatesWhileKeepingAtMostTwo(_ nums: inout [Int]) -> Int {
@@ -126,4 +126,25 @@ func removeDuplicatesWhileKeepingAtMostTwo(_ nums: inout [Int]) -> Int {
 	}
 
 	return k + 1
+}
+
+/// Majority element.
+///
+/// Given an array `nums` of size `n`, return *the majority element*.
+///
+/// The majority element is the element that appears more than `⌊n / 2⌋` times.
+/// You may assume that the majority element always exists in the array.
+func majorityElement(_ nums: [Int]) -> Int {
+	var k = nums[0]
+	var count = 1
+
+	for num in nums[1...] {
+		count += num == k ? 1 : -1
+		if count == 0 {
+			k = num
+			count = 1
+		}
+	}
+
+	return k
 }

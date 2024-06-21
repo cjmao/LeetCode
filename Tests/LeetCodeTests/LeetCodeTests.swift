@@ -100,3 +100,14 @@ func testRemoveDuplicatesWhileKeepingAtMostTwo(t: TestCase<Int>) throws {
 	#expect(k == expected.count)
 	#expect(nums[..<k] == expected[...])
 }
+
+@Test("Majority element", arguments: [
+	.init(given: .many([3, 2, 3]), expected: .one(3)),
+	.init(given: .many([2, 2, 1, 1, 1, 2, 2]), expected: .one(2)),
+] as [TestCase<Int>])
+func testMajorityElement(t: TestCase<Int>) throws {
+	let nums = try #require(t.given.getMany)
+	let expected = try #require(t.expected.getOne)
+	let m = majorityElement(nums)
+	#expect(m == expected)
+}
