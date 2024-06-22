@@ -216,5 +216,12 @@ func maxProfit(_ prices: [Int]) -> Int {
 ///
 /// Find and return *the **maximum** profit you can achieve*.
 func maxProfitAllowingSellingOnSameDay(_ prices: [Int]) -> Int {
-	0
+	var sum = 0
+
+	for i in prices[1...].indices {
+		let diff = prices[i] - prices[i - 1]
+		sum += max(0, diff)
+	}
+
+	return sum
 }

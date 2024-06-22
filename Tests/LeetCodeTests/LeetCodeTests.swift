@@ -169,6 +169,10 @@ func testMaxProfit(t: TestCase<Int>) throws {
 		given: .many([7, 6, 4, 3, 1]),
 		expected: .one(0)
 	),
+	.init(
+		given: .many([6, 1, 3, 2, 4, 7]),
+		expected: .one(7)
+	),
 ] as [TestCase<Int>])
 func testMaxProfitAllowingSellingOnSameDay(t: TestCase<Int>) throws {
 	let prices = try #require(t.given.getMany)
