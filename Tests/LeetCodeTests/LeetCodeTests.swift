@@ -133,3 +133,43 @@ func testRotateArray(t: TestCase<Int>) throws {
 	rotate(&nums, k)
 	#expect(nums == expected)
 }
+
+@Test("Best time to buy and sell stock", arguments: [
+	.init(
+		given: .many([7, 1, 5, 3, 6, 4]),
+		expected: .one(5)
+	),
+	.init(
+		given: .many([7, 6, 4, 3, 1]),
+		expected: .one(0)
+	),
+] as [TestCase<Int>])
+func testMaxProfit(t: TestCase<Int>) throws {
+	let prices = try #require(t.given.getMany)
+	let expected = try #require(t.expected.getOne)
+	try #require(!prices.isEmpty && prices.allSatisfy { $0 >= 0 })
+	let profit = maxProfit(prices)
+	#expect(profit == expected)
+}
+
+@Test("Best time to buy and sell stock II", arguments: [
+	.init(
+		given: .many([7, 1, 5, 3, 6, 4]),
+		expected: .one(7)
+	),
+	.init(
+		given: .many([1, 2, 3, 4, 5]),
+		expected: .one(4)
+	),
+	.init(
+		given: .many([7, 6, 4, 3, 1]),
+		expected: .one(0)
+	),
+] as [TestCase<Int>])
+func testMaxProfitAllowingSellingOnSameDay(t: TestCase<Int>) throws {
+	let prices = try #require(t.given.getMany)
+	let expected = try #require(t.expected.getOne)
+	try #require(!prices.isEmpty && prices.allSatisfy { $0 >= 0 })
+	let profit = maxProfitAllowingSellingOnSameDay(prices)
+	#expect(profit == expected)
+}

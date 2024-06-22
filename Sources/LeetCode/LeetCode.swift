@@ -179,3 +179,31 @@ func rotate(_ nums: inout [Int], _ k: Int) {
 		(nums[i], nums[j]) = (nums[j], nums[i])
 	}
 }
+
+/// Best time to buy and sell stock.
+///
+/// You are given an array `prices` where `prices[i]` is the price of a given
+/// stock on the `ith` day.
+///
+/// You want to maximize your profit by choosing **a single day** to buy one
+/// stock and choosing **a different day in the future** to sell that stock.
+///
+/// Return *the maximum profit you can achieve from this transaction*.
+/// If you cannot achieve any profit, return `0`.
+func maxProfit(_ prices: [Int]) -> Int {
+	0
+}
+
+/// Best time to buy and sell stock II.
+///
+/// You are given an integer array `prices` where `prices[i]` is the price of a
+/// given stock on the `ith` day.
+///
+/// On each day, you may decide to buy and/or sell the stock. You can only hold
+/// **at most one** share of the stock at any time. However, you can buy it then
+/// immediately sell it on the **same day**.
+///
+/// Find and return *the **maximum** profit you can achieve*.
+func maxProfitAllowingSellingOnSameDay(_ prices: [Int]) -> Int {
+	0
+}
