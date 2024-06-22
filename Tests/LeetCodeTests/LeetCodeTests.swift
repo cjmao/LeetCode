@@ -121,6 +121,10 @@ func testMajorityElement(t: TestCase<Int>) throws {
 		given: .oneAndMany(2, [-1, -100, 3, 99]),
 		expected: .many([3, 99, -1, -100])
 	),
+	.init(
+		given: .oneAndMany(1, [1, 2, 3, 4, 5, 6, 7]),
+		expected: .many([7, 1, 2, 3, 4, 5, 6])
+	),
 ] as [TestCase<Int>])
 func testRotateArray(t: TestCase<Int>) throws {
 	var (k, nums) = try #require(t.given.getOneAndMany)

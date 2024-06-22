@@ -154,5 +154,28 @@ func majorityElement(_ nums: [Int]) -> Int {
 /// Given an integer array `nums`, rotate the array to the right by `k` steps,
 /// where `k` is non-negative.
 func rotate(_ nums: inout [Int], _ k: Int) {
+	let k = k % nums.count
+	if k == 0 {
+		return
+	}
 
+	let n = nums.endIndex
+
+	// reverse the whole array
+	for i in 0..<(n / 2) {
+		let j = (n - 1) - i
+		(nums[i], nums[j]) = (nums[j], nums[i])
+	}
+
+	// reverse the first k elements
+	for i in 0..<(k / 2) {
+		let j = (k - 1) - i
+		(nums[i], nums[j]) = (nums[j], nums[i])
+	}
+
+	// reverse the last n - k elements
+	for i in k..<((n + k) / 2) {
+		let j = (n - 1) - (i - k)
+		(nums[i], nums[j]) = (nums[j], nums[i])
+	}
 }
