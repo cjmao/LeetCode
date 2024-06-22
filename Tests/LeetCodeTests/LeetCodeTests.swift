@@ -143,6 +143,10 @@ func testRotateArray(t: TestCase<Int>) throws {
 		given: .many([7, 6, 4, 3, 1]),
 		expected: .one(0)
 	),
+	.init(
+		given: .many([1]),
+		expected: .one(0)
+	),
 ] as [TestCase<Int>])
 func testMaxProfit(t: TestCase<Int>) throws {
 	let prices = try #require(t.given.getMany)

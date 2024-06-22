@@ -191,7 +191,18 @@ func rotate(_ nums: inout [Int], _ k: Int) {
 /// Return *the maximum profit you can achieve from this transaction*.
 /// If you cannot achieve any profit, return `0`.
 func maxProfit(_ prices: [Int]) -> Int {
-	0
+	var maxSum = 0
+	var currentSum = 0
+
+	for i in prices[1...].indices {
+		let diff = prices[i] - prices[i - 1]
+		currentSum = max(0, currentSum + diff)
+		if currentSum > maxSum {
+			maxSum = currentSum
+		}
+	}
+
+	return maxSum
 }
 
 /// Best time to buy and sell stock II.
