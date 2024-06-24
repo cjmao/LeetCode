@@ -215,3 +215,25 @@ func testJumpGame(t: TestCase<Int, Bool>) throws {
 	let result = canJump(nums)
 	#expect(result == expected)
 }
+
+@Test("Jump game II", arguments: [
+	.init(
+		given: .many([2, 3, 1, 1, 4]),
+		expected: .one(2)
+	),
+	.init(
+		given: .many([2, 3, 0, 1, 4]),
+		expected: .one(2)
+	),
+	.init(
+		given: .many([0]),
+		expected: .one(0)
+	),
+] as [TestCase<Int, Int>])
+func testMinimumStepsOfJumpGame(t: TestCase<Int, Int>) throws {
+	let nums = try #require(t.given.getMany)
+	try #require(!nums.isEmpty && nums.allSatisfy { $0 >= 0 })
+	let expected = try #require(t.expected.getOne)
+	let result = jump(nums)
+	#expect(result == expected)
+}

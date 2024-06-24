@@ -246,3 +246,35 @@ func canJump(_ nums: [Int]) -> Bool {
 
 	return steps <= nums[0]
 }
+
+/// Jump game II.
+///
+/// You are given a **0-indexed** array of integers `nums` of length `n`. You
+/// are initially positioned at `nums[0]`.
+///
+/// Each element `nums[i]` represents the maximum length of a forward jump from
+/// index `i`. In other words, if you are at `nums[i]`, you can jump to any
+/// `nums[i + j]` where:
+///
+/// - `0 <= j <= nums[i]` and
+/// - `i + j < n`
+///
+/// Return *the minimum number of jumps to reach `nums[n - 1]`. The test cases
+/// are generated such that you can reach `nums[n - 1]`*.
+func jump(_ nums: [Int]) -> Int {
+	var steps = 0
+	var endOfCurrentStep = 0
+	var endOfNextStep = 0
+
+	for (i, step) in nums[0..<nums.endIndex - 1].enumerated() {
+		endOfNextStep = max(endOfNextStep, i + step)
+		if endOfNextStep >= nums.count - 1 {
+			return 1 + steps
+		} else if i == endOfCurrentStep {
+			steps += 1
+			endOfCurrentStep = endOfNextStep
+		}
+	}
+
+	return steps
+}
