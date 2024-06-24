@@ -24,8 +24,8 @@ extension [Int] {
 	),
 	.init(given: .manyAndMany([1], []), expected: .many([1])),
 	.init(given: .manyAndMany([0], [1]), expected: .many([1])),
-] as [TestCase<Int>])
-func testMergeSortedArrays(t: TestCase<Int>) throws {
+] as [TestCase<Int, Int>])
+func testMergeSortedArrays(t: TestCase<Int, Int>) throws {
 	var (a, b) = try #require(t.given.getManyAndMany)
 	let expected = try #require(t.expected.getMany)
 	let (m, n) = (
@@ -49,8 +49,8 @@ func testMergeSortedArrays(t: TestCase<Int>) throws {
 	.init(given: .oneAndMany(1, []), expected: .many([])),
 	.init(given: .oneAndMany(1, [2]), expected: .many([2])),
 	.init(given: .oneAndMany(3, [3, 3]), expected: .many([])),
-] as [TestCase<Int>])
-func testRemoveElement(t: TestCase<Int>) throws {
+] as [TestCase<Int, Int>])
+func testRemoveElement(t: TestCase<Int, Int>) throws {
 	var (number, nums) = try #require(t.given.getOneAndMany)
 	let expected = try #require(t.expected.getMany)
 	try #require(number >= 0 && number <= 100)
@@ -68,8 +68,8 @@ func testRemoveElement(t: TestCase<Int>) throws {
 	.init(given: .many([1]), expected: .many([1])),
 	.init(given: .many([1, 1]), expected: .many([1])),
 	.init(given: .many([]), expected: .many([])),
-] as [TestCase<Int>])
-func testRemoveDuplicates(t: TestCase<Int>) throws {
+] as [TestCase<Int, Int>])
+func testRemoveDuplicates(t: TestCase<Int, Int>) throws {
 	var nums = try #require(t.given.getMany)
 	let expected = try #require(t.expected.getMany)
 	try #require(nums.isSorted() && expected.isSorted())
@@ -91,8 +91,8 @@ func testRemoveDuplicates(t: TestCase<Int>) throws {
 	.init(given: .many([1]), expected: .many([1])),
 	.init(given: .many([1, 1]), expected: .many([1, 1])),
 	.init(given: .many([1, 1, 1]), expected: .many([1, 1])),
-] as [TestCase<Int>])
-func testRemoveDuplicatesWhileKeepingAtMostTwo(t: TestCase<Int>) throws {
+] as [TestCase<Int, Int>])
+func testRemoveDuplicatesWhileKeepingAtMostTwo(t: TestCase<Int, Int>) throws {
 	var nums = try #require(t.given.getMany)
 	let expected = try #require(t.expected.getMany)
 	try #require(nums.isSorted() && expected.isSorted())
@@ -104,8 +104,8 @@ func testRemoveDuplicatesWhileKeepingAtMostTwo(t: TestCase<Int>) throws {
 @Test("Majority element", arguments: [
 	.init(given: .many([3, 2, 3]), expected: .one(3)),
 	.init(given: .many([2, 2, 1, 1, 1, 2, 2]), expected: .one(2)),
-] as [TestCase<Int>])
-func testMajorityElement(t: TestCase<Int>) throws {
+] as [TestCase<Int, Int>])
+func testMajorityElement(t: TestCase<Int, Int>) throws {
 	let nums = try #require(t.given.getMany)
 	let expected = try #require(t.expected.getOne)
 	let m = majorityElement(nums)
@@ -125,8 +125,8 @@ func testMajorityElement(t: TestCase<Int>) throws {
 		given: .oneAndMany(1, [1, 2, 3, 4, 5, 6, 7]),
 		expected: .many([7, 1, 2, 3, 4, 5, 6])
 	),
-] as [TestCase<Int>])
-func testRotateArray(t: TestCase<Int>) throws {
+] as [TestCase<Int, Int>])
+func testRotateArray(t: TestCase<Int, Int>) throws {
 	var (k, nums) = try #require(t.given.getOneAndMany)
 	let expected = try #require(t.expected.getMany)
 	try #require(k >= 0 && nums.count > 0)
@@ -147,8 +147,8 @@ func testRotateArray(t: TestCase<Int>) throws {
 		given: .many([1]),
 		expected: .one(0)
 	),
-] as [TestCase<Int>])
-func testMaxProfit(t: TestCase<Int>) throws {
+] as [TestCase<Int, Int>])
+func testMaxProfit(t: TestCase<Int, Int>) throws {
 	let prices = try #require(t.given.getMany)
 	let expected = try #require(t.expected.getOne)
 	try #require(!prices.isEmpty && prices.allSatisfy { $0 >= 0 })
@@ -173,11 +173,45 @@ func testMaxProfit(t: TestCase<Int>) throws {
 		given: .many([6, 1, 3, 2, 4, 7]),
 		expected: .one(7)
 	),
-] as [TestCase<Int>])
-func testMaxProfitAllowingSellingOnSameDay(t: TestCase<Int>) throws {
+] as [TestCase<Int, Int>])
+func testMaxProfitAllowingSellingOnSameDay(t: TestCase<Int, Int>) throws {
 	let prices = try #require(t.given.getMany)
 	let expected = try #require(t.expected.getOne)
 	try #require(!prices.isEmpty && prices.allSatisfy { $0 >= 0 })
 	let profit = maxProfitAllowingSellingOnSameDay(prices)
 	#expect(profit == expected)
+}
+
+@Test("Jump game", arguments: [
+	.init(
+		given: .many([2, 3, 1, 1, 4]),
+		expected: .one(true)
+	),
+	.init(
+		given: .many([3, 2, 1, 0, 4]),
+		expected: .one(false)
+	),
+	.init(
+		given: .many([1, 2, 1, 0, 0]),
+		expected: .one(false)
+	),
+	.init(
+		given: .many([1, 2, 3, 4, 0]),
+		expected: .one(true)
+	),
+	.init(
+		given: .many([0]),
+		expected: .one(true)
+	),
+	.init(
+		given: .many([1]),
+		expected: .one(true)
+	),
+] as [TestCase<Int, Bool>])
+func testJumpGame(t: TestCase<Int, Bool>) throws {
+	let nums = try #require(t.given.getMany)
+	try #require(!nums.isEmpty && nums.allSatisfy { $0 >= 0 })
+	let expected = try #require(t.expected.getOne as Bool?)
+	let result = canJump(nums)
+	#expect(result == expected)
 }
