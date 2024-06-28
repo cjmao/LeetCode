@@ -237,3 +237,37 @@ func testMinimumStepsOfJumpGame(t: TestCase<Int, Int>) throws {
 	let result = jump(nums)
 	#expect(result == expected)
 }
+
+@Test("H-index", arguments: [
+	.init(
+		given: .many([3, 0, 6, 1, 5]),
+		expected: .one(3)
+	),
+	.init(
+		given: .many([1, 3, 1]),
+		expected: .one(1)
+	),
+	.init(
+		given: .many([0]),
+		expected: .one(0)
+	),
+	.init(
+		given: .many([1]),
+		expected: .one(1)
+	),
+	.init(
+		given: .many([100]),
+		expected: .one(1)
+	),
+	.init(
+		given: .many([4, 4, 0, 0]),
+		expected: .one(2)
+	),
+] as [TestCase<Int, Int>])
+func testHIndex(t: TestCase<Int, Int>) throws {
+	let nums = try #require(t.given.getMany)
+	let expected = try #require(t.expected.getOne)
+	try #require(nums.count > 0 && nums.allSatisfy { $0 >= 0 })
+	let h = hIndex(nums)
+	#expect(h == expected)
+}

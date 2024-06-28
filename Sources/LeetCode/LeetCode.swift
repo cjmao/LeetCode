@@ -278,3 +278,37 @@ func jump(_ nums: [Int]) -> Int {
 
 	return steps
 }
+
+/// H-index.
+///
+/// Given an array of integers `citations` where `citations[i]` is the number
+/// of citations a researcher received for their `ith` paper, return *the
+/// researcher's `h-index`*.
+///
+/// According to the definition of `h-index` on Wikipedia: The `h-index` is
+/// defined as the maximum value of `h` such that the given researcher has
+/// published at least `h` papers that have each been cited at least `h` times.
+///
+/// **Constraints**:
+/// - `n == citations.length`
+/// - `1 <= n <= 5000`
+/// - `0 <= citations[i] <= 1000`
+func hIndex(_ citations: [Int]) -> Int {
+	let n = citations.count
+	var frequencies = [Int](repeating: 0, count: n + 1)
+
+	for c in citations {
+		frequencies[min(n, c)] += 1
+	}
+	
+	var totalCount = 0
+
+	for (timesCited, count) in frequencies.enumerated().reversed() {
+		totalCount += count
+		if totalCount >= timesCited {
+			return timesCited
+		}
+	}
+
+	return 0
+}
