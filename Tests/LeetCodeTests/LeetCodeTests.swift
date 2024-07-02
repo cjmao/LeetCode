@@ -281,6 +281,10 @@ func testHIndex(t: TestCase<Int, Int>) throws {
 		given: .many([-1, 1, 0, -3, 3]),
 		expected: .many([0, 0, 9, 0, 0])
 	),
+	.init(
+		given: .many([2, 3]),
+		expected: .many([3, 2])
+	),
 ] as [TestCase<Int, Int>])
 func testProductExceptSelf(t: TestCase<Int, Int>) throws {
 	let nums = try #require(t.given.getMany)

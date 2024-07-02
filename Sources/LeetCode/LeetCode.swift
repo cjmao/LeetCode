@@ -325,7 +325,27 @@ func hIndex(_ citations: [Int]) -> Int {
 /// You must write an algorithm that runs in `O(n)` time and without using the
 /// division operation.
 func productExceptSelf(_ nums: [Int]) -> [Int] {
-	[]
+	if nums.count < 2 {
+		return nums
+	}
+
+	var products = nums
+
+	for i in products.indices {
+		products[i] = if i == products.startIndex {
+			1
+		} else {
+			nums[i - 1] * products[i - 1]
+		}
+	}
+
+	var trailingProduct = 1
+	for i in products.indices.reversed() {
+		products[i] *= trailingProduct
+		trailingProduct *= nums[i]
+	}
+
+	return products
 }
 
 /// Gas station.
