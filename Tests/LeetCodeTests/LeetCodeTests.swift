@@ -271,3 +271,49 @@ func testHIndex(t: TestCase<Int, Int>) throws {
 	let h = hIndex(nums)
 	#expect(h == expected)
 }
+
+@Test("Product of array except self", arguments: [
+	.init(
+		given: .many([1, 2, 3, 4]),
+		expected: .many([24, 12, 8, 6])
+	),
+	.init(
+		given: .many([-1, 1, 0, -3, 3]),
+		expected: .many([0, 0, 9, 0, 0])
+	),
+] as [TestCase<Int, Int>])
+func testProductExceptSelf(t: TestCase<Int, Int>) throws {
+	let nums = try #require(t.given.getMany)
+	let expected = try #require(t.expected.getMany)
+	try #require(nums.count >= 2 && nums.count == expected.count)
+	let product = productExceptSelf(nums)
+	#expect(product == expected)
+}
+
+@Test("Gas station", arguments: [
+	.init(
+		given: .manyAndMany(
+			[1, 2, 3, 4, 5],
+			[3, 4, 5, 1, 2]
+		),
+		expected: .one(3)
+	),
+	.init(
+		given: .manyAndMany(
+			[2, 3, 4],
+			[3, 4, 3]
+		),
+		expected: .one(-1)
+	),
+] as [TestCase<Int, Int>])
+func testGasStation(t: TestCase<Int, Int>) throws {
+	let (gas, cost) = try #require(t.given.getManyAndMany)
+	let expected = try #require(t.expected.getOne)
+
+	try #require(!gas.isEmpty && gas.count == cost.count)
+	try #require(gas.allSatisfy { $0 >= 0 })
+	try #require(cost.allSatisfy { $0 >= 0 })
+
+	let canComplete = canCompleteCircuit(gas, cost)
+	#expect(canComplete == expected)
+}

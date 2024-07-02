@@ -300,7 +300,7 @@ func hIndex(_ citations: [Int]) -> Int {
 	for c in citations {
 		frequencies[min(n, c)] += 1
 	}
-	
+
 	var totalCount = 0
 
 	for (timesCited, count) in frequencies.enumerated().reversed() {
@@ -311,4 +311,36 @@ func hIndex(_ citations: [Int]) -> Int {
 	}
 
 	return 0
+}
+
+/// Product of array except self.
+///
+/// Given an integer array `nums`, return *an array `answer` such that
+/// `answer[i]` is equal to the product of all the elements of `nums` except
+/// `nums[i]`*.
+///
+/// The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit
+/// integer.
+///
+/// You must write an algorithm that runs in `O(n)` time and without using the
+/// division operation.
+func productExceptSelf(_ nums: [Int]) -> [Int] {
+	[]
+}
+
+/// Gas station.
+///
+/// There are `n` gas stations along a circular route, where the amount of gas
+/// at the `ith` station is `gas[i]`.
+///
+/// You have a car with an unlimited gas tank and it costs `cost[i]` of gas to
+/// travel from the `ith` station to its next `(i + 1)th` station. You begin the
+/// journey with an empty tank at one of the gas stations.
+///
+/// Given two integer arrays `gas` and `cost`, return *the starting gas
+/// station's index if you can travel around the circuit once in the clockwise
+/// direction, otherwise return `-1`*. If there exists a solution, it is
+/// **guaranteed** to be **unique**.
+func canCompleteCircuit(_ gas: [Int], _ cost: [Int]) -> Int {
+	0
 }
