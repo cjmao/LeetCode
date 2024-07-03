@@ -362,5 +362,19 @@ func productExceptSelf(_ nums: [Int]) -> [Int] {
 /// direction, otherwise return `-1`*. If there exists a solution, it is
 /// **guaranteed** to be **unique**.
 func canCompleteCircuit(_ gas: [Int], _ cost: [Int]) -> Int {
-	0
+	let n = gas.count
+	var tank = 0
+	var start = 0
+
+	for i in 0 ..< 2 * n {
+		tank += gas[i % n] - cost[i % n]
+		if tank < 0 {
+			tank = 0
+			start = i + 1
+		} else if i == start + n {
+			break
+		}
+	}
+
+	return start < n ? start : -1
 }
