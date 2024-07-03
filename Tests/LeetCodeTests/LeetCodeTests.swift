@@ -321,3 +321,39 @@ func testGasStation(t: TestCase<Int, Int>) throws {
 	let canComplete = canCompleteCircuit(gas, cost)
 	#expect(canComplete == expected)
 }
+
+@Test("Candy", arguments: [
+	.init(
+		given: .many([1, 0, 2]),
+		expected: .one(5)
+	),
+	.init(
+		given: .many([1, 2, 2]),
+		expected: .one(4)
+	),
+] as [TestCase<Int, Int>])
+func testCandy(t: TestCase<Int, Int>) throws {
+	let ratings = try #require(t.given.getMany)
+	let expected = try #require(t.expected.getOne)
+	try #require(!ratings.isEmpty && ratings.allSatisfy { $0 >= 0 })
+	let candies = candy(ratings)
+	#expect(candies == expected)
+}
+
+@Test("Trapping rain water", arguments: [
+	.init(
+		given: .many([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]),
+		expected: .one(6)
+	),
+	.init(
+		given: .many([4, 2, 0, 3, 2, 5]),
+		expected: .one(9)
+	),
+] as [TestCase<Int, Int>])
+func testTrappingRainWater(t: TestCase<Int, Int>) throws {
+	let height = try #require(t.given.getMany)
+	let expected = try #require(t.expected.getOne)
+	try #require(!height.isEmpty && height.allSatisfy { $0 >= 0 })
+	let water = trap(height)
+	#expect(water == expected)
+}

@@ -378,3 +378,28 @@ func canCompleteCircuit(_ gas: [Int], _ cost: [Int]) -> Int {
 
 	return start < n ? start : -1
 }
+
+/// Candy
+///
+/// There are `n` children standing in a line. Each child is assigned a rating
+/// value given in the integer array `ratings`.
+///
+/// You are giving candies to these children subjected to the following
+/// requirements:
+///
+/// - Each child must have at least one candy.
+/// - Children with a higher rating get more candies than their neighbors.
+///
+/// Return *the minimum number of candies you need to have to distribute the
+/// candies to the children*.
+func candy(_ ratings: [Int]) -> Int {
+	0
+}
+
+/// Trapping rain water
+///
+/// Given `n` non-negative integers representing an elevation map where the
+/// width of each bar is `1`, compute how much water it can trap after raining.
+func trap(_ height: [Int]) -> Int {
+	0
+}
