@@ -393,7 +393,32 @@ func canCompleteCircuit(_ gas: [Int], _ cost: [Int]) -> Int {
 /// Return *the minimum number of candies you need to have to distribute the
 /// candies to the children*.
 func candy(_ ratings: [Int]) -> Int {
-	0
+	let n = ratings.count
+	var extra = 0
+	var upWidth = 0, downWidth = 0
+
+	for (i, (a, b)) in zip(ratings, ratings[1...]).enumerated() {
+		if a < b {
+			if downWidth > 0 {
+				extra -= min(upWidth, downWidth)
+				upWidth = 0
+				downWidth = 0
+			}
+			upWidth += 1
+			extra += upWidth
+		} else if a > b {
+			downWidth += 1
+			extra += downWidth
+		}
+
+		if a == b || i == n - 2 {
+			extra -= min(upWidth, downWidth)
+			upWidth = 0
+			downWidth = 0
+		}
+	}
+
+	return n + extra
 }
 
 /// Trapping rain water

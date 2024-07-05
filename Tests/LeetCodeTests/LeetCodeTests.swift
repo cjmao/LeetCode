@@ -331,6 +331,22 @@ func testGasStation(t: TestCase<Int, Int>) throws {
 		given: .many([1, 2, 2]),
 		expected: .one(4)
 	),
+	.init(
+		given: .many([1, 2, 1, 3, 4, 2]),
+		expected: .one(10)
+	),
+	.init(
+		given: .many([1, 2, 87, 87, 2, 1]),
+		expected: .one(12)
+	),
+	.init(
+		given: .many([0, 1, 2, 5, 3, 2, 7]),
+		expected: .one(15)
+	),
+	.init(
+		given: .many([1, 6, 10, 8, 7, 3, 2]),
+		expected: .one(18)
+	),
 ] as [TestCase<Int, Int>])
 func testCandy(t: TestCase<Int, Int>) throws {
 	let ratings = try #require(t.given.getMany)
