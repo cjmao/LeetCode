@@ -426,5 +426,24 @@ func candy(_ ratings: [Int]) -> Int {
 /// Given `n` non-negative integers representing an elevation map where the
 /// width of each bar is `1`, compute how much water it can trap after raining.
 func trap(_ height: [Int]) -> Int {
-	0
+	var trappedWater = 0
+	var i = 0, j = height.endIndex - 1
+	var maxHeight = (left: 0, right: 0)
+
+	while i < j {
+		let left = height[i]
+		let right = height[j]
+
+		if left <= right {
+			maxHeight.left = max(left, maxHeight.left)
+			trappedWater += maxHeight.left - left
+			i += 1
+		} else {
+			maxHeight.right = max(right, maxHeight.right)
+			trappedWater += maxHeight.right - right
+			j -= 1
+		}
+	}
+
+	return trappedWater
 }

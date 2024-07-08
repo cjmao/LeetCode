@@ -365,11 +365,15 @@ func testCandy(t: TestCase<Int, Int>) throws {
 		given: .many([4, 2, 0, 3, 2, 5]),
 		expected: .one(9)
 	),
+	.init(
+		given: .many([4, 2, 3]),
+		expected: .one(1)
+	),
 ] as [TestCase<Int, Int>])
 func testTrappingRainWater(t: TestCase<Int, Int>) throws {
 	let height = try #require(t.given.getMany)
 	let expected = try #require(t.expected.getOne)
 	try #require(!height.isEmpty && height.allSatisfy { $0 >= 0 })
-	let water = trap(height)
-	#expect(water == expected)
+	let trappedWater = trap(height)
+	#expect(trappedWater == expected)
 }
