@@ -377,3 +377,44 @@ func testTrappingRainWater(t: TestCase<Int, Int>) throws {
 	let trappedWater = trap(height)
 	#expect(trappedWater == expected)
 }
+
+@Test("Roman to integer", arguments: [
+	.init(given: .one("III"), expected: .one(3)),
+	.init(given: .one("LVIII"), expected: .one(58)),
+	.init(given: .one("MCMXCIV"), expected: .one(1994)),
+] as [TestCase<String, Int>])
+func testRomanToInt(t: TestCase<String, Int>) throws {
+	let roman = try #require(t.given.getOne)
+	let expected = try #require(t.expected.getOne)
+
+	try #require((1...15).contains(roman.count))
+	try #require(
+		Set(roman.unicodeScalars)
+			.isSubset(of: ["I", "V", "X", "L", "C", "D", "M"])
+	)
+
+	let number = romanToInt(roman)
+	try #require((1...3999).contains(number))
+
+	#expect(number == expected)
+}
+
+@Test("Integer to Roman", arguments: [
+	.init(given: .one(3749), expected: .one("MMMDCCXLIX")),
+	.init(given: .one(58), expected: .one("LVIII")),
+	.init(given: .one(1994), expected: .one("MCMXCIV")),
+] as [TestCase<Int, String>])
+func testIntegerToRoman(t: TestCase<Int, String>) throws {
+	let number = try #require(t.given.getOne)
+	let expected = try #require(t.expected.getOne)
+
+	try #require((1...3999).contains(number))
+
+	let roman = intToRoman(number)
+	try #require(
+		Set(roman.unicodeScalars)
+			.isSubset(of: ["I", "V", "X", "L", "C", "D", "M"])
+	)
+
+	#expect(roman == expected)
+}
