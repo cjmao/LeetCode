@@ -479,7 +479,26 @@ func trap(_ height: [Int]) -> Int {
 ///
 /// Given a roman numeral, convert it to an integer.
 func romanToInt(_ s: String) -> Int {
-	1
+	let values: [Character: _] = [
+		"I": 1, "V": 5, "X": 10,
+		"L": 50, "C": 100, "D": 500, "M": 1000
+	]
+	var number = 0
+	var previous = Character("\0")
+
+	for c in s {
+		var value = values[c] ?? 0
+		switch previous {
+			case "I" where ["V", "X"].contains(c): fallthrough
+			case "X" where ["L", "C"].contains(c): fallthrough
+			case "C" where ["D", "M"].contains(c): value -= 2 * (values[previous] ?? 0)
+			default: break
+		}
+		number += value
+		previous = c
+	}
+
+	return number
 }
 
 /// Integer to Roman
