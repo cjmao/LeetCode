@@ -566,7 +566,17 @@ func intToRoman(_ num: Int) -> String {
 ///
 /// A word is a maximal substring consisting of non-space characters only.
 func lengthOfLastWord(_ s: String) -> Int {
-	0
+	var length = 0
+
+	for c in s.reversed() {
+		if !c.isWhitespace {
+			length += 1
+		} else if length > 0 {
+			break
+		}
+	}
+
+	return length
 }
 
 /// Longest common prefix
