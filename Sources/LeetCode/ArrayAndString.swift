@@ -558,3 +558,23 @@ func intToRoman(_ num: Int) -> String {
 
 	return s
 }
+
+/// Length of last word
+///
+/// Given a string `s` consisting of words and spaces, return *the length of the
+/// last word in the string*.
+///
+/// A word is a maximal substring consisting of non-space characters only.
+func lengthOfLastWord(_ s: String) -> Int {
+	0
+}
+
+/// Longest common prefix
+///
+/// Write a function to find the longest common prefix string amongst an array
+/// of strings.
+///
+/// If there is no common prefix, return an empty string `""`.
+func longestCommonPrefix(_ strs: [String]) -> String {
+	""
+}

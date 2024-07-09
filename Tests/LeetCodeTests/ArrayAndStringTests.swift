@@ -420,4 +420,36 @@ struct ArrayAndStringTests {
 
 		#expect(roman == expected)
 	}
+
+	@Test("Length of last word", arguments: [
+		.init(given: .one("Hello World"), expected: .one(5)),
+		.init(given: .one("   fly me   to   the moon  "), expected: .one(4)),
+		.init(given: .one("luffy is still joyboy"), expected: .one(6)),
+	] as [TestCase<String, Int>])
+	func testLengthOfLastWord(t: TestCase<String, Int>) throws {
+		let string = try #require(t.given.getOne)
+		let expected = try #require(t.expected.getOne)
+
+		try #require(string.count >= 1)
+		try #require(string.allSatisfy { $0.isLetter || $0 == " " })
+		try #require(string.split(separator: " ").count >= 1)
+
+		let length = lengthOfLastWord(string)
+		#expect(length == expected)
+	}
+
+	@Test("Longest common prefix", arguments: [
+		.init(given: .many(["flower", "flow", "flight"]), expected: .one("fl")),
+		.init(given: .many(["dog", "racecar", "car"]), expected: .one("")),
+	] as [TestCase<String, String>])
+	func testLongestCommonPrefix(t: TestCase<String, String>) throws {
+		let string = try #require(t.given.getMany)
+		let expected = try #require(t.expected.getOne)
+
+		try #require(string.count >= 1)
+		try #require(string.allSatisfy { $0.count >= 0 })
+
+		let length = longestCommonPrefix(string)
+		#expect(length == expected)
+	}
 }
