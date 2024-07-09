@@ -441,15 +441,18 @@ struct ArrayAndStringTests {
 	@Test("Longest common prefix", arguments: [
 		.init(given: .many(["flower", "flow", "flight"]), expected: .one("fl")),
 		.init(given: .many(["dog", "racecar", "car"]), expected: .one("")),
+		.init(given: .many(["ab", "a"]), expected: .one("a")),
+		.init(given: .many(["", "b"]), expected: .one("")),
+		.init(given: .many(["c", "acc", "ccc"]), expected: .one("")),
 	] as [TestCase<String, String>])
 	func testLongestCommonPrefix(t: TestCase<String, String>) throws {
-		let string = try #require(t.given.getMany)
+		let strings = try #require(t.given.getMany)
 		let expected = try #require(t.expected.getOne)
 
-		try #require(string.count >= 1)
-		try #require(string.allSatisfy { $0.count >= 0 })
+		try #require(strings.count >= 1)
+		try #require(strings.allSatisfy { $0.count >= 0 })
 
-		let length = longestCommonPrefix(string)
+		let length = longestCommonPrefix(strings)
 		#expect(length == expected)
 	}
 }

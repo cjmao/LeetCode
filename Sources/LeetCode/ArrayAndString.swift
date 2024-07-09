@@ -586,5 +586,21 @@ func lengthOfLastWord(_ s: String) -> Int {
 ///
 /// If there is no common prefix, return an empty string `""`.
 func longestCommonPrefix(_ strs: [String]) -> String {
-	""
+	let prefix = strs[0]
+	var end = prefix.endIndex
+
+	for s in strs[1...] {
+		if s.isEmpty {
+			return ""
+		}
+		end = min(end, s.endIndex)
+		for i in s.indices {
+			if i >= end || s[i] != prefix[i] {
+				end = i
+				break
+			}
+		}
+	}
+
+	return String(prefix[..<end])
 }
