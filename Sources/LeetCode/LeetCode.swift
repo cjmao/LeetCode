@@ -535,5 +535,26 @@ func romanToInt(_ s: String) -> Int {
 ///
 /// Given an integer, convert it to a Roman numeral.
 func intToRoman(_ num: Int) -> String {
-	""
+	let literals = [
+		"M", "CM", "D", "CD",
+		"C", "XC", "L", "XL",
+		"X", "IX", "V", "IV",
+		"I"
+	]
+	let values = [
+		1000, 900, 500, 400,
+		100,  90,  50,  40,
+		10,   9,   5,   4,
+		1
+	]
+
+	var s = "", p = num
+
+	for (literal, value) in zip(literals, values) {
+		let (q, r) = p.quotientAndRemainder(dividingBy: value)
+		s += [_](repeating: literal, count: q).joined()
+		p = r
+	}
+
+	return s
 }
