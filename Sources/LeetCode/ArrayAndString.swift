@@ -607,15 +607,38 @@ func longestCommonPrefix(_ strs: [String]) -> String {
 
 /// Reverse words in a string
 ///
-/// Given an input string s, reverse the order of the words.
+/// Given an input string `s`, reverse the order of the **words**.
 ///
-/// A word is defined as a sequence of non-space characters. The words in s will be separated by at least one space.
+/// A **word** is defined as a sequence of non-space characters. The **words**
+/// in `s` will be separated by at least one space.
 ///
-/// Return a string of the words in reverse order concatenated by a single space.
+/// Return *a string of the words in reverse order concatenated by a single
+/// space*.
 ///
-/// Note that s may contain leading or trailing spaces or multiple spaces between two words. The returned string should only have a single space separating the words. Do not include any extra spaces.
+/// **Note** that `s` may contain leading or trailing spaces or multiple spaces
+/// between two words. The returned string should only have a single space
+/// separating the words. Do not include any extra spaces.
 func reverseWords(_ s: String) -> String {
-	""
+	var reversed = ""
+	var word = ""
+
+	for c in (" " + s).reversed() {
+		if c.isWhitespace {
+			if !word.isEmpty {
+				if !reversed.isEmpty {
+					reversed.append(" ")
+				}
+				for c in word.reversed() {
+					reversed.append(c)
+				}
+				word = ""
+			}
+		} else { // is letter
+			word.append(c)
+		}
+	}
+
+	return reversed
 }
 
 /// Zigzag conversion
