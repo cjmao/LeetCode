@@ -604,3 +604,40 @@ func longestCommonPrefix(_ strs: [String]) -> String {
 
 	return String(prefix[..<end])
 }
+
+/// Reverse words in a string
+///
+/// Given an input string s, reverse the order of the words.
+///
+/// A word is defined as a sequence of non-space characters. The words in s will be separated by at least one space.
+///
+/// Return a string of the words in reverse order concatenated by a single space.
+///
+/// Note that s may contain leading or trailing spaces or multiple spaces between two words. The returned string should only have a single space separating the words. Do not include any extra spaces.
+func reverseWords(_ s: String) -> String {
+	""
+}
+
+/// Zigzag conversion
+///
+/// The string `"PAYPALISHIRING"` is written in a zigzag pattern on a given
+/// number of rows like this: (you may want to display this pattern in a fixed
+/// font for better legibility)
+///
+/// ```
+/// P   A   H   N
+/// A P L S I I G
+/// Y   I   R
+/// ```
+///
+/// And then read line by line: `"PAHNAPLSIIGYIR"`
+///
+/// Write the code that will take a string and make this conversion given a
+/// number of rows:
+///
+/// ```c
+/// string convert(string s, int numRows);
+/// ```
+func convert(_ s: String, _ numRows: Int) -> String {
+	""
+}

@@ -455,4 +455,41 @@ struct ArrayAndStringTests {
 		let length = longestCommonPrefix(strings)
 		#expect(length == expected)
 	}
+
+	@Test("Reverse words in a string", arguments: [
+		.init(given: .one("the sky is blue"), expected: .one("blue is sky the")),
+		.init(given: .one("  hello world  "), expected: .one("world hello")),
+		.init(given: .one("a good   example"), expected: .one("example good a")),
+	] as [TestCase<String, String>])
+	func testReverseWords(t: TestCase<String, String>) throws {
+		let s = try #require(t.given.getOne)
+		let expected = try #require(t.expected.getOne)
+
+		try #require(!s.isEmpty)
+		let _ = try #require(
+			try #/[[:space:]]*([[:alnum:]]+[[:space:]]*)+/#.wholeMatch(in: s)
+		)
+
+		let reversed = reverseWords(s)
+		#expect(reversed == expected)
+	}
+
+	@Test("Zigzag conversion", arguments: [
+		.init(given: .oneAndOne(3, "PAYPALISHIRING"), expected: .one("PAHNAPLSIIGYIR")),
+		.init(given: .oneAndOne(4, "PAYPALISHIRING"), expected: .one("PINALSIGYAHRPI")),
+		.init(given: .oneAndOne(1, "A"), expected: .one("A")),
+	] as [CompoundTestCase<Int, String, String, String>])
+	func testZigZagConversion(t: CompoundTestCase<Int, String, String, String>) throws {
+		let (rows, s) = try #require(t.given.getOneAndOne)
+		let expected = try #require(t.expected.getOne)
+
+		try #require(rows >= 1 && rows <= 1000)
+		try #require(!s.isEmpty)
+		let _ = try #require(
+			try #/([[:alpha:]]|,|\.)+/#.wholeMatch(in: s)
+		)
+
+		let converted = convert(s, rows)
+		#expect(converted == expected)
+	}
 }
