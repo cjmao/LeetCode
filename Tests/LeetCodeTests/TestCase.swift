@@ -1,9 +1,9 @@
 import Testing
 
-struct TestCase<T, U>: Encodable, Sendable, CustomTestStringConvertible
-where T: Encodable & Sendable, U: Encodable & Sendable {
-	let given: DataType<T>
-	let expected: DataType<U>
+struct TestCase<Given, Expected>: Encodable, Sendable, CustomTestStringConvertible
+where Given: Encodable & Sendable, Expected: Encodable & Sendable {
+	let given: DataType<Given>
+	let expected: DataType<Expected>
 
 	var testDescription: String {
 		"Given \(given.testDescription), expecting \(expected.testDescription)"
@@ -11,35 +11,35 @@ where T: Encodable & Sendable, U: Encodable & Sendable {
 }
 
 extension TestCase {
-	enum DataType<V>: Encodable, Sendable, CustomTestStringConvertible
-	where V: Encodable & Sendable {
-		case one(V)
-		case many([V])
-		case oneAndMany(V, [V])
-		case manyAndMany([V], [V])
+	enum DataType<T>: Encodable, Sendable, CustomTestStringConvertible
+	where T: Encodable & Sendable {
+		case one(T)
+		case many([T])
+		case oneAndMany(T, [T])
+		case manyAndMany([T], [T])
 
-		var getOne: V? {
+		var getOne: T? {
 			switch self {
 				case let .one(a): a
 				default: nil
 			}
 		}
 
-		var getMany: [V]? {
+		var getMany: [T]? {
 			switch self {
 				case let .many(a): a
 				default: nil
 			}
 		}
 
-		var getOneAndMany: (V, [V])? {
+		var getOneAndMany: (T, [T])? {
 			switch self {
 				case let .oneAndMany(a, b): (a, b)
 				default: nil
 			}
 		}
 
-		var getManyAndMany: ([V], [V])? {
+		var getManyAndMany: ([T], [T])? {
 			switch self {
 				case let .manyAndMany(a, b): (a, b)
 				default: nil
