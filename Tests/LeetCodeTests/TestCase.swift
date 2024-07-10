@@ -1,7 +1,7 @@
 import Testing
 
-struct TestCase<T, U>: Encodable, CustomTestStringConvertible
-where T: Encodable, U: Encodable {
+struct TestCase<T, U>: Encodable, Sendable, CustomTestStringConvertible
+where T: Encodable & Sendable, U: Encodable & Sendable {
 	let given: DataType<T>
 	let expected: DataType<U>
 
@@ -11,7 +11,8 @@ where T: Encodable, U: Encodable {
 }
 
 extension TestCase {
-	enum DataType<V>: Encodable, CustomTestStringConvertible where V: Encodable {
+	enum DataType<V>: Encodable, Sendable, CustomTestStringConvertible
+	where V: Encodable & Sendable {
 		case one(V)
 		case many([V])
 		case oneAndMany(V, [V])
