@@ -497,6 +497,8 @@ struct ArrayAndStringTests {
 	@Test("Find the index of the first occurrence in a string", arguments: [
 		.init(given: .oneAndOne("sadbutsad", "sad"), expected: .one(0)),
 		.init(given: .oneAndOne("leetcode", "leeto"), expected: .one(-1)),
+		.init(given: .oneAndOne("aaa", "aaaa"), expected: .one(-1)),
+		.init(given: .oneAndOne("mississippi", "issipi"), expected: .one(-1)),
 	] as [TestCase<String, Int>])
 	func testFindFirstOccurenceInString(t: TestCase<String, Int>) throws {
 		let (haystack, needle) = try #require(t.given.getOneAndOne)

@@ -680,7 +680,25 @@ func convert(_ s: String, _ numRows: Int) -> String {
 /// occurrence of `needle` in `haystack`, or `-1` if `needle` is not part of
 /// `haystack`.
 func strStr(_ haystack: String, _ needle: String) -> Int {
-	-1
+	if haystack.count < needle.count {
+		return -1
+	}
+
+	let endIndex = haystack.index(haystack.endIndex, offsetBy: -needle.count)
+
+	for i in haystack[...endIndex].indices {
+		for j in needle.indices {
+			let offset = needle.distance(from: needle.startIndex, to: j)
+			let k = haystack.index(i, offsetBy: offset)
+			if haystack[k] != needle[j] {
+				break
+			} else if j == needle.index(before: needle.endIndex) {
+				return haystack.distance(from: haystack.startIndex, to: i)
+			}
+		}
+	}
+
+	return -1
 }
 
 /// Text justification
