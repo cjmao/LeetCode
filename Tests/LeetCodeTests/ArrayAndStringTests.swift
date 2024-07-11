@@ -477,6 +477,7 @@ struct ArrayAndStringTests {
 	@Test("Zigzag conversion", arguments: [
 		.init(given: .oneAndOne(3, "PAYPALISHIRING"), expected: .one("PAHNAPLSIIGYIR")),
 		.init(given: .oneAndOne(4, "PAYPALISHIRING"), expected: .one("PINALSIGYAHRPI")),
+		.init(given: .oneAndOne(5, "PAYPALISHIRING"), expected: .one("PHASIYIRPLIGAN")),
 		.init(given: .oneAndOne(1, "A"), expected: .one("A")),
 	] as [CompoundTestCase<Int, String, String, String>])
 	func testZigZagConversion(t: CompoundTestCase<Int, String, String, String>) throws {

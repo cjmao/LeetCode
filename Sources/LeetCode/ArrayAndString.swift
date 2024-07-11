@@ -662,5 +662,14 @@ func reverseWords(_ s: String) -> String {
 /// string convert(string s, int numRows);
 /// ```
 func convert(_ s: String, _ numRows: Int) -> String {
-	""
+	var rows = [_](repeating: "", count: numRows)
+	let period = max(1, numRows + (numRows - 2))
+
+	for (i, c) in s.enumerated() {
+		let t = i % period
+		let row = t < numRows ? t : period - t
+		rows[row].append(String(c))
+	}
+
+	return rows.joined()
 }
