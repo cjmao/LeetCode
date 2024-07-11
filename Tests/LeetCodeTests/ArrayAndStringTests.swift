@@ -493,4 +493,80 @@ struct ArrayAndStringTests {
 		let converted = convert(s, rows)
 		#expect(converted == expected)
 	}
+
+	@Test("Find the index of the first occurrence in a string", arguments: [
+		.init(given: .oneAndOne("sadbutsad", "sad"), expected: .one(0)),
+		.init(given: .oneAndOne("leetcode", "leeto"), expected: .one(-1)),
+	] as [TestCase<String, Int>])
+	func testFindFirstOccurenceInString(t: TestCase<String, Int>) throws {
+		let (haystack, needle) = try #require(t.given.getOneAndOne)
+		let expected = try #require(t.expected.getOne)
+
+		try #require(!haystack.isEmpty && !needle.isEmpty)
+		try #require(haystack.allSatisfy { $0.isLetter })
+		try #require(needle.allSatisfy { $0.isLetter })
+
+		let index = strStr(haystack, needle)
+		#expect(index == expected)
+	}
+
+	@Test("Text justification", arguments: [
+		.init(
+			given: .oneAndMany(
+				16,
+				["This", "is", "an", "example", "of", "text", "justification."]
+			),
+			expected: .many([
+				"This    is    an",
+				"example  of text",
+				"justification.  "
+			])
+		),
+		.init(
+			given: .oneAndMany(
+				16,
+				["What", "must", "be", "acknowledgment", "shall", "be"]
+			),
+			expected: .many([
+				"What   must   be",
+				"acknowledgment  ",
+				"shall be        "
+			])
+		),
+		.init(
+			given: .oneAndMany(
+				20,
+				[
+					"Science", "is", "what", "we", "understand", "well",
+					"enough", "to", "explain", "to", "a", "computer.",
+					"Art", "is", "everything", "else", "we", "do"
+				]
+			),
+			expected: .many([
+				"Science  is  what we",
+				"understand      well",
+				"enough to explain to",
+				"a  computer.  Art is",
+				"everything  else  we",
+				"do                  "
+			])
+		),
+	] as [CompoundTestCase<Int, String, String, String>])
+	func testTextJustification(t: CompoundTestCase<Int, String, String, String>) throws {
+		let (maxWidth, words) = try #require(t.given.getOneAndMany)
+		let expected = try #require(t.expected.getMany)
+
+		try #require(maxWidth >= 1 && maxWidth <= 100)
+		try #require(!words.isEmpty)
+		try #require(
+			words.allSatisfy { w in
+				w.count >= 1 && w.count <= min(20, maxWidth) && w.allSatisfy {
+					c in c.isLetter || c.isSymbol
+				}
+			}
+		)
+
+		let justified = fullJustify(words, maxWidth)
+		#expect(justified == expected)
+	}
 }
