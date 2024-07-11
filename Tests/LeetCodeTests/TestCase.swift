@@ -15,6 +15,7 @@ extension TestCase {
 	where T: Encodable & Sendable {
 		case one(T)
 		case many([T])
+		case oneAndOne(T, T)
 		case oneAndMany(T, [T])
 		case manyAndMany([T], [T])
 
@@ -28,6 +29,13 @@ extension TestCase {
 		var getMany: [T]? {
 			switch self {
 				case let .many(a): a
+				default: nil
+			}
+		}
+
+		var getOneAndOne: (T, T)? {
+			switch self {
+				case let .oneAndOne(a, b): (a, b)
 				default: nil
 			}
 		}
@@ -50,6 +58,7 @@ extension TestCase {
 			switch self {
 				case let .one(a): "\(a)"
 				case let .many(a): "\(a)"
+				case let .oneAndOne(a, b): "\(a) and \(b)"
 				case let .oneAndMany(a, b): "\(a) and \(b)"
 				case let .manyAndMany(a, b): "\(a) and \(b)"
 			}
