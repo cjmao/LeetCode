@@ -563,7 +563,7 @@ struct ArrayAndStringTests {
 		try #require(
 			words.allSatisfy { w in
 				w.count >= 1 && w.count <= min(20, maxWidth) && w.allSatisfy {
-					c in c.isLetter || c.isSymbol
+					c in c.isLetter || c.isSymbol || c.isPunctuation
 				}
 			}
 		)

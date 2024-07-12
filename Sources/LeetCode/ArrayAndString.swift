@@ -727,5 +727,96 @@ func strStr(_ haystack: String, _ needle: String) -> Int {
 ///   `maxWidth`.
 /// - The input array `words` contains at least one word.
 func fullJustify(_ words: [String], _ maxWidth: Int) -> [String] {
-	[]
+	/// Words grouped by rows where they should appear.
+	var rows: [[String]] = [[]]
+	/// The total width of gaps for each row.
+	var widthOfGaps: [Int] = []
+
+	/// Index of the current row.
+	var row = 0
+	/// Width of the current row at the moment, excluding spaces.
+	var rowWidth = 0
+
+	// group words into rows, and calculate total width of gaps for each row
+	for (i, word) in words.enumerated() {
+		// if the word does not fit in current row, proceed to the next row
+		// word.count: width of word
+		// rows[row].count: number of gaps on current row
+		if rowWidth + word.count + rows[row].count > maxWidth {
+			widthOfGaps.append(maxWidth - rowWidth)
+			rowWidth = 0
+			rows.append([])
+			row += 1
+		}
+
+		rows[row].append(word)
+		rowWidth += word.count
+
+		// for the last row, each gap has width of 1, therefore the total width
+		// of gaps equals the number of gaps
+		if i == words.endIndex - 1 {
+			widthOfGaps.append(rows[row].count - 1)
+		}
+	}
+
+	/// Justified lines of words.
+	var lines = [String]()
+
+	for (row, spaces) in zip(rows, widthOfGaps) {
+		var line = ""
+
+		/// Number of gaps on current line.
+		let gaps = row.count - 1
+		/// Minimum number of spaces needed for each gap.
+		let spacesPerGap: Int
+		/// Number of wide gaps who contains more spaces.
+		let wideGaps: Int
+
+		(spacesPerGap, wideGaps) = if gaps == 0 {
+			(0, 0)
+		} else {
+			// Let n be the number of gaps and p the total width of gaps (which
+			// is the same as the total number of spaces for that line).
+			//
+			// We can first put q = (p - p % n) / n spaces into each gap. After
+			// that, there are still r = p % n spaces left.
+			//
+			// To distribute these r spaces evenly, we can put 1 space into each
+			// of first r gaps.
+			//
+			// Thus we have p = q * n + r where q is the quotient and r is the
+			// remainder.
+			spaces.quotientAndRemainder(dividingBy: gaps)
+		}
+
+		/// The distribution of spaces. The ith element represents how many
+		/// spaces should be in the ith gap.
+		var distributionOfSpaces = [Int](repeating: spacesPerGap, count: gaps)
+		// distribute one extra space for each of first r = wideGaps gaps
+		for gap in 0 ..< wideGaps {
+			distributionOfSpaces[gap] += 1
+		}
+
+		// add a gap of 0 width so that the number of gaps is equal to the
+		// number of words, which allows it to be zipped with the words
+		distributionOfSpaces.append(0)
+
+		// pair each word with a padded gap
+		for (word, gapWidth) in zip(row, distributionOfSpaces) {
+			line += word + .init(repeating: " ", count: gapWidth)
+		}
+
+		// pad right for lines with no gaps or for the last line
+		//
+		// maxWidth > line.count if and only if:
+		// - the width of word is less than maxWidth
+		// and one of the following:
+		// - the line has no gap
+		// - the line is the last line where each gap has width of 1
+		line += .init(repeating: " ", count: maxWidth - line.count)
+
+		lines.append(line)
+	}
+
+	return lines
 }
