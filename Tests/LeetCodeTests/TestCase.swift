@@ -1,67 +1,45 @@
 import Testing
 
-struct TestCase<Given, Expected>: Encodable, Sendable, CustomTestStringConvertible
-where Given: Encodable & Sendable, Expected: Encodable & Sendable {
-	let given: DataType<Given>
-	let expected: DataType<Expected>
+typealias TestData = Encodable & Sendable & CustomTestStringConvertible
+
+struct TestCase<Given, Expected>: TestData
+where Given: TestData, Expected: TestData {
+	let given: Given
+	let expected: Expected
 
 	var testDescription: String {
-		"Given \(given.testDescription), expecting \(expected.testDescription)"
+		"given: \(given.testDescription), expecting: \(expected.testDescription)"
 	}
 }
 
-extension TestCase {
-	enum DataType<T>: Encodable, Sendable, CustomTestStringConvertible
-	where T: Encodable & Sendable {
-		case one(T)
-		case many([T])
-		case oneAndOne(T, T)
-		case oneAndMany(T, [T])
-		case manyAndMany([T], [T])
+struct Pair<A, B>: TestData where A: TestData, B: TestData {
+	let a: A
+	let b: B
 
-		var getOne: T? {
-			switch self {
-				case let .one(a): a
-				default: nil
-			}
-		}
-
-		var getMany: [T]? {
-			switch self {
-				case let .many(a): a
-				default: nil
-			}
-		}
-
-		var getOneAndOne: (T, T)? {
-			switch self {
-				case let .oneAndOne(a, b): (a, b)
-				default: nil
-			}
-		}
-
-		var getOneAndMany: (T, [T])? {
-			switch self {
-				case let .oneAndMany(a, b): (a, b)
-				default: nil
-			}
-		}
-
-		var getManyAndMany: ([T], [T])? {
-			switch self {
-				case let .manyAndMany(a, b): (a, b)
-				default: nil
-			}
-		}
-
-		var testDescription: String {
-			switch self {
-				case let .one(a): "\(a)"
-				case let .many(a): "\(a)"
-				case let .oneAndOne(a, b): "\(a) and \(b)"
-				case let .oneAndMany(a, b): "\(a) and \(b)"
-				case let .manyAndMany(a, b): "\(a) and \(b)"
-			}
-		}
+	init(_ a: A, _ b: B) {
+		self.a = a
+		self.b = b
 	}
+
+	var values: (A, B) { (a, b) }
+
+	var testDescription: String {
+		"(\(a.testDescription), \(b.testDescription))"
+	}
+}
+
+extension Bool: @retroactive CustomTestStringConvertible {
+	public var testDescription: String { description }
+}
+
+extension Int: @retroactive CustomTestStringConvertible {
+	public var testDescription: String { description }
+}
+
+extension Double: @retroactive CustomTestStringConvertible {
+	public var testDescription: String { description }
+}
+
+extension Array: @retroactive CustomTestStringConvertible {
+	public var testDescription: String { description }
 }
