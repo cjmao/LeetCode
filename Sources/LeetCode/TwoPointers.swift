@@ -8,7 +8,26 @@
 /// Given a string `s`, return *`true` if it is a **palindrome**, or `false`
 /// otherwise*.
 func isPalindrome(_ s: String) -> Bool {
-	false
+	var i = s.startIndex, j = s.index(before: s.endIndex)
+
+	while i < j {
+		let (a, b) = (s[i], s[j])
+		if a.isAlphanumeric, b.isAlphanumeric,
+		   a.lowercased() != b.lowercased() {
+			return false
+		}
+
+		if a.isAlphanumeric, !b.isAlphanumeric {
+			j = s.index(before: j)
+		} else if !a.isAlphanumeric, b.isAlphanumeric {
+			i = s.index(after: i)
+		} else {
+			i = s.index(after: i)
+			j = s.index(before: j)
+		}
+	}
+
+	return true
 }
 
 /// Is subsequence
@@ -22,4 +41,10 @@ func isPalindrome(_ s: String) -> Bool {
 /// `"ace"` is a subsequence of `"abcde"` while `"aec"` is not).
 func isSubsequence(_ s: String, _ t: String) -> Bool {
 	false
+}
+
+extension Character {
+	var isAlphanumeric: Bool {
+		isLetter || isNumber
+	}
 }

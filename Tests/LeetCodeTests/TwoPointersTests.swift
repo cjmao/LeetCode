@@ -7,6 +7,7 @@ struct TwoPointersTests {
 		TestCase(given: "A man, a plan, a canal: Panama", expected: true),
 		TestCase(given: "race a car", expected: false),
 		TestCase(given: " ", expected: true),
+		TestCase(given: "0P", expected: false),
 	])
 	func testValidPalindrome(c: TestCase<String, Bool>) throws {
 		let (given, expected) = (c.given, c.expected)
