@@ -40,7 +40,19 @@ func isPalindrome(_ s: String) -> Bool {
 /// disturbing the relative positions of the remaining characters. (i.e.,
 /// `"ace"` is a subsequence of `"abcde"` while `"aec"` is not).
 func isSubsequence(_ s: String, _ t: String) -> Bool {
-	false
+	var i = s.startIndex, j = t.startIndex
+
+	while i < s.endIndex, j < t.endIndex {
+		let (a, b) = (s[i], t[j])
+
+		if a == b {
+			i = s.index(after: i)
+		}
+
+		j = t.index(after: j)
+	}
+
+	return i == s.endIndex
 }
 
 extension Character {
