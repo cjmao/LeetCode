@@ -28,4 +28,32 @@ struct TwoPointersTests {
 
 		#expect(isSubsequence(s, t) == expected)
 	}
+
+	@Test("Two sum II - input array is sorted", arguments: [
+		TestCase(given: Pair([2, 7, 11, 15], 9), expected: [1, 2]),
+		TestCase(given: Pair([2, 3, 4], 6), expected: [1, 3]),
+		TestCase(given: Pair([-1, 0], -1), expected: [1, 2]),
+	])
+	func testTwoSums2(c: TestCase<Pair<[Int], Int>, [Int]>) throws {
+		let ((nums, target), expected) = (c.given.values, c.expected)
+
+		try #require(nums.count >= 2 && nums.isSorted())
+		try #require(nums.allSatisfy { $0 >= -1000 && $0 <= 1000 })
+		try #require(target >= -1000 && target <= 1000)
+
+		#expect(twoSum(nums, target) == expected)
+	}
+
+	@Test("Container with most water", arguments: [
+		TestCase(given: [1, 8, 6, 2, 5, 4, 8, 3, 7], expected: 49),
+		TestCase(given: [1, 1], expected: 1),
+	])
+	func testMaxArea(c: TestCase<[Int], Int>) throws {
+		let (height, expected) = (c.given, c.expected)
+
+		try #require(height.count >= 2)
+		try #require(height.allSatisfy { $0 >= 0 && $0 <= 10000 })
+
+		#expect(maxArea(height) == expected)
+	}
 }

@@ -55,6 +55,40 @@ func isSubsequence(_ s: String, _ t: String) -> Bool {
 	return i == s.endIndex
 }
 
+/// Two sum II - input array is sorted
+///
+/// Given a **1-indexed** array of integers `numbers` that is already
+/// _**sorted in non-decreasing order**_, find two numbers such that they add up
+/// to a specific `target` number. Let these two numbers be `numbers[index1]`
+/// and `numbers[index2]` where `1 <= index1 < index2 <= numbers.length`.
+///
+/// Return _the indices of the two numbers, `index1` and `index2`, **added by
+/// one** as an integer array `[index1, index2]` of length 2_.
+///
+/// The tests are generated such that there is **exactly one solution**. You
+/// **may not** use the same element twice.
+///
+/// Your solution must use only constant extra space.
+func twoSum(_ numbers: [Int], _ target: Int) -> [Int] {
+	[]
+}
+
+/// Container with most water
+///
+/// You are given an integer array `height` of length `n`. There are `n`
+/// vertical lines drawn such that the two endpoints of the `ith` line are
+/// `(i, 0)` and `(i, height[i])`.
+///
+/// Find two lines that together with the x-axis form a container, such that the
+/// container contains the most water.
+///
+/// Return *the maximum amount of water a container can store*.
+///
+/// **Notice** that you may not slant the container.
+func maxArea(_ height: [Int]) -> Int {
+	0
+}
+
 extension Character {
 	var isAlphanumeric: Bool {
 		isLetter || isNumber
