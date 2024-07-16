@@ -70,7 +70,18 @@ func isSubsequence(_ s: String, _ t: String) -> Bool {
 ///
 /// Your solution must use only constant extra space.
 func twoSum(_ numbers: [Int], _ target: Int) -> [Int] {
-	[]
+	var i = 0, j = numbers.endIndex - 1
+
+	while i < j - 1, numbers[i] + numbers[j] != target {
+		while j > 1, numbers[i] + numbers[j] > target {
+			j -= 1
+		}
+		while i < j - 1, numbers[i] + numbers[j] < target {
+			i += 1
+		}
+	}
+
+	return [i + 1, j + 1]
 }
 
 /// Container with most water
