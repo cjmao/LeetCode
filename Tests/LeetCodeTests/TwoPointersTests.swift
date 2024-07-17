@@ -56,4 +56,24 @@ struct TwoPointersTests {
 
 		#expect(maxArea(height) == expected)
 	}
+
+	@Test("3 Sum", arguments: [
+		TestCase(
+			given: [-1, 0, 1, 2, -1, -4],
+			expected: [[-1, -1, 2], [-1, 0, 1]]
+		),
+		TestCase(
+			given: [0, 1, 1],
+			expected: []
+		),
+		TestCase(
+			given: [0, 0, 0],
+			expected: [[0, 0, 0]]
+		),
+	])
+	func test3Sum(c: TestCase<[Int], [[Int]]>) throws {
+		let (given, expected) = (c.given, c.expected)
+		try #require(given.count >= 3)
+		#expect(threeSum(given) == expected)
+	}
 }

@@ -117,6 +117,26 @@ func maxArea(_ height: [Int]) -> Int {
 	return maxArea
 }
 
+/// 3 Sum
+///
+/// Given an integer array `nums`, return all the triplets
+///
+/// `[nums[i], nums[j], nums[k]]`
+///
+/// such that
+/// - `i != j`
+/// - `i != k`
+/// - `j != k`
+///
+/// and
+///
+/// - `nums[i] + nums[j] + nums[k] == 0`.
+///
+/// Notice that the solution set must not contain duplicate triplets.
+func threeSum(_ nums: [Int]) -> [[Int]] {
+	[]
+}
+
 extension Character {
 	var isAlphanumeric: Bool {
 		isLetter || isNumber
