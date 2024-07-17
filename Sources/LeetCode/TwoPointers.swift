@@ -97,7 +97,24 @@ func twoSum(_ numbers: [Int], _ target: Int) -> [Int] {
 ///
 /// **Notice** that you may not slant the container.
 func maxArea(_ height: [Int]) -> Int {
-	0
+	var maxArea = 0
+	var area = 0
+
+	var i = height.startIndex, j = height.endIndex - 1
+
+	while i < j {
+		let (a, b) = (height[i], height[j])
+		area = (j - i) * min(a, b)
+		maxArea = max(area, maxArea)
+
+		if a < b {
+			i += 1
+		} else {
+			j -= 1
+		}
+	}
+
+	return maxArea
 }
 
 extension Character {
