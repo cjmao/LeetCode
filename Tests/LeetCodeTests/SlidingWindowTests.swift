@@ -19,4 +19,17 @@ struct SlidingWindowTests {
 
 		#expect(minSubArrayLen(target, nums) == expected)
 	}
+
+	@Test("Longest substring without repeating characters", arguments: [
+		TestCase(given: "abcabcbb", expected: 3),
+		TestCase(given: "bbbbb", expected: 1),
+		TestCase(given: "pwwkew", expected: 3),
+	])
+	func testLengthOfLongestSubstring(c: TestCase<String, Int>) throws {
+		let (s, expected) = (c.given, c.expected)
+		try #require(s.allSatisfy { c in
+			c.isAlphanumeric || c.isSymbol || c.isWhitespace
+		})
+		#expect(lengthOfLongestSubstring(s) == expected)
+	}
 }

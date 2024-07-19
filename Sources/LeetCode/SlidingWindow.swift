@@ -20,3 +20,11 @@ func minSubArrayLen(_ target: Int, _ nums: [Int]) -> Int {
 
 	return minCount > nums.count ? 0 : minCount
 }
+
+/// Longest substring without repeating characters
+///
+/// Given a string `s`, find the length of the **longest** substring without
+/// repeating characters.
+func lengthOfLongestSubstring(_ s: String) -> Int {
+	0
+}
