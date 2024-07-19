@@ -32,4 +32,45 @@ struct SlidingWindowTests {
 		})
 		#expect(lengthOfLongestSubstring(s) == expected)
 	}
+
+	@Test("Substring with concatenation of all words", arguments: [
+		TestCase(
+			given: Pair(
+				"barfoothefoobarman",
+				["foo", "bar"]
+			),
+			expected: [0, 9]
+		),
+		TestCase(
+			given: Pair(
+				"wordgoodgoodgoodbestword",
+				["word", "good", "best", "word"]
+			),
+			expected: []
+		),
+		TestCase(
+			given: Pair(
+				"barfoofoobarthefoobarman",
+				["bar", "foo", "the"]
+			),
+			expected: [6, 9, 12]
+		),
+	])
+	func testFindSubstring(c: TestCase<Pair<String, [String]>, [Int]>) throws {
+		let ((s, words), expected) = (c.given.values, c.expected)
+
+		try #require(!s.isEmpty && !words.isEmpty)
+		try #require(
+			words.allSatisfy { w in
+				w.count >= 1 && w.count <= 30 && w.allSatisfy { c in
+					c.isLetter && c.isLowercase
+				}
+			}
+		)
+		try #require(s.allSatisfy { c in
+			c.isLetter && c.isLowercase
+		})
+
+		#expect(findSubstring(s, words) == expected)
+	}
 }
