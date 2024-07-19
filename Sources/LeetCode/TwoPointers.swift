@@ -124,6 +124,7 @@ func maxArea(_ height: [Int]) -> Int {
 /// `[nums[i], nums[j], nums[k]]`
 ///
 /// such that
+///
 /// - `i != j`
 /// - `i != k`
 /// - `j != k`
@@ -134,7 +135,36 @@ func maxArea(_ height: [Int]) -> Int {
 ///
 /// Notice that the solution set must not contain duplicate triplets.
 func threeSum(_ nums: [Int]) -> [[Int]] {
-	[]
+	let nums = nums.sorted()
+	var triplets = [[Int]]()
+
+	for (i, m) in nums.enumerated() {
+		if m > 0 {
+			break
+		} else if i - 1 >= 0, nums[i - 1] == nums[i] {
+			continue
+		}
+
+		var j = i + 1, k = nums.endIndex - 1
+
+		while j < k {
+			let (n, p) = (nums[j], nums[k])
+			let sum = m + n + p
+			let triplet = [m, n, p]
+
+			if sum == 0, triplet != triplets.last {
+				triplets.append(triplet)
+			}
+
+			if sum > 0 {
+				k -= 1
+			} else {
+				j += 1
+			}
+		}
+	}
+
+	return triplets
 }
 
 extension Character {

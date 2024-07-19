@@ -70,6 +70,28 @@ struct TwoPointersTests {
 			given: [0, 0, 0],
 			expected: [[0, 0, 0]]
 		),
+		TestCase(
+			given: [1, 2, -2, -1],
+			expected: []
+		),
+		TestCase(
+			given: [-1, 0, 1, 2, -1, -4, -2, -3, 3, 0, 4],
+			expected: [
+				[-4, 0, 4],
+				[-4, 1, 3],
+				[-3, -1, 4],
+				[-3, 0, 3],
+				[-3, 1, 2],
+				[-2, -1, 3],
+				[-2, 0, 2],
+				[-1, -1, 2],
+				[-1, 0, 1]
+			]
+		),
+		TestCase(
+			given: [0, 0, 0, 0],
+			expected: [[0, 0, 0]]
+		),
 	])
 	func test3Sum(c: TestCase<[Int], [[Int]]>) throws {
 		let (given, expected) = (c.given, c.expected)
