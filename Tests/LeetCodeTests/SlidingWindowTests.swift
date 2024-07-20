@@ -24,6 +24,9 @@ struct SlidingWindowTests {
 		TestCase(given: "abcabcbb", expected: 3),
 		TestCase(given: "bbbbb", expected: 1),
 		TestCase(given: "pwwkew", expected: 3),
+		TestCase(given: " ", expected: 1),
+		TestCase(given: "aab", expected: 2),
+		TestCase(given: "dvdf", expected: 3),
 	])
 	func testLengthOfLongestSubstring(c: TestCase<String, Int>) throws {
 		let (s, expected) = (c.given, c.expected)

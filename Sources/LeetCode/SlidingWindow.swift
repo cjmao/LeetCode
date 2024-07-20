@@ -26,7 +26,25 @@ func minSubArrayLen(_ target: Int, _ nums: [Int]) -> Int {
 /// Given a string `s`, find the length of the **longest** substring without
 /// repeating characters.
 func lengthOfLongestSubstring(_ s: String) -> Int {
-	0
+	var maxLength = 0
+	var i = s.startIndex
+	var substringCharacters = Set<Character>()
+
+	for j in s.indices {
+		let c = s[j]
+		if substringCharacters.contains(c) {
+			while s[i] != c {
+				substringCharacters.remove(s[i])
+				i = s.index(after: i)
+			}
+			i = s.index(after: i)
+		}
+		substringCharacters.insert(c)
+		let length = 1 + s.distance(from: i, to: j)
+		maxLength = max(length, maxLength)
+	}
+
+	return maxLength == 0 ? s.count : maxLength
 }
 
 /// Substring with concatenation of all words
