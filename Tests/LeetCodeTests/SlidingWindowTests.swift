@@ -99,4 +99,17 @@ struct SlidingWindowTests {
 
 		#expect(findSubstring(s, words).sorted() == expected)
 	}
+
+	@Test("Minimum window substring", arguments: [
+		TestCase(given: Pair("ADOBECODEBANC", "ABC"), expected: "BANC"),
+		TestCase(given: Pair("a", "a"), expected: "a"),
+		TestCase(given: Pair("a", "aa"), expected: ""),
+	])
+	func testMinWindow(c: TestCase<Pair<String, String>, String>) throws {
+		let ((s, t), expected) = (c.given.values, c.expected)
+
+		try #require(!s.isEmpty && !t.isEmpty)
+		try #require(s.allSatisfy { $0.isLetter })
+		try #require(t.allSatisfy { $0.isLetter })
+	}
 }

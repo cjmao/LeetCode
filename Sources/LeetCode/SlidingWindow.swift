@@ -114,3 +114,15 @@ func findSubstring(_ s: String, _ words: [String]) -> [Int] {
 
 	return indices
 }
+
+/// Minimum window substring
+///
+/// Given two strings `s` and `t` of lengths `m` and `n` respectively, return
+/// _the **minimum window substring** of `s` such that every character in `t`
+/// (**including duplicates**) is included in the window_. If there is no such
+/// substring, return the empty string `""`.
+///
+/// The testcases will be generated such that the answer is **unique**.
+func minWindow(_ s: String, _ t: String) -> String {
+	""
+}
