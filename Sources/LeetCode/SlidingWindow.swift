@@ -60,8 +60,57 @@ func lengthOfLongestSubstring(_ s: String) -> Int {
 ///   strings. `"acdbef"` is not a concatenated string because it is not the
 ///   concatenation of any permutation of `words`.
 ///
-/// Return an array of *the starting indices of all the concatenated substrings in
-/// `s`*. You can return the answer in **any order**.
+/// Return an array of *the starting indices of all the concatenated substrings
+/// in `s`*. You can return the answer in **any order**.
 func findSubstring(_ s: String, _ words: [String]) -> [Int] {
-	[]
+	var indices = [Int]()
+
+	let characters = Array(s)
+	let wordWidth = words.first!.count
+	let substringLength = words.count * wordWidth
+	let expectedCounts = words.reduce(into: [:]) { frequencies, word in
+		frequencies[word] = 1 + (frequencies[word] ?? 0)
+	}
+
+	func word(at index: Int) -> String? {
+		if index < 0 || index + wordWidth > characters.endIndex {
+			nil
+		} else {
+			String(characters[index ..< index + wordWidth])
+		}
+	}
+
+	for offset in 0..<wordWidth {
+		var wordCounts = [String: Int]()
+		var startOfSubstring = offset
+
+		for i in stride(from: offset, to: characters.endIndex, by: wordWidth) {
+			// if no more words available
+			guard let currentWord = word(at: i) else { break }
+
+			// if current word is not in the given list of words
+			if expectedCounts[currentWord] == nil {
+				wordCounts = [:]
+				startOfSubstring = i + wordWidth
+				continue
+			}
+
+			// if there are enough words in substring
+			if i == startOfSubstring + substringLength {
+				let firstWord = word(at: startOfSubstring)!
+				wordCounts[firstWord]! -= 1
+				startOfSubstring += wordWidth
+			}
+
+			// count current word
+			wordCounts[currentWord, default: 0] += 1
+
+			// check if the substring is a permutation of given words
+			if wordCounts == expectedCounts {
+				indices.append(startOfSubstring)
+			}
+		}
+	}
+
+	return indices
 }

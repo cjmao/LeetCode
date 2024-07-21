@@ -58,6 +58,29 @@ struct SlidingWindowTests {
 			),
 			expected: [6, 9, 12]
 		),
+		TestCase(
+			given: Pair(
+				"lingmindraboofooowingdingbarrwingmonkeypoundcake",
+				["fooo", "barr", "wing", "ding", "wing"]
+			),
+			expected: [13]
+		),
+		TestCase(given: Pair("aaa", ["a", "a"]), expected: [0, 1]),
+		TestCase(given: Pair("ababaab", ["ab", "ba", "ba"]), expected: [1]),
+		TestCase(
+			given: Pair(
+				String(repeating: "a", count: 10000),
+				[String](repeating: "a", count: 5000)
+			),
+			expected: Array(0...5000)
+		),
+		TestCase(
+			given: Pair(
+				"abbaccaaabcabbbccbabbccabbacabcacbbaabbbbbaaabaccaacbccabcbababbbabccabacbbcabbaacaccccbaabcabaabaaaabcaabcacabaa",
+				["cac", "aaa", "aba", "aab", "abc"]
+			),
+			expected: [97]
+		),
 	])
 	func testFindSubstring(c: TestCase<Pair<String, [String]>, [Int]>) throws {
 		let ((s, words), expected) = (c.given.values, c.expected)
@@ -74,6 +97,6 @@ struct SlidingWindowTests {
 			c.isLetter && c.isLowercase
 		})
 
-		#expect(findSubstring(s, words) == expected)
+		#expect(findSubstring(s, words).sorted() == expected)
 	}
 }
