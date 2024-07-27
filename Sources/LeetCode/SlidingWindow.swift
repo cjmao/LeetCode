@@ -124,5 +124,38 @@ func findSubstring(_ s: String, _ words: [String]) -> [Int] {
 ///
 /// The testcases will be generated such that the answer is **unique**.
 func minWindow(_ s: String, _ t: String) -> String {
-	""
+	let s = Array(s)
+	let countOfLetters = t.reduce(into: [:]) { $0[$1, default: 0] += 1 }
+	let endPoints = s.indices.filter { countOfLetters[s[$0]] != nil }
+
+	var minRange = 0 ... s.endIndex
+	var left = 0, right = 0
+	var seenCount = [Character: Int]()
+	var remainingLetters = Set(t)
+
+	while left < endPoints.endIndex, right < endPoints.endIndex {
+		while !remainingLetters.isEmpty, right < endPoints.endIndex {
+			let letter = s[endPoints[right]]
+			seenCount[letter, default: 0] += 1
+			if seenCount[letter]! >= countOfLetters[letter]! {
+				remainingLetters.remove(letter)
+			}
+			right += 1
+		}
+
+		while remainingLetters.isEmpty, left < endPoints.endIndex {
+			let range = endPoints[left] ... endPoints[right - 1]
+			if range.count < minRange.count {
+				minRange = range
+			}
+			let letter = s[endPoints[left]]
+			seenCount[letter]! -= 1
+			if seenCount[letter]! < countOfLetters[letter]! {
+				remainingLetters.insert(letter)
+			}
+			left += 1
+		}
+	}
+
+	return minRange.count <= s.count ? String(s[minRange]) : ""
 }

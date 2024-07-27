@@ -102,8 +102,13 @@ struct SlidingWindowTests {
 
 	@Test("Minimum window substring", arguments: [
 		TestCase(given: Pair("ADOBECODEBANC", "ABC"), expected: "BANC"),
+		TestCase(given: Pair("ADOBECODEBANC", "ABBC"), expected: "BECODEBA"),
 		TestCase(given: Pair("a", "a"), expected: "a"),
+		TestCase(given: Pair("a", "b"), expected: ""),
 		TestCase(given: Pair("a", "aa"), expected: ""),
+		TestCase(given: Pair("aa", "aa"), expected: "aa"),
+		TestCase(given: Pair("bba", "ab"), expected: "ba"),
+		TestCase(given: Pair("aaaaaaaaaaaabbbbbcdd", "abcdd"), expected: "abbbbbcdd"),
 	])
 	func testMinWindow(c: TestCase<Pair<String, String>, String>) throws {
 		let ((s, t), expected) = (c.given.values, c.expected)
@@ -111,5 +116,7 @@ struct SlidingWindowTests {
 		try #require(!s.isEmpty && !t.isEmpty)
 		try #require(s.allSatisfy { $0.isLetter })
 		try #require(t.allSatisfy { $0.isLetter })
+
+		#expect(minWindow(s, t) == expected)
 	}
 }
