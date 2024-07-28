@@ -41,3 +41,11 @@ func isValidSudoku(_ board: [[Character]]) -> Bool {
 
 	return true
 }
+
+/// Spiral matrix
+///
+/// Given an `m x n` `matrix`, return *all elements of the `matrix` in spiral
+/// order*.
+func spiralOrder(_ matrix: [[Int]]) -> [Int] {
+	[]
+}

@@ -57,4 +57,43 @@ struct MatrixTests {
 
 		#expect(isValidSudoku(board) == expected)
 	}
+
+	@Test("Spiral matrix", arguments: [
+		TestCase(
+			given: [
+				[1, 2, 3],
+				[4, 5, 6],
+				[7, 8, 9]
+			],
+			expected: [
+				1, 2, 3,
+				6, 9, 8,
+				7, 4, 5
+			]
+		),
+		TestCase(
+			given: [
+				[1,  2,  3,  4],
+				[5,  6,  7,  8],
+				[9, 10, 11, 12]
+			],
+			expected: [
+				1,  2,  3,  4,
+				8, 12, 11, 10,
+				9,  5,  6,  7
+			]
+		),
+	])
+	func testSpiralOrder(c: TestCase<[[Int]], [Int]>) throws {
+		let (matrix, expected) = (c.given, c.expected)
+
+		try #require(matrix.count >= 1 && matrix.count <= 10)
+		try #require(matrix.allSatisfy { row in
+			row.count >= 1 && row.count <= 10 && row.allSatisfy { cell in
+				cell >= -100 && cell <= 100
+			}
+		})
+
+		#expect(spiralOrder(matrix) == expected)
+	}
 }
