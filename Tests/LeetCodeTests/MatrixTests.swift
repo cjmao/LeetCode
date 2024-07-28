@@ -3,7 +3,7 @@ import Testing
 
 @Suite("Matrix")
 struct MatrixTests {
-	@Test("Valid Sudoku", .disabled(), arguments: [
+	@Test("Valid Sudoku", arguments: [
 		TestCase(
 			given: [
 				["5","3",".", ".","7",".", ".",".","."],

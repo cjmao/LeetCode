@@ -15,5 +15,29 @@
 /// - Only the filled cells need to be validated according to the mentioned
 ///   rules.
 func isValidSudoku(_ board: [[Character]]) -> Bool {
-	false
+	var rows: [Set<Int>] = [_](repeating: [], count: 9)
+	var columns: [Set<Int>] = [_](repeating: [], count: 9)
+	var grids: [Set<Int>] = [_](repeating: [], count: 9)
+
+	for (i, row) in board.enumerated() {
+		for (j, cell) in row.enumerated() {
+			guard let number = cell.wholeNumberValue else {
+				continue
+			}
+
+			let gridIndex = (i / 3) * 3 + j / 3
+
+			if rows[i].contains(number)
+				|| columns[j].contains(number)
+				|| grids[gridIndex].contains(number) {
+				return false
+			}
+
+			rows[i].insert(number)
+			columns[j].insert(number)
+			grids[gridIndex].insert(number)
+		}
+	}
+
+	return true
 }
