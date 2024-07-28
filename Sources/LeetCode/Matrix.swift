@@ -47,7 +47,47 @@ func isValidSudoku(_ board: [[Character]]) -> Bool {
 /// Given an `m x n` `matrix`, return *all elements of the `matrix` in spiral
 /// order*.
 func spiralOrder(_ matrix: [[Int]]) -> [Int] {
-	[]
+	var spiral = [Int]()
+
+	let (m, n) = (matrix.count, matrix[0].count)
+	let movements = [
+		( 0,  1), // right
+		( 1,  0), // down
+		( 0, -1), // left
+		(-1,  0), // up
+	]
+	var currentMovement = 0
+	var rowLimits = (low: 0, high: m)
+	var columnLimits = (low: 0, high: n)
+
+	var r = 0, c = 0
+
+	while spiral.count < m * n {
+		spiral.append(matrix[r][c])
+
+		var (dr, dc) = movements[currentMovement]
+
+		if currentMovement == 0, c + dc >= columnLimits.high {
+			currentMovement = 1
+			rowLimits.low += 1
+		} else if currentMovement == 1, r + dr >= rowLimits.high {
+			currentMovement = 2
+			columnLimits.high -= 1
+		} else if currentMovement == 2, c + dc < columnLimits.low {
+			currentMovement = 3
+			columnLimits.low += 1
+		} else if currentMovement == 3, r + dr < rowLimits.low {
+			currentMovement = 0
+			rowLimits.high -= 1
+		}
+
+		(dr, dc) = movements[currentMovement]
+
+		r += dr
+		c += dc
+	}
+
+	return spiral
 }
 
 /// Rotate image
