@@ -93,11 +93,27 @@ func spiralOrder(_ matrix: [[Int]]) -> [Int] {
 /// Rotate image
 ///
 /// You are given an `n x n` 2D `matrix` representing an image, rotate the image
-/// by **9**0 degrees (clockwise).
+/// by **90** degrees (clockwise).
 ///
 /// You have to rotate the image **in-place**, which means you have to modify
 /// the input 2D matrix directly. **DO NOT** allocate another 2D matrix and do
 /// the rotation.
 func rotate(_ matrix: inout [[Int]]) {
+	let n = matrix.count
 
+	for i in 0 ..< n / 2 {
+		let k = n - 1 - i
+		for j in i ..< k {
+			let l = n - 1 - j
+			let tmp = matrix[i][j]
+			// top left
+			matrix[i][j] = matrix[l][i]
+			// bottom left
+			matrix[l][i] = matrix[k][l]
+			// bottom right
+			matrix[k][l] = matrix[j][k]
+			// top right
+			matrix[j][k] = tmp
+		}
+	}
 }
