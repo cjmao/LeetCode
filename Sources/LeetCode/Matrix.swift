@@ -125,7 +125,43 @@ func rotate(_ matrix: inout [[Int]]) {
 ///
 /// You must do it in place.
 func setZeroes(_ matrix: inout [[Int]]) {
+	let (m, n) = (matrix.count, matrix[0].count)
+	var clearFirstRow = false, clearFirstColumn = false
 
+	for n in matrix[0] where n == 0 {
+		clearFirstRow = true
+		break
+	}
+
+	for i in 0..<m where matrix[i][0] == 0 {
+		clearFirstColumn = true
+		break
+	}
+
+	for i in 1..<m {
+		for j in 1..<n where matrix[i][j] == 0 {
+			matrix[i][0] = 0
+			matrix[0][j] = 0
+		}
+	}
+
+	for i in 1..<m {
+		for j in 1..<n where matrix[i][0] == 0 || matrix[0][j] == 0 {
+			matrix[i][j] = 0
+		}
+	}
+
+	if clearFirstRow {
+		for j in 0..<n {
+			matrix[0][j] = 0
+		}
+	}
+
+	if clearFirstColumn {
+		for i in 0..<m {
+			matrix[i][0] = 0
+		}
+	}
 }
 
 /// Game of life

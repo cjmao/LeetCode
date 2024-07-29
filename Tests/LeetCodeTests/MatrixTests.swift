@@ -178,6 +178,20 @@ struct MatrixTests {
 				[0, 3, 1, 0]
 			]
 		),
+		TestCase(
+			given: [
+				[ 1,  2,  3,  4],
+				[ 5,  0,  7,  8],
+				[ 0, 10, 11, 12],
+				[13, 14, 15,  0]
+			],
+			expected: [
+				[0, 0, 3, 0],
+				[0, 0, 0, 0],
+				[0, 0, 0, 0],
+				[0, 0, 0, 0]
+			]
+		),
 	])
 	func testSetZeroes(c: TestCase<[[Int]], [[Int]]>) throws {
 		var (matrix, expected) = (c.given, c.expected)
