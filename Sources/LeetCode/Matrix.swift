@@ -190,5 +190,36 @@ func setZeroes(_ matrix: inout [[Int]]) {
 /// simultaneously. Given the current state of the `m x n` grid `board`, return
 /// *the next state*.
 func gameOfLife(_ board: inout [[Int]]) {
+	let (m, n) = (board.count, board[0].count)
 
+	for i in 0..<m {
+		for j in 0..<n {
+			var neighbours = 0
+
+			for r in max(0, i - 1) ... min(m - 1, i + 1) {
+				for c in max(0, j - 1) ... min(n - 1, j + 1)
+				where (r != i || c != j) && abs(board[r][c]) == 1 {
+					neighbours += 1
+				}
+			}
+
+			let k = board[i][j]
+			if k == 1, (neighbours < 2 || neighbours >= 4) {
+				board[i][j] = -1
+			} else if k == 0, neighbours == 3 {
+				board[i][j] = -2
+			}
+		}
+	}
+
+	for i in 0..<m {
+		for j in 0..<n {
+			let k = board[i][j]
+			if k == -1 {
+				board[i][j] = 0
+			} else if k == -2 {
+				board[i][j] = 1
+			}
+		}
+	}
 }
