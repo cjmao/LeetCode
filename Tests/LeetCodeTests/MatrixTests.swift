@@ -190,4 +190,44 @@ struct MatrixTests {
 		setZeroes(&matrix)
 		#expect(matrix == expected)
 	}
+
+	@Test("Game of life", arguments: [
+		TestCase(
+			given: [
+				[0, 1, 0],
+				[0, 0, 1],
+				[1, 1, 1],
+				[0, 0, 0]
+			],
+			expected: [
+				[0, 0, 0],
+				[1, 0, 1],
+				[0, 1, 1],
+				[0, 1, 0]
+			]
+		),
+		TestCase(
+			given: [
+				[1, 1],
+				[1, 0]
+			],
+			expected: [
+				[1, 1],
+				[1, 1]
+			]
+		),
+	])
+	func testGameOfLife(c: TestCase<[[Int]], [[Int]]>) throws {
+		var (board, expected) = (c.given, c.expected)
+
+		try #require(board.count >= 1 && board.count <= 25)
+		try #require(board.allSatisfy { row in
+			row.count >= 1 && row.count <= 25 && row.allSatisfy { cell in
+				cell == 0 || cell == 1
+			}
+		})
+
+		gameOfLife(&board)
+		#expect(board == expected)
+	}
 }
