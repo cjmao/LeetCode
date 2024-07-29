@@ -117,3 +117,13 @@ func rotate(_ matrix: inout [[Int]]) {
 		}
 	}
 }
+
+/// Set matrix zeroes
+///
+/// Given an `m x n` integer matrix matrix, if an element is `0`, set its entire
+/// row and column to `0`'s.
+///
+/// You must do it in place.
+func setZeroes(_ matrix: inout [[Int]]) {
+
+}

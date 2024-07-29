@@ -152,4 +152,42 @@ struct MatrixTests {
 		rotate(&matrix)
 		#expect(matrix == expected)
 	}
+
+	@Test("Set matrix zeroes", arguments: [
+		TestCase(
+			given: [
+				[1, 1, 1],
+				[1, 0, 1],
+				[1, 1, 1]
+			],
+			expected: [
+				[1, 0, 1],
+				[0, 0, 0],
+				[1, 0, 1]
+			]
+		),
+		TestCase(
+			given: [
+				[0, 1, 2, 0],
+				[3, 4, 5, 2],
+				[1, 3, 1, 5]
+			],
+			expected: [
+				[0, 0, 0, 0],
+				[0, 4, 5, 0],
+				[0, 3, 1, 0]
+			]
+		),
+	])
+	func testSetZeroes(c: TestCase<[[Int]], [[Int]]>) throws {
+		var (matrix, expected) = (c.given, c.expected)
+
+		try #require(matrix.count >= 1 && matrix.count <= 200)
+		try #require(matrix.allSatisfy { row in
+			row.count >= 1 && row.count <= 200
+		})
+
+		setZeroes(&matrix)
+		#expect(matrix == expected)
+	}
 }
