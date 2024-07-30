@@ -6,7 +6,19 @@
 ///
 /// Each letter in `magazine` can only be used once in `ransomNote`.
 func canConstruct(_ ransomNote: String, _ magazine: String) -> Bool {
-	false
+	var counts = ransomNote.reduce(into: [:]) { partialResult, character in
+		partialResult[character, default: 0] += 1
+	}
+	counts = magazine.reduce(into: counts) { partialResult, character in
+		if let count = partialResult[character] {
+			if count == 1 {
+				partialResult.removeValue(forKey: character)
+			} else {
+				partialResult[character] = count - 1
+			}
+		}
+	}
+	return counts.isEmpty
 }
 
 /// Isomorphic strings
