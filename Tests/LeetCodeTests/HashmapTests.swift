@@ -36,4 +36,26 @@ struct HashmapTests {
 
 		#expect(isIsomorphic(s, t) == expected)
 	}
+
+	@Test("Word pattern", arguments: [
+		TestCase(given: Pair("abba", "dog cat cat dog"), expected: true),
+		TestCase(given: Pair("abba", "dog cat cat fish"), expected: false),
+		TestCase(given: Pair("aaaa", "dog cat cat dog"), expected: false),
+	])
+	func testWordPattern(c: TestCase<Pair<String, String>, Bool>) throws {
+		let ((pattern, s), expected) = (c.given.values, c.expected)
+
+		try #require(pattern.count >= 1 && pattern.count <= 300)
+		try #require(pattern.allSatisfy { c in
+			c.isLetter && c.isLowercase
+		})
+
+		try #require(s.count >= 1 && s.count <= 3000)
+		try #require(s.allSatisfy { c in
+			c.isLetter && c.isLowercase || c == " "
+		})
+		try #require(s.wholeMatch(of: /^\S+(\s\S+)*$/) != nil)
+
+		#expect(wordPattern(pattern, s) == expected)
+	}
 }
