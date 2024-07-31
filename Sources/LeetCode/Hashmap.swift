@@ -132,5 +132,15 @@ func groupAnagrams(_ strs: [String]) -> [[String]] {
 ///
 /// You can return the answer in any order.
 func twoSum(_ nums: [Int], _ target: Int) -> [Int] {
-	[]
+	var indices = [Int: Int]()
+
+	for (i, num) in nums.enumerated() {
+		let target = target - num
+		if let j = indices[target] {
+			return [j, i]
+		}
+		indices[num] = i
+	}
+
+	return []
 }
