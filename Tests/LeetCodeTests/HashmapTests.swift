@@ -115,4 +115,14 @@ struct HashmapTests {
 		try #require(nums.count >= 2)
 		#expect(twoSum(nums, target) == expected)
 	}
+
+	@Test("Happy number", .disabled(), arguments: [
+		TestCase(given: 19, expected: true),
+		TestCase(given: 2, expected: false),
+	])
+	func testIsHappy(c: TestCase<Int, Bool>) throws {
+		let (n, expected) = (c.given, c.expected)
+		try #require(n >= 1)
+		#expect(isHappy(n) == expected)
+	}
 }
