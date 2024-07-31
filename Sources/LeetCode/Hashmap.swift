@@ -177,3 +177,13 @@ func isHappy(_ n: Int) -> Bool {
 func containsNearbyDuplicate(_ nums: [Int], _ k: Int) -> Bool {
 	false
 }
+
+/// Longest consecutive sequence
+///
+/// Given an unsorted array of integers `nums`, return _the length of the
+/// longest consecutive elements sequence_.
+///
+/// You must write an algorithm that runs in `O(n)` time.
+func longestConsecutive(_ nums: [Int]) -> Int {
+	0
+}

@@ -136,4 +136,13 @@ struct HashmapTests {
 		try #require(!nums.isEmpty && k >= 0)
 		#expect(containsNearbyDuplicate(nums, k) == expected)
 	}
+
+	@Test("Longest consecutive sequence", .disabled(), arguments: [
+		TestCase(given: [100, 4, 200, 1, 3, 2], expected: 4),
+		TestCase(given: [0, 3, 7, 2, 5, 8, 4, 6, 0, 1], expected: 4),
+	])
+	func testLongestConsecutive(c: TestCase<[Int], Int>) throws {
+		let (nums, expected) = (c.given, c.expected)
+		#expect(longestConsecutive(nums) == expected)
+	}
 }
