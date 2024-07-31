@@ -78,4 +78,25 @@ struct HashmapTests {
 
 		#expect(isAnagram(s, t) == expected)
 	}
+
+	@Test("Group anagrams", arguments: [
+		TestCase(
+			given: ["eat", "tea", "tan", "ate", "nat", "bat"],
+			expected: [["bat"], ["nat", "tan"], ["ate", "eat","tea"]]
+		),
+		TestCase(given: [""], expected: [[""]]),
+		TestCase(given: ["a"], expected: [["a"]]),
+	])
+	func testGroupAnagrams(c: TestCase<[String], [[String]]>) throws {
+		let (strs, expected) = (c.given, c.expected)
+
+		try #require(!strs.isEmpty)
+		try #require(strs.allSatisfy { s in
+			s.count <= 100 && s.allSatisfy { c in
+				c.isLetter && c.isLowercase
+			}
+		})
+
+		#expect(groupAnagrams(strs) == expected)
+	}
 }
