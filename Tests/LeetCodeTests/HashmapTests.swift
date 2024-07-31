@@ -61,4 +61,21 @@ struct HashmapTests {
 
 		#expect(wordPattern(pattern, s) == expected)
 	}
+
+	@Test("Valid anagram", arguments: [
+		TestCase(given: Pair("anagram", "nagaram"), expected: true),
+		TestCase(given: Pair("rat", "car"), expected: false),
+	])
+	func testIsAnagram(c: TestCase<Pair<String, String>, Bool>) throws {
+		let ((s, t), expected) = (c.given.values, c.expected)
+
+		try #require(!s.isEmpty && !t.isEmpty)
+		try #require([s, t].allSatisfy {s in
+			s.allSatisfy { c in
+				c.isLetter && c.isLowercase
+			}
+		})
+
+		#expect(isAnagram(s, t) == expected)
+	}
 }
