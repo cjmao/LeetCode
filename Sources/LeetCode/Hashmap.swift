@@ -168,3 +168,12 @@ func twoSum(_ nums: [Int], _ target: Int) -> [Int] {
 func isHappy(_ n: Int) -> Bool {
 	false
 }
+
+/// Contains duplicate II
+///
+/// Given an integer array `nums` and an integer `k`, return _`true` if there
+/// are two **distinct indices** `i` and `j` in the array such that
+/// `nums[i] == nums[j]` and `abs(i - j) <= k`_.
+func containsNearbyDuplicate(_ nums: [Int], _ k: Int) -> Bool {
+	false
+}

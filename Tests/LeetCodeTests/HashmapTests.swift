@@ -125,4 +125,15 @@ struct HashmapTests {
 		try #require(n >= 1)
 		#expect(isHappy(n) == expected)
 	}
+
+	@Test("Contains duplicate II", .disabled(), arguments: [
+		TestCase(given: Pair([1, 2, 3, 1], 3), expected: true),
+		TestCase(given: Pair([1, 0, 1, 1], 1), expected: true),
+		TestCase(given: Pair([1, 2, 3, 1, 2, 3], 2), expected: false),
+	])
+	func testContainsNearbyDuplicate(c: TestCase<Pair<[Int], Int>, Bool>) throws {
+		let ((nums, k), expected) = (c.given.values, c.expected)
+		try #require(!nums.isEmpty && k >= 0)
+		#expect(containsNearbyDuplicate(nums, k) == expected)
+	}
 }
