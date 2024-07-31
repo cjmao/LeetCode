@@ -92,5 +92,20 @@ func wordPattern(_ pattern: String, _ s: String) -> Bool {
 /// different word or phrase, typically using all the original letters exactly
 /// once.
 func isAnagram(_ s: String, _ t: String) -> Bool {
-	false
+	var counts = s.reduce(into: [:]) { result, c in
+		result[c, default: 0] += 1
+	}
+
+	for c in t {
+		guard let count = counts[c], count > 0 else {
+			return false
+		}
+		if count == 1 {
+			counts.removeValue(forKey: c)
+		} else {
+			counts[c] = count - 1
+		}
+	}
+
+	return counts.isEmpty
 }
