@@ -99,4 +99,15 @@ struct HashmapTests {
 
 		#expect(groupAnagrams(strs) == expected)
 	}
+
+	@Test("Two sum", arguments: [
+		TestCase(given: Pair([2, 7, 11, 15], 9), expected: [0, 1]),
+		TestCase(given: Pair([3, 2, 4], 6), expected: [1, 2]),
+		TestCase(given: Pair([3, 3], 6), expected: [0, 1]),
+	])
+	func testTwoSum(c: TestCase<Pair<[Int], Int>, [Int]>) throws {
+		let ((nums, target), expected) = (c.given.values, c.expected)
+		try #require(nums.count >= 2)
+		#expect(twoSum(nums, target) == expected)
+	}
 }

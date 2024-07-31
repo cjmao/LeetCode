@@ -69,7 +69,7 @@ func isSubsequence(_ s: String, _ t: String) -> Bool {
 /// **may not** use the same element twice.
 ///
 /// Your solution must use only constant extra space.
-func twoSum(_ numbers: [Int], _ target: Int) -> [Int] {
+func twoSum2(_ numbers: [Int], _ target: Int) -> [Int] {
 	var i = 0, j = numbers.endIndex - 1
 
 	while i < j - 1, numbers[i] + numbers[j] != target {

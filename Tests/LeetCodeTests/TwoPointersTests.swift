@@ -34,14 +34,14 @@ struct TwoPointersTests {
 		TestCase(given: Pair([2, 3, 4], 6), expected: [1, 3]),
 		TestCase(given: Pair([-1, 0], -1), expected: [1, 2]),
 	])
-	func testTwoSums2(c: TestCase<Pair<[Int], Int>, [Int]>) throws {
+	func testTwoSum2(c: TestCase<Pair<[Int], Int>, [Int]>) throws {
 		let ((nums, target), expected) = (c.given.values, c.expected)
 
 		try #require(nums.count >= 2 && nums.isSorted())
 		try #require(nums.allSatisfy { $0 >= -1000 && $0 <= 1000 })
 		try #require(target >= -1000 && target <= 1000)
 
-		#expect(twoSum(nums, target) == expected)
+		#expect(twoSum2(nums, target) == expected)
 	}
 
 	@Test("Container with most water", arguments: [
