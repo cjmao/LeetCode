@@ -86,6 +86,7 @@ struct HashmapTests {
 		),
 		TestCase(given: [""], expected: [[""]]),
 		TestCase(given: ["a"], expected: [["a"]]),
+		TestCase(given: ["", ""], expected: [["", ""]]),
 	])
 	func testGroupAnagrams(c: TestCase<[String], [[String]]>) throws {
 		let (strs, expected) = (c.given, c.expected)
@@ -97,7 +98,11 @@ struct HashmapTests {
 			}
 		})
 
-		#expect(groupAnagrams(strs) == expected)
+		#expect(Set(
+			groupAnagrams(strs).map { $0.sorted() }
+		) == Set(
+			expected.map { $0.sorted() }
+		))
 	}
 
 	@Test("Two sum", arguments: [

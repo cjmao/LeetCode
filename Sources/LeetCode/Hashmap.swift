@@ -119,7 +119,14 @@ func isAnagram(_ s: String, _ t: String) -> Bool {
 /// different word or phrase, typically using all the original letters exactly
 /// once.
 func groupAnagrams(_ strs: [String]) -> [[String]] {
-	[]
+	var groups = [Int: [String]]()
+
+	for s in strs {
+		let key = s.sorted().hashValue
+		groups[key, default: []].append(s)
+	}
+
+	return groups.map { $0.value }
 }
 
 /// Two sum
