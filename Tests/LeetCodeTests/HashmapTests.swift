@@ -42,6 +42,8 @@ struct HashmapTests {
 		TestCase(given: Pair("abba", "dog cat cat dog"), expected: true),
 		TestCase(given: Pair("abba", "dog cat cat fish"), expected: false),
 		TestCase(given: Pair("aaaa", "dog cat cat dog"), expected: false),
+		TestCase(given: Pair("abba", "dog dog dog dog"), expected: false),
+		TestCase(given: Pair("aaa", "aa aa aa aa"), expected: false),
 	])
 	func testWordPattern(c: TestCase<Pair<String, String>, Bool>) throws {
 		let ((pattern, s), expected) = (c.given.values, c.expected)

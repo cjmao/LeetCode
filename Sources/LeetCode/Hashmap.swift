@@ -56,5 +56,29 @@ func isIsomorphic(_ s: String, _ t: String) -> Bool {
 /// Here **follow** means a full match, such that there is a bijection between a
 /// letter in `pattern` and a **non-empty** word in `s`.
 func wordPattern(_ pattern: String, _ s: String) -> Bool {
-	false
+	var words = [Character: Substring]()
+	var used = Set<Substring>()
+	var i = s.startIndex, j = s.startIndex
+
+	for p in pattern {
+		while j < s.endIndex, s[j] != " " {
+			j = s.index(after: j)
+		}
+
+		let word = s[i..<j]
+
+		if (words[p] != nil || used.contains(word)), words[p] != word {
+			return false
+		}
+
+		words[p] = word
+		used.insert(word)
+
+		if j < s.endIndex {
+			j = s.index(after: j)
+			i = j
+		}
+	}
+
+	return j == s.endIndex
 }
