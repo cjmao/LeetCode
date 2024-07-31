@@ -26,6 +26,7 @@ struct HashmapTests {
 		TestCase(given: Pair("egg", "add"), expected: true),
 		TestCase(given: Pair("foo", "bar"), expected: false),
 		TestCase(given: Pair("paper", "title"), expected: true),
+		TestCase(given: Pair("badc", "baba"), expected: false),
 	])
 	func testIsIsomorphic(c: TestCase<Pair<String, String>, Bool>) throws {
 		let ((s, t), expected) = (c.given.values, c.expected)

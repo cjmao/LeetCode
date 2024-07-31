@@ -32,7 +32,21 @@ func canConstruct(_ ransomNote: String, _ magazine: String) -> Bool {
 /// preserving the order of characters. No two characters may map to the same
 /// character, but a character may map to itself.
 func isIsomorphic(_ s: String, _ t: String) -> Bool {
-	false
+	var map = [Character: Character]()
+	var used = Set<Character>()
+
+	for (c1, c2) in zip(s, t) {
+		let mapOfC1 = map[c1]
+		let c1Used = mapOfC1 != nil
+		let c2Used = used.contains(c2)
+		if (c1Used || c2Used) && mapOfC1 != c2 {
+			return false
+		}
+		map[c1] = c2
+		used.insert(c2)
+	}
+
+	return true
 }
 
 /// Word pattern
