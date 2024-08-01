@@ -116,7 +116,7 @@ struct HashmapTests {
 		#expect(twoSum(nums, target) == expected)
 	}
 
-	@Test("Happy number", .disabled(), arguments: [
+	@Test("Happy number", arguments: [
 		TestCase(given: 19, expected: true),
 		TestCase(given: 2, expected: false),
 	])

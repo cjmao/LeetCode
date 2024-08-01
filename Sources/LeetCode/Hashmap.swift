@@ -166,7 +166,16 @@ func twoSum(_ nums: [Int], _ target: Int) -> [Int] {
 ///
 /// Return *`true` if `n` is a happy number, and `false` if not*.
 func isHappy(_ n: Int) -> Bool {
-	false
+	var n = n
+	var seenNumbers = Set<Int>()
+
+	while !seenNumbers.contains(n), n != 1 {
+		seenNumbers.insert(n)
+		let digits = n.digits
+		n = digits.reduce(into: 0) { $0 += $1 * $1 }
+	}
+
+	return n == 1
 }
 
 /// Contains duplicate II
@@ -186,4 +195,12 @@ func containsNearbyDuplicate(_ nums: [Int], _ k: Int) -> Bool {
 /// You must write an algorithm that runs in `O(n)` time.
 func longestConsecutive(_ nums: [Int]) -> Int {
 	0
+}
+
+extension Int {
+	var digits: some Sequence<Int> {
+		sequence(first: self, next: { $0 < 10 ? nil : $0 / 10 })
+			.lazy
+			.map { $0 % 10 }
+	}
 }
