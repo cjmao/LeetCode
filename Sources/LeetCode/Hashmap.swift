@@ -217,7 +217,22 @@ func containsNearbyDuplicate(_ nums: [Int], _ k: Int) -> Bool {
 ///
 /// You must write an algorithm that runs in `O(n)` time.
 func longestConsecutive(_ nums: [Int]) -> Int {
-	0
+	let nums = Set(nums)
+	var maxCount = 0
+
+	for num in nums where !nums.contains(num - 1) {
+		var count = 1
+
+		var n = num + 1
+		while nums.contains(n) {
+			count += 1
+			n += 1
+		}
+
+		maxCount = max(count, maxCount)
+	}
+
+	return maxCount
 }
 
 extension Int {
