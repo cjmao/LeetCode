@@ -126,7 +126,7 @@ struct HashmapTests {
 		#expect(isHappy(n) == expected)
 	}
 
-	@Test("Contains duplicate II", .disabled(), arguments: [
+	@Test("Contains duplicate II", arguments: [
 		TestCase(given: Pair([1, 2, 3, 1], 3), expected: true),
 		TestCase(given: Pair([1, 0, 1, 1], 1), expected: true),
 		TestCase(given: Pair([1, 2, 3, 1, 2, 3], 2), expected: false),

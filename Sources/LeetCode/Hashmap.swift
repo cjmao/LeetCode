@@ -184,7 +184,30 @@ func isHappy(_ n: Int) -> Bool {
 /// are two **distinct indices** `i` and `j` in the array such that
 /// `nums[i] == nums[j]` and `abs(i - j) <= k`_.
 func containsNearbyDuplicate(_ nums: [Int], _ k: Int) -> Bool {
-	false
+	var i = 0, j = 0
+	var numbersBetween = Set<Int>()
+
+	while j - i <= k, j < nums.endIndex {
+		let num = nums[j]
+		if numbersBetween.contains(num) {
+			return true
+		}
+		numbersBetween.insert(num)
+		j += 1
+	}
+
+	while j < nums.endIndex {
+		let (a, b) = (nums[i], nums[j])
+		numbersBetween.remove(a)
+		if numbersBetween.contains(b) {
+			return true
+		}
+		numbersBetween.insert(b)
+		i += 1
+		j += 1
+	}
+
+	return false
 }
 
 /// Longest consecutive sequence
