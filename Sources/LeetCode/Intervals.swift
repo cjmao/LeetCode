@@ -13,7 +13,20 @@
 /// - `"a->b"` if `a != b`
 /// - `"a"` if `a == b`
 func summaryRanges(_ nums: [Int]) -> [String] {
-	[]
+	var intervals = [String]()
+
+	var i = 0
+	while i < nums.endIndex {
+		var j = i + 1
+		while j < nums.endIndex, nums[j] == nums[j - 1] + 1 {
+			j += 1
+		}
+		let range = j - 1 == i ? "\(nums[i])" : "\(nums[i])->\(nums[j - 1])"
+		intervals.append(range)
+		i = j
+	}
+
+	return intervals
 }
 
 /// Merge intervals
