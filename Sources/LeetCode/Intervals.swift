@@ -103,9 +103,29 @@ func insert(_ intervals: [[Int]], _ newInterval: [Int]) -> [[Int]] {
 /// A balloon with `x_start` and `x_end` is **burst** by an arrow shot at `x` if
 /// `x_start <= x <= x_end`.
 /// There is **no limit** to the number of arrows that can be shot.
-/// A shot arrow keeps traveling up infinitely, bursting any balloons in its path.
+/// A shot arrow keeps traveling up infinitely, bursting any balloons in its
+/// path.
 ///
-/// Given the array `points`, return _the **minimum** number of arrows that must be shot to burst all balloons_.
+/// Given the array `points`, return _the **minimum** number of arrows that must
+/// be shot to burst all balloons_.
 func findMinArrowShots(_ points: [[Int]]) -> Int {
-	0
+	var count = 1
+	let sorted = points.sorted { $0[0] < $1[0] }
+	var previous = sorted[0]
+
+	for point in sorted[1...] {
+		let intersection = [
+			max(previous[0], point[0]),
+			min(previous[1], point[1])
+		]
+
+		if intersection[0] <= intersection[1] {
+			previous = intersection
+		} else {
+			count += 1
+			previous = point
+		}
+	}
+
+	return count
 }
