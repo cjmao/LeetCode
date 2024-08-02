@@ -65,6 +65,8 @@ struct IntervalsTests {
 			),
 			expected: [[1, 2], [3, 10], [12, 16]]
 		),
+		TestCase(given: Pair([], [5, 7]), expected: [[5, 7]]),
+		TestCase(given: Pair([[1, 5]], [2, 7]), expected: [[1, 7]]),
 	])
 	func testInsert(c: TestCase<Pair<[[Int]], [Int]>, [[Int]]>) throws {
 		let ((intervals, newInterval), expected) = (c.given.values, c.expected)

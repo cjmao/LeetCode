@@ -67,7 +67,26 @@ func merge(_ intervals: [[Int]]) -> [[Int]] {
 /// **Note** that you don't need to modify `intervals` in-place. You can make a
 /// new array and return it.
 func insert(_ intervals: [[Int]], _ newInterval: [Int]) -> [[Int]] {
-	[]
+	var merged = [[Int]]()
+	var toBeMerged = newInterval
+
+	for interval in intervals {
+		if interval[1] < toBeMerged[0] {
+			merged.append(interval)
+		} else if toBeMerged[1] < interval[0] {
+			merged.append(toBeMerged)
+			toBeMerged = interval
+		} else {
+			toBeMerged = [
+				min(toBeMerged[0], interval[0]),
+				max(toBeMerged[1], interval[1])
+			]
+		}
+	}
+
+	merged.append(toBeMerged)
+
+	return merged
 }
 
 /// Minimum number of arrows to burst balloons
