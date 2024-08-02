@@ -22,4 +22,26 @@ struct IntervalsTests {
 
 		#expect(summaryRanges(nums) == expected)
 	}
+
+	@Test("Merge intervals", arguments: [
+		TestCase(
+			given: [[1, 3], [2, 6], [8, 10], [15, 18]],
+			expected: [[1, 6], [8, 10], [15, 18]]
+		),
+		TestCase(
+			given: [[1, 4], [4, 5]],
+			expected: [[1, 5]]
+		),
+	])
+	func testMerge(c: TestCase<[[Int]], [[Int]]>) throws {
+		let (intervals, expected) = (c.given, c.expected)
+
+		try #require(!intervals.isEmpty)
+		try #require(intervals.allSatisfy { $0.count == 2 })
+		try #require(intervals.allSatisfy {
+			0 <= $0[0] && $0[0] <= $0[1]
+		})
+
+		#expect(merge(intervals) == expected)
+	}
 }
