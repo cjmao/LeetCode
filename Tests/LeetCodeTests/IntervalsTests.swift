@@ -28,9 +28,14 @@ struct IntervalsTests {
 			given: [[1, 3], [2, 6], [8, 10], [15, 18]],
 			expected: [[1, 6], [8, 10], [15, 18]]
 		),
+		TestCase(given: [[1, 4], [4, 5]], expected: [[1, 5]]),
+		TestCase(given: [[1, 4], [0, 4]], expected: [[0, 4]]),
+		TestCase(given: [[1, 4], [1, 5]], expected: [[1, 5]]),
+		TestCase(given: [[1, 4], [2, 3]], expected: [[1, 4]]),
+		TestCase(given: [[1, 4], [0, 5]], expected: [[0, 5]]),
 		TestCase(
-			given: [[1, 4], [4, 5]],
-			expected: [[1, 5]]
+			given: [[2, 3], [4, 5], [6, 7], [8, 9], [1, 10]],
+			expected: [[1, 10]]
 		),
 	])
 	func testMerge(c: TestCase<[[Int]], [[Int]]>) throws {

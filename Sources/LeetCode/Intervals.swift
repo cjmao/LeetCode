@@ -31,11 +31,23 @@ func summaryRanges(_ nums: [Int]) -> [String] {
 
 /// Merge intervals
 ///
-/// Given an array of `intervals` where `intervals[i] = [starti, endi]`, merge
+/// Given an array of `intervals` where `intervals[i] = [start_i, end_i]`, merge
 /// all overlapping intervals, and return _an array of the non-overlapping
 /// intervals that cover all the intervals in the input_.
 func merge(_ intervals: [[Int]]) -> [[Int]] {
-	[]
+	var result = [[Int]]()
+
+	let sorted = intervals.sorted { $0[0] <= $1[0] }
+
+	for interval in sorted {
+		if let last = result.last, last[1] >= interval[0] {
+			result[result.endIndex - 1][1] = max(last[1], interval[1])
+		} else {
+			result.append(interval)
+		}
+	}
+
+	return result
 }
 
 /// Insert interval
