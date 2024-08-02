@@ -44,4 +44,35 @@ struct IntervalsTests {
 
 		#expect(merge(intervals) == expected)
 	}
+
+	@Test("Insert interval", arguments: [
+		TestCase(
+			given: Pair(
+				[[1, 3], [6, 9]],
+				[2, 5]
+			),
+			expected: [[1, 5], [6, 9]]
+		),
+		TestCase(
+			given: Pair(
+				[[1, 2], [3, 5], [6, 7], [8, 10], [12, 16]],
+				[4, 8]
+			),
+			expected: [[1, 2], [3, 10], [12, 16]]
+		),
+	])
+	func testInsert(c: TestCase<Pair<[[Int]], [Int]>, [[Int]]>) throws {
+		let ((intervals, newInterval), expected) = (c.given.values, c.expected)
+
+		try #require(intervals.allSatisfy { $0.count == 2 })
+		try #require(intervals.allSatisfy {
+			0 <= $0[0] && $0[0] <= $0[1]
+		})
+		try #require(intervals == intervals.sorted(by: { a, b in
+			a[0] <= b[0]
+		}))
+		try #require(newInterval.count == 2)
+
+		#expect(insert(intervals, newInterval) == expected)
+	}
 }
