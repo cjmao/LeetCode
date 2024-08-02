@@ -75,4 +75,18 @@ struct IntervalsTests {
 
 		#expect(insert(intervals, newInterval) == expected)
 	}
+
+	@Test("Minimum number of arrows to burst balloons", arguments: [
+		TestCase(given: [[10, 16], [2, 8], [1, 6], [7, 12]], expected: 2),
+		TestCase(given: [[1, 2], [3, 4], [5, 6], [7, 8]], expected: 4),
+		TestCase(given: [[1, 2], [2, 3], [3, 4], [4, 5]], expected: 2),
+	])
+	func testFindMinArrowShots(c: TestCase<[[Int]], Int>) throws {
+		let (points, expected) = (c.given, c.expected)
+
+		try #require(!points.isEmpty)
+		try #require(points.allSatisfy { $0.count == 2 })
+
+		#expect(findMinArrowShots(points) == expected)
+	}
 }
