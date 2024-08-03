@@ -9,7 +9,22 @@
 /// - Open brackets must be closed in the correct order.
 /// - Every close bracket has a corresponding open bracket of the same type.
 func isValid(_ s: String) -> Bool {
-	false
+	var stack = [Character]()
+
+	for c in s {
+		let last = stack.last
+		if c == ")", last == "(" {
+			stack.removeLast()
+		} else if c == "}", last == "{" {
+			stack.removeLast()
+		} else if c == "]", last == "[" {
+			stack.removeLast()
+		} else {
+			stack.append(c)
+		}
+	}
+
+	return stack.isEmpty
 }
 
 /// Simplify path
