@@ -47,7 +47,22 @@ func isValid(_ s: String) -> Bool {
 ///
 /// Return the new path.
 func simplifyPath(_ path: String) -> String {
-	""
+	var components = [Substring]()
+	let splitPath = path.split(separator: "/")
+
+	for component in splitPath {
+		if component == "" || component == "." {
+			continue
+		} else if component == ".." {
+			if !components.isEmpty {
+				components.removeLast()
+			}
+		} else {
+			components.append(component)
+		}
+	}
+
+	return "/" + components.joined(separator: "/")
 }
 
 /// Min stack
