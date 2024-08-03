@@ -67,7 +67,8 @@ func simplifyPath(_ path: String) -> String {
 
 /// Min stack
 ///
-/// Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.
+/// Design a stack that supports push, pop, top, and retrieving the minimum
+/// element in constant time.
 ///
 /// Implement the `MinStack` class:
 ///
@@ -79,24 +80,27 @@ func simplifyPath(_ path: String) -> String {
 ///
 /// You must implement a solution with `O(1)` time complexity for each function.
 class MinStack {
-	init() {
+	private var elements = [Int]()
+	private var minValues = [Int]()
 
-	}
+	init() {}
 
 	func push(_ val: Int) {
-
+		elements.append(val)
+		minValues.append(min(minValues.last ?? val, val))
 	}
 
 	func pop() {
-
+		_ = elements.popLast()
+		_ = minValues.popLast()
 	}
 
 	func top() -> Int {
-		0
+		elements.last ?? Int.max
 	}
 
 	func getMin() -> Int {
-		0
+		minValues.last ?? Int.max
 	}
 }
 
