@@ -160,5 +160,41 @@ func evalRPN(_ tokens: [String]) -> Int {
 /// **Note**: You are not allowed to use any built-in function which evaluates
 /// strings as mathematical expressions, such as eval().
 func calculate(_ s: String) -> Int {
-	0
+	var result = 0
+
+	var stack = [Int]()
+	var operand: Int?
+	var sign = 1
+
+	for c in s {
+		if let digit = c.wholeNumberValue {
+			operand = (operand ?? 0) * 10 + digit
+			continue
+		}
+
+		if c == "+" {
+			result += sign * (operand ?? 0)
+			operand = nil
+			sign = 1
+		} else if c == "-" {
+			result += sign * (operand ?? 0)
+			operand = nil
+			sign = -1
+		} else if c == "(" {
+			stack.append(result)
+			stack.append(sign)
+			result = 0
+			operand = nil
+			sign = 1
+		} else if c == ")" {
+			result += sign * (operand ?? 0)
+			operand = nil
+			sign = stack.removeLast()
+			result = stack.removeLast() + sign * result
+		}
+	}
+
+	result += sign * (operand ?? 0)
+
+	return result
 }

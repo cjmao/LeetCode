@@ -101,6 +101,10 @@ struct StackTests {
 		TestCase(given: "1 + 1", expected: 2),
 		TestCase(given: " 2-1 + 2 ", expected: 3),
 		TestCase(given: "(1+(4+5+2)-3)+(6+8)", expected: 23),
+		TestCase(given: "1-(     -2)", expected: 3),
+		TestCase(given: "0", expected: 0),
+		TestCase(given: "1", expected: 1),
+		TestCase(given: "- (3 + (4 + 5))", expected: -12),
 	])
 	func testCalculate(c: TestCase<String, Int>) throws {
 		let (s, expected) = (c.given, c.expected)
