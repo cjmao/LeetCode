@@ -123,7 +123,33 @@ class MinStack {
 /// - The answer and all the intermediate calculations can be represented in a
 ///   `32-bit` integer.
 func evalRPN(_ tokens: [String]) -> Int {
-	0
+	var numbers = [Int]()
+
+	for token in tokens {
+		if let number = Int(token) {
+			numbers.append(number)
+			continue
+		}
+
+		let operation: ((Int, Int) -> Int)? = switch token {
+			case "+": (+)
+			case "-": (-)
+			case "*": (*)
+			case "/": (/)
+			default: nil
+		}
+
+		if let operation {
+			let (b, a) = (
+				numbers.removeLast(),
+				numbers.last!
+			)
+			let result = operation(a, b)
+			numbers[numbers.endIndex - 1] = result
+		}
+	}
+
+	return numbers.last!
 }
 
 /// Basic calculator
