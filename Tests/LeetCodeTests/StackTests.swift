@@ -69,6 +69,33 @@ struct StackTests {
 			}
 		}
 	}
+
+	@Test("Evaluate reverse polish notation", arguments: [
+		TestCase(given: ["2", "1", "+", "3", "*"], expected: 9),
+		TestCase(given: ["4", "13", "5", "/", "+"], expected: 6),
+		TestCase(
+			given: [
+				"10", "6", "9", "3",
+				"+", "-11", "*", "/",
+				"*", "17", "+", "5",
+				"+"
+			],
+			expected: 22
+		),
+	])
+	func testEvalRPN(c: TestCase<[String], Int>) throws {
+		let (tokens, expected) = (c.given, c.expected)
+
+		try #require(!tokens.isEmpty && tokens.allSatisfy { t in
+			if let number = Int(t) {
+				number >= -200 && number <= 200
+			} else {
+				t.wholeMatch(of: /(\+|-|\*|\/)/) != nil
+			}
+		})
+
+		#expect(evalRPN(tokens) == expected)
+	}
 }
 
 enum MinStackOperation: Encodable {
