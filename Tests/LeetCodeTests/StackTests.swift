@@ -96,6 +96,19 @@ struct StackTests {
 
 		#expect(evalRPN(tokens) == expected)
 	}
+
+	@Test("Basic calculator", arguments: [
+		TestCase(given: "1 + 1", expected: 2),
+		TestCase(given: " 2-1 + 2 ", expected: 3),
+		TestCase(given: "(1+(4+5+2)-3)+(6+8)", expected: 23),
+	])
+	func testCalculate(c: TestCase<String, Int>) throws {
+		let (s, expected) = (c.given, c.expected)
+		try #require(!s.isEmpty && s.allSatisfy { c in
+			(try? /(\d|\+|\-|\(|\)|\s)/.wholeMatch(in: String(c))) != nil
+		})
+		#expect(calculate(s) == expected)
+	}
 }
 
 enum MinStackOperation: Encodable {
