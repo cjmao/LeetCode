@@ -1,4 +1,4 @@
-struct LinkedList: CustomDebugStringConvertible {
+struct LinkedList: CustomDebugStringConvertible, Equatable {
 	var head: ListNode?
 	var tail: ListNode?
 	var count = 0
@@ -14,6 +14,19 @@ struct LinkedList: CustomDebugStringConvertible {
 				tail = node
 			}
 			count += 1
+		}
+	}
+
+	init(_ head: ListNode?) {
+		if let head {
+			self.head = head
+			count = 1
+		}
+
+		tail = head
+		while let next = tail?.next {
+			count += 1
+			tail = next
 		}
 	}
 
@@ -39,6 +52,25 @@ struct LinkedList: CustomDebugStringConvertible {
 			current = current?.next
 		}
 		return s
+	}
+
+	static func ==(l1: Self, l2: Self) -> Bool {
+		guard l1.count == l2.count else {
+			return false
+		}
+
+		var n1 = l1.head
+		var n2 = l2.head
+
+		while n1 != nil {
+			if n1?.val != n2?.val {
+				return false
+			}
+			n1 = n1?.next
+			n2 = n2?.next
+		}
+
+		return true
 	}
 }
 
