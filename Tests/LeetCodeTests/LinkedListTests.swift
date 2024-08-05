@@ -39,4 +39,28 @@ struct LinkedListTests {
 		let sum = addTwoNumbers(list1.head, list2.head)
 		#expect(LinkedList(sum) == LinkedList(expected))
 	}
+
+	@Test("Merge two sorted lists", arguments: [
+		TestCase(
+			given: Pair([1, 2, 4], [1, 3, 4]),
+			expected: [1, 1, 2, 3, 4, 4]
+		),
+		TestCase(given: Pair([], []), expected: []),
+		TestCase(given: Pair([], [0]), expected: [0]),
+	])
+	func testMergeTwoLists(c: TestCase<Pair<[Int], [Int]>, [Int]>) throws {
+		let ((l1, l2), expected) = (c.given.values, c.expected)
+
+		try #require([l1, l2].allSatisfy {
+			$0.count >= 0 && $0.count <= 50 && $0.allSatisfy {
+				$0 >= -100 && $0 <= 100
+			}
+		})
+
+		let list1 = LinkedList(l1)
+		let list2 = LinkedList(l2)
+
+		let merged = mergeTwoLists(list1.head, list2.head)
+		#expect(LinkedList(merged) == LinkedList(expected))
+	}
 }
