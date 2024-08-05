@@ -64,5 +64,16 @@ public class ListNode {
 /// Return _`true` if there is a cycle in the linked list. Otherwise, return
 /// `false`_.
 func hasCycle(_ head: ListNode?) -> Bool {
-	false
+	var fast = head?.next
+	var slow = head
+
+	while fast != nil, slow != nil {
+		if fast === slow {
+			return true
+		}
+		fast = fast?.next?.next
+		slow = slow?.next
+	}
+
+	return false
 }
