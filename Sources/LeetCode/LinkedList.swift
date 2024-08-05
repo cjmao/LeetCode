@@ -42,7 +42,7 @@ struct LinkedList: CustomDebugStringConvertible {
 	}
 }
 
-public class ListNode {
+public class ListNode: CustomDebugStringConvertible {
 	public var val: Int
 	public var next: ListNode?
 
@@ -59,6 +59,10 @@ public class ListNode {
 	public init(_ val: Int, _ next: ListNode?) {
 		self.val = val
 		self.next = next
+	}
+
+	public var debugDescription: String {
+		"\(val) -> \(next?.debugDescription ?? "nil")"
 	}
 }
 
@@ -99,5 +103,33 @@ func hasCycle(_ head: ListNode?) -> Bool {
 /// You may assume the two numbers do not contain any leading zero, except the
 /// number 0 itself.
 func addTwoNumbers(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
-	nil
+	let nodes = sequence(first: (l1, l2)) { n1, n2 in
+		if n1?.next == nil && n2?.next == nil {
+			nil
+		} else {
+			(n1?.next, n2?.next)
+		}
+	}
+
+	var result: ListNode?
+	var tail: ListNode?
+	var carry = false
+
+	for node in nodes {
+		let (n1, n2) = node
+		let digit = (n1?.val ?? 0) + (n2?.val ?? 0) + (carry ? 1 : 0)
+		let node = ListNode(digit % 10)
+		carry = digit >= 10
+		if result == nil {
+			result = node
+		}
+		tail?.next = node
+		tail = node
+	}
+
+	if carry {
+		tail?.next = ListNode(1)
+	}
+
+	return result
 }
