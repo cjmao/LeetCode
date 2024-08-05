@@ -63,4 +63,53 @@ struct LinkedListTests {
 		let merged = mergeTwoLists(list1.head, list2.head)
 		#expect(LinkedList(merged) == LinkedList(expected))
 	}
+
+	@Test("Copy list with random pointer", arguments: [
+		TestCase(
+			given: [[7, nil], [13, 0], [11, 4], [10, 2], [1, 0]],
+			expected: [[7, nil], [13, 0], [11, 4], [10, 2], [1, 0]]
+		),
+		TestCase(
+			given: [[1, 1], [2, 1]],
+			expected: [[1, 1], [2, 1]]
+		),
+		TestCase(
+			given: [[3, nil], [3, 0], [3, nil]],
+			expected: [[3, nil], [3, 0], [3, nil]]
+		),
+	])
+	func testCopyRandomList(c: TestCase<[[Int?]], [[Int?]]>) throws {
+		let (head, expected) = (c.given, c.expected)
+		let list = LinkedList(head)
+		try #require(list.count >= 0 && list.count <= 1000)
+		let copy = copyRandomList(list.head as? Node)
+		#expect(LinkedList(copy) == LinkedList(expected))
+	}
+}
+
+extension LinkedList {
+	init(_ nodes: [[Int?]]) {
+		self.init([Int]())
+
+		for node in nodes {
+			let node = Node(node[0]!)
+			if head != nil, let tail {
+				tail.next = node
+				self.tail = node
+			} else {
+				head = node
+				tail = node
+			}
+			count += 1
+		}
+
+		var current = head
+
+		for node in nodes {
+			if let i = node[1] {
+				(current as! Node).random = self[i]
+			}
+			current = current?.next
+		}
+	}
 }
