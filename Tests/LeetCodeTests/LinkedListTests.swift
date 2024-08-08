@@ -116,6 +116,28 @@ struct LinkedListTests {
 			#expect(copyOfRandom === randomOfCopy)
 		}
 	}
+
+	@Test("Reverse linked list II", arguments: [
+		TestCase(
+			given: Pair([1, 2, 3, 4, 5], Pair(2, 4)),
+			expected: [1, 4, 3, 2, 5]
+		),
+		TestCase(given: Pair([5], Pair(1, 1)), expected: [5]),
+	])
+	func testReverseBetween(c: TestCase<Pair<[Int], Pair<Int, Int>>, [Int]>) throws {
+		let ((head, leftAndRight), expected) = (c.given.values, c.expected)
+		let (left, right) = leftAndRight.values
+
+		let list = LinkedList(head)
+		let expectedList = LinkedList(expected)
+
+		try #require(list.count >= 1 && list.count <= 500)
+		try #require(list.nodes.allSatisfy { $0.val >= -500 && $0.val <= 500 })
+		try #require(1 <= left && left <= right && right <= list.count)
+
+		let reversed = reverseBetween(list.head, left, right)
+		#expect(Array(reversed) == Array(expectedList))
+	}
 }
 
 extension LinkedList {
