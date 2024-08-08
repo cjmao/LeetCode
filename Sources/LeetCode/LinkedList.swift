@@ -218,5 +218,33 @@ func mergeTwoLists(_ list1: ListNode?, _ list2: ListNode?) -> ListNode? {
 ///
 /// Your code will **only** be given the `head` of the original linked list.
 func copyRandomList(_ head: ListNode?) -> ListNode? {
-	nil
+	var next = head
+	while let current = next {
+		let copy = Node(current.val)
+		next = current.next
+		copy.next = current.next
+		current.next = copy
+	}
+
+	next = head
+	while let current = next, let copy = current.next {
+		if let random = current.random {
+			copy.random = random.next
+		}
+		next = copy.next
+	}
+
+	var copyOfHead: Node?
+
+	next = head
+	while let current = next, let copy = current.next {
+		if copyOfHead == nil {
+			copyOfHead = copy
+		}
+		next = copy.next
+		current.next = next
+		copy.next = next?.next
+	}
+
+	return copyOfHead
 }
