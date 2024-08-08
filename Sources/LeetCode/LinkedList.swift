@@ -1,4 +1,4 @@
-struct LinkedList: CustomDebugStringConvertible, Equatable {
+struct LinkedList: CustomDebugStringConvertible {
 	var head: ListNode?
 	var tail: ListNode?
 	var count = 0
@@ -53,54 +53,38 @@ struct LinkedList: CustomDebugStringConvertible, Equatable {
 		}
 		return s
 	}
-
-	static func ==(l1: Self, l2: Self) -> Bool {
-		guard l1.count == l2.count else {
-			return false
-		}
-
-		var n1 = l1.head
-		var n2 = l2.head
-
-		while n1 != nil {
-			if n1?.val != n2?.val {
-				return false
-			}
-			n1 = n1?.next
-			n2 = n2?.next
-		}
-
-		return true
-	}
 }
 
-public class ListNode: CustomDebugStringConvertible {
-	public var val: Int
-	public var next: ListNode?
+class ListNode: CustomDebugStringConvertible {
+	var val: Int
+	var next: ListNode?
+	var random: ListNode?
 
-	public init() {
+	init() {
 		self.val = 0
 		self.next = nil
 	}
 
-	public init(_ val: Int) {
+	init(_ val: Int) {
 		self.val = val
 		self.next = nil
 	}
 
-	public init(_ val: Int, _ next: ListNode?) {
+	init(_ val: Int, _ next: ListNode?) {
 		self.val = val
 		self.next = next
 	}
 
-	public var debugDescription: String {
-		"\(val) -> \(next?.debugDescription ?? "nil")"
+	var debugDescription: String {
+		if let next {
+			"\(val) -> \(next.debugDescription)"
+		} else {
+			"\(val)"
+		}
 	}
 }
 
-public class Node: ListNode {
-	public var random: ListNode?
-}
+fileprivate typealias Node = ListNode
 
 /// Linked list cycle
 ///
@@ -233,6 +217,6 @@ func mergeTwoLists(_ list1: ListNode?, _ list2: ListNode?) -> ListNode? {
 ///   `random` pointer points to, or `null` if it does not point to any node.
 ///
 /// Your code will **only** be given the `head` of the original linked list.
-func copyRandomList(_ head: Node?) -> Node? {
+func copyRandomList(_ head: ListNode?) -> ListNode? {
 	nil
 }

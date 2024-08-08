@@ -37,7 +37,7 @@ struct LinkedListTests {
 		let list2 = LinkedList(l2)
 
 		let sum = addTwoNumbers(list1.head, list2.head)
-		#expect(LinkedList(sum) == LinkedList(expected))
+		#expect(Array(sum) == Array(expected))
 	}
 
 	@Test("Merge two sorted lists", arguments: [
@@ -61,7 +61,7 @@ struct LinkedListTests {
 		let list2 = LinkedList(l2)
 
 		let merged = mergeTwoLists(list1.head, list2.head)
-		#expect(LinkedList(merged) == LinkedList(expected))
+		#expect(Array(merged) == Array(expected))
 	}
 
 	@Test("Copy list with random pointer", arguments: [
@@ -80,10 +80,41 @@ struct LinkedListTests {
 	])
 	func testCopyRandomList(c: TestCase<[[Int?]], [[Int?]]>) throws {
 		let (head, expected) = (c.given, c.expected)
-		let list = LinkedList(head)
-		try #require(list.count >= 0 && list.count <= 1000)
-		let copy = copyRandomList(list.head as? Node)
-		#expect(LinkedList(copy) == LinkedList(expected))
+
+		let originalList = LinkedList(head)
+		try #require(originalList.count >= 0 && originalList.count <= 1000)
+
+		let copyOfList = LinkedList(copyRandomList(originalList.head))
+		let expectedList = LinkedList(expected)
+
+		#expect(Array(copyOfList) == Array(expectedList))
+
+		let copiesOfNodes: [ObjectIdentifier: ListNode] = zip(
+			originalList.nodes, copyOfList.nodes
+		).reduce(into: [:]) { map, nodes in
+			let (original, copy) = nodes
+			map[ObjectIdentifier(original)] = copy
+		}
+
+		for (original, copy) in zip(originalList.nodes, copyOfList.nodes) {
+			guard let random = original.random else {
+				#expect(copy.random == nil)
+				continue
+			}
+
+			#expect(copy.random != nil)
+
+			let randomOfCopy = copy.random
+			let copyOfRandom = copiesOfNodes[.init(random)]!
+
+			// The following does not work and would cause a crash
+			// #expect(copyOfRandom !== random)
+
+			// The following asserts the same thing
+			#expect(ObjectIdentifier(copyOfRandom) != ObjectIdentifier(random))
+
+			#expect(copyOfRandom === randomOfCopy)
+		}
 	}
 }
 
@@ -92,7 +123,7 @@ extension LinkedList {
 		self.init([Int]())
 
 		for node in nodes {
-			let node = Node(node[0]!)
+			let node = ListNode(node[0]!)
 			if head != nil, let tail {
 				tail.next = node
 				self.tail = node
@@ -107,9 +138,26 @@ extension LinkedList {
 
 		for node in nodes {
 			if let i = node[1] {
-				(current as! Node).random = self[i]
+				current?.random = self[i]
 			}
 			current = current?.next
 		}
+	}
+
+	var nodes: some Sequence<ListNode> {
+		sequence(first: head, next: { $0?.next })
+			.lazy
+			.compactMap(\.self)
+	}
+}
+
+extension [Int] {
+	init(_ list: LinkedList) {
+		self.init(list.head)
+	}
+
+	init(_ listHead: ListNode?) {
+		self = sequence(first: listHead, next: { $0?.next })
+			.compactMap { $0?.val }
 	}
 }
