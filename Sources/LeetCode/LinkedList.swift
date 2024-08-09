@@ -363,3 +363,11 @@ func removeNthFromEnd(_ head: ListNode?, _ n: Int) -> ListNode? {
 func deleteDuplicates(_ head: ListNode?) -> ListNode? {
 	nil
 }
+
+/// Rotate list
+///
+/// Given the `head` of a linked list, rotate the list to the right by `k`
+/// places.
+func rotateRight(_ head: ListNode?, _ k: Int) -> ListNode? {
+	nil
+}

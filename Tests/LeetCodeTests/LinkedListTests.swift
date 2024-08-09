@@ -190,6 +190,22 @@ struct LinkedListTests {
 		let result = deleteDuplicates(list.head)
 		#expect(Array(result) == expected)
 	}
+
+	@Test("Rotate list", arguments: [
+		TestCase(given: Pair([1, 2, 3, 4, 5], 2), expected: [4, 5, 1, 2, 3]),
+		TestCase(given: Pair([0, 1, 2], 4), expected: [2, 0, 1]),
+	])
+	func testRotateRight(c: TestCase<Pair<[Int], Int>, [Int]>) throws {
+		let ((head, k), expected) = (c.given.values, c.expected)
+
+		let list = LinkedList(head)
+		try #require(list.count <= 500)
+		try #require(list.nodes.allSatisfy { $0.val >= -100 && $0.val <= 100 })
+		try #require(k >= 0)
+
+		let result = rotateRight(list.head, k)
+		#expect(Array(result) == expected)
+	}
 }
 
 extension LinkedList {
