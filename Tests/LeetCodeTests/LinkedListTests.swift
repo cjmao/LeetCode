@@ -206,6 +206,22 @@ struct LinkedListTests {
 		let result = rotateRight(list.head, k)
 		#expect(Array(result) == expected)
 	}
+
+	@Test("Partition list", arguments: [
+		TestCase(given: Pair([1, 4, 3, 2, 5, 2], 3), expected: [1, 2, 2, 4, 3, 5]),
+		TestCase(given: Pair([2, 1], 2), expected: [1, 2]),
+	])
+	func testPartition(c: TestCase<Pair<[Int], Int>, [Int]>) throws {
+		let ((head, x), expected) = (c.given.values, c.expected)
+
+		let list = LinkedList(head)
+		try #require(list.count <= 200)
+		try #require(list.nodes.allSatisfy { $0.val >= -100 && $0.val <= 100 })
+		try #require(-200 <= x && x <= 200)
+
+		let result = partition(list.head, x)
+		#expect(Array(result) == expected)
+	}
 }
 
 extension LinkedList {
