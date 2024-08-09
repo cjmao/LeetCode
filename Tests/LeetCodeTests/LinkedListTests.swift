@@ -222,6 +222,50 @@ struct LinkedListTests {
 		let result = partition(list.head, x)
 		#expect(Array(result) == expected)
 	}
+
+	@Test("LRU cache", arguments: [
+		TestCase(
+			given: [
+				.initialize(capacity: 2),
+				.put(key: 1, value: 1),
+				.put(key: 2, value: 2),
+				.get(key: 1),
+				.put(key: 3, value: 3),
+				.get(key: 2),
+				.put(key: 4, value: 4),
+				.get(key: 1),
+				.get(key: 3),
+				.get(key: 4),
+			] as [LRUCacheOperation],
+			expected: [
+				nil,
+				nil,
+				nil,
+				1,
+				nil,
+				-1,
+				nil,
+				-1,
+				3,
+				4
+			]
+		),
+	])
+	func testLRUCache(c: TestCase<[LRUCacheOperation], [Int?]>) throws {
+		let (operations, expected) = (c.given, c.expected)
+
+		var cache = LRUCache(0)
+		for (operation, expected) in zip(operations, expected) {
+			switch operation {
+				case let .initialize(capacity):
+					cache = LRUCache(capacity)
+				case let .get(key):
+					#expect(cache.get(key) == expected)
+				case let .put(key: key, value: value):
+					cache.put(key, value)
+			}
+		}
+	}
 }
 
 extension LinkedList {
@@ -266,4 +310,10 @@ extension [Int] {
 		self = sequence(first: listHead, next: { $0?.next })
 			.compactMap { $0?.val }
 	}
+}
+
+enum LRUCacheOperation: Encodable {
+	case initialize(capacity: Int)
+	case get(key: Int)
+	case put(key: Int, value: Int)
 }
