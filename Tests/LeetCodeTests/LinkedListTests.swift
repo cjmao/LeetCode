@@ -174,6 +174,22 @@ struct LinkedListTests {
 		let result = LinkedList(removeNthFromEnd(list.head, n))
 		#expect(Array(result) == expected)
 	}
+
+	@Test("Remove duplicates from sorted list II", arguments: [
+		TestCase(given: [1, 2, 3, 3, 4, 4, 5], expected: [1, 2, 5]),
+		TestCase(given: [1, 1, 1, 2, 3], expected: [2, 3]),
+	])
+	func testDeleteDuplicates(c: TestCase<[Int], [Int]>) throws {
+		let (head, expected) = (c.given, c.expected)
+
+		let list = LinkedList(head)
+		try #require(list.count <= 300)
+		try #require(list.nodes.allSatisfy { $0.val >= -100 && $0.val <= 100 })
+		try #require(list.nodes.map(\.val).isSorted())
+
+		let result = deleteDuplicates(list.head)
+		#expect(Array(result) == expected)
+	}
 }
 
 extension LinkedList {

@@ -354,3 +354,12 @@ func reverseKGroup(_ head: ListNode?, _ k: Int) -> ListNode? {
 func removeNthFromEnd(_ head: ListNode?, _ n: Int) -> ListNode? {
 	nil
 }
+
+/// Remove duplicates from sorted list II
+///
+/// Given the `head` of a sorted linked list, _delete all nodes that have
+/// duplicate numbers, leaving only distinct numbers from the original list_.
+/// Return _the linked list **sorted** as well_.
+func deleteDuplicates(_ head: ListNode?) -> ListNode? {
+	nil
+}
