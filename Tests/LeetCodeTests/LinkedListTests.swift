@@ -145,15 +145,16 @@ struct LinkedListTests {
 	@Test("Reverse nodes in k-group", arguments: [
 		TestCase(given: Pair([1, 2, 3, 4, 5], 2), expected: [2, 1, 4, 3, 5]),
 		TestCase(given: Pair([1, 2, 3, 4, 5], 3), expected: [3, 2, 1, 4, 5]),
+		TestCase(given: Pair([1, 2, 3, 4, 5], 1), expected: [1, 2, 3, 4, 5]),
 	])
 	func testReverseKGroup(c: TestCase<Pair<[Int], Int>, [Int]>) throws {
 		let ((head, k), expected) = (c.given.values, c.expected)
 
-		let list = LinkedList(head)
+		var list = LinkedList(head)
 		try #require(1 <= k && k <= list.count && list.count <= 5000)
 		try #require(list.nodes.allSatisfy { $0.val >= 0 && $0.val <= 1000 })
 
-		_ = reverseKGroup(list.head, k)
+		list.head = reverseKGroup(list.head, k)
 		#expect(Array(list) == expected)
 	}
 }

@@ -295,5 +295,54 @@ func reverseBetween(_ head: ListNode?, _ left: Int, _ right: Int) -> ListNode? {
 /// You may not alter the values in the list's nodes, only nodes themselves may
 /// be changed.
 func reverseKGroup(_ head: ListNode?, _ k: Int) -> ListNode? {
-	nil
+	/// The dummy node that appears before the head of the list.
+	let dummy = ListNode(0, head)
+	/// The node before the start of the k-group.
+	var before: _? = dummy
+
+	// while there might be a group
+	while before != nil {
+		/// Index of the current node.
+		var i = 0
+		/// Current node.
+		var current = before?.next
+
+		// find the node after the group, starting from the node after `before`
+		while i < k, current != nil {
+			i += 1
+			current = current?.next
+		}
+
+		// break if the number of nodes in this group is less than k
+		if i < k {
+			break
+		}
+
+		// otherwise, there are k nodes in this group, and `current` points to
+		// the node after the last node in the group
+
+		/// The node after the end of the k-group.
+		let after = current
+
+		/// The node before the current node.
+		var previous = before
+
+		// move current back to the start of the group
+		current = before?.next
+
+		// reverse the group
+		while current !== after {
+			let next = current?.next
+			current?.next = previous
+			previous = current
+			current = next
+		}
+
+		before?.next?.next = after
+		let nextBefore = before?.next
+		before?.next = previous
+		before = nextBefore
+	}
+
+	return dummy.next
 }
