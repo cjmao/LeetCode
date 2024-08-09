@@ -255,5 +255,30 @@ func copyRandomList(_ head: ListNode?) -> ListNode? {
 /// where `left <= right`, reverse the nodes of the list from position `left` to
 /// position `right`, and return _the reversed list_.
 func reverseBetween(_ head: ListNode?, _ left: Int, _ right: Int) -> ListNode? {
-	nil
+	let dummy = ListNode(0, head)
+
+	var i = 0
+	var previous: ListNode?
+	var current: ListNode? = dummy
+	var next = current?.next
+
+	var nodeBeforeLeft: ListNode?
+
+	while i <= right, current != nil {
+		if i == left, nodeBeforeLeft == nil {
+			nodeBeforeLeft = previous
+		} else if i > left {
+			current?.next = previous
+		}
+
+		i += 1
+		previous = current
+		current = next
+		next = next?.next
+	}
+
+	nodeBeforeLeft?.next?.next = current
+	nodeBeforeLeft?.next = previous
+
+	return dummy.next
 }

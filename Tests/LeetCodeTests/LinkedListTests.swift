@@ -123,6 +123,9 @@ struct LinkedListTests {
 			expected: [1, 4, 3, 2, 5]
 		),
 		TestCase(given: Pair([5], Pair(1, 1)), expected: [5]),
+		TestCase(given: Pair([3, 5], Pair(1, 1)), expected: [3, 5]),
+		TestCase(given: Pair([3, 5], Pair(1, 2)), expected: [5, 3]),
+		TestCase(given: Pair([3, 5], Pair(2, 2)), expected: [3, 5]),
 	])
 	func testReverseBetween(c: TestCase<Pair<[Int], Pair<Int, Int>>, [Int]>) throws {
 		let ((head, leftAndRight), expected) = (c.given.values, c.expected)
