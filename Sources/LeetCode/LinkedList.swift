@@ -346,3 +346,11 @@ func reverseKGroup(_ head: ListNode?, _ k: Int) -> ListNode? {
 
 	return dummy.next
 }
+
+/// Remove nth node from end of list
+///
+/// Given the `head` of a linked list, remove the `nth` node from the end of the
+/// list and return its head.
+func removeNthFromEnd(_ head: ListNode?, _ n: Int) -> ListNode? {
+	nil
+}

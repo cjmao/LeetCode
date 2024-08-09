@@ -157,6 +157,23 @@ struct LinkedListTests {
 		list.head = reverseKGroup(list.head, k)
 		#expect(Array(list) == expected)
 	}
+
+	@Test("Remove nth node from end of list", arguments: [
+		TestCase(given: Pair([1, 2, 3, 4, 5], 2), expected: [1, 2, 3, 5]),
+		TestCase(given: Pair([1], 1), expected: []),
+		TestCase(given: Pair([1, 2], 1), expected: [1]),
+	])
+	func testRemoveNthFromEnd(c: TestCase<Pair<[Int], Int>, [Int]>) throws {
+		let ((head, n), expected) = (c.given.values, c.expected)
+
+		let list = LinkedList(head)
+		try #require(list.count >= 1 && list.count <= 30)
+		try #require(list.nodes.allSatisfy { $0.val >= 0 && $0.val <= 100 })
+		try #require(1 <= n && n <= list.count)
+
+		let result = LinkedList(removeNthFromEnd(list.head, n))
+		#expect(Array(result) == expected)
+	}
 }
 
 extension LinkedList {
