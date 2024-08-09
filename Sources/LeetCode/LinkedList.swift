@@ -282,3 +282,18 @@ func reverseBetween(_ head: ListNode?, _ left: Int, _ right: Int) -> ListNode? {
 
 	return dummy.next
 }
+
+/// Reverse nodes in k-group
+///
+/// Given the `head` of a linked list, reverse the nodes of the list `k` at a
+/// time, and return _the modified list_.
+///
+/// `k` is a positive integer and is less than or equal to the length of the
+/// linked list. If the number of nodes is not a multiple of `k` then left-out
+/// nodes, in the end, should remain as it is.
+///
+/// You may not alter the values in the list's nodes, only nodes themselves may
+/// be changed.
+func reverseKGroup(_ head: ListNode?, _ k: Int) -> ListNode? {
+	nil
+}
