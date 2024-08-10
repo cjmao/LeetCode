@@ -352,7 +352,23 @@ func reverseKGroup(_ head: ListNode?, _ k: Int) -> ListNode? {
 /// Given the `head` of a linked list, remove the `nth` node from the end of the
 /// list and return its head.
 func removeNthFromEnd(_ head: ListNode?, _ n: Int) -> ListNode? {
-	nil
+	let dummy = ListNode(0, head)
+	var tail = head, beforeTarget: _? = dummy
+	var distance = 1
+
+	while distance < n {
+		tail = tail?.next
+		distance += 1
+	}
+
+	while tail?.next != nil {
+		beforeTarget = beforeTarget?.next
+		tail = tail?.next
+	}
+
+	beforeTarget?.next = beforeTarget?.next?.next
+
+	return dummy.next
 }
 
 /// Remove duplicates from sorted list II
