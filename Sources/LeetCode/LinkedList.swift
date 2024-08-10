@@ -377,7 +377,23 @@ func removeNthFromEnd(_ head: ListNode?, _ n: Int) -> ListNode? {
 /// duplicate numbers, leaving only distinct numbers from the original list_.
 /// Return _the linked list **sorted** as well_.
 func deleteDuplicates(_ head: ListNode?) -> ListNode? {
-	nil
+	let dummy = ListNode((head?.val ?? 0) - 1, head)
+	var left: _? = dummy, right = dummy.next
+
+	while right != nil {
+		if right?.val == right?.next?.val {
+			while right?.val == right?.next?.val {
+				right = right?.next
+			}
+			left?.next = right?.next
+		} else {
+			left = left?.next
+		}
+
+		right = right?.next
+	}
+
+	return dummy.next
 }
 
 /// Rotate list
