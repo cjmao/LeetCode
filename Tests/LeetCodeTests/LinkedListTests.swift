@@ -256,6 +256,26 @@ struct LinkedListTests {
 				4
 			]
 		),
+		TestCase(
+			given: [
+				.initialize(capacity: 2),
+				.put(key: 2, value: 1),
+				.put(key: 2, value: 2),
+				.get(key: 2),
+				.put(key: 1, value: 1),
+				.put(key: 4, value: 1),
+				.get(key: 2),
+			],
+			expected: [
+				nil,
+				nil,
+				nil,
+				2,
+				nil,
+				nil,
+				-1,
+			]
+		),
 	])
 	func testLRUCache(c: TestCase<[LRUCacheOperation], [Int?]>) throws {
 		let (operations, expected) = (c.given, c.expected)

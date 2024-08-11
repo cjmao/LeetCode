@@ -481,15 +481,62 @@ func partition(_ head: ListNode?, _ x: Int) -> ListNode? {
 /// The functions `get` and `put` must each run in `O(1)` average time
 /// complexity.
 class LRUCache {
-	init(_ capacity: Int) {
+	private class Node {
+		let key: Int
+		var value: Int
+		var previous: Node?
+		var next: Node?
 
+		init(_ key: Int = 0, _ val: Int = 0) {
+			self.key = key
+			self.value = val
+		}
+	}
+
+	private let capacity: Int
+	private let queue: Node
+	private var cache: [Int: Node] = [:]
+
+	init(_ capacity: Int) {
+		self.capacity = capacity
+		queue = Node()
 	}
 
 	func get(_ key: Int) -> Int {
-		0
+		guard let node = cache[key] else {
+			return -1
+		}
+		moveToEndOfQueue(node: node)
+		return node.value
 	}
 
 	func put(_ key: Int, _ value: Int) {
+		if cache[key] == nil, cache.count + 1 > capacity, let node = queue.next {
+			cache.removeValue(forKey: node.key)
+			queue.next = queue.next?.next
+			queue.next?.previous = queue
+		}
 
+		let node = cache[key] ?? Node(key)
+		node.value = value
+		cache[key] = node
+
+		moveToEndOfQueue(node: node)
+
+		if cache.count == 1 {
+			queue.next = node
+			node.previous = queue
+		}
+	}
+
+	private func moveToEndOfQueue(node: Node) {
+		node.previous?.next = node.next
+		node.next?.previous = node.previous
+		
+		queue.previous?.next = node
+		node.previous = queue.previous
+		
+		queue.previous = node
+		node.next = queue
 	}
 }
