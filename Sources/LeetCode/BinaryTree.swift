@@ -61,5 +61,28 @@ class TreeNode: CustomDebugStringConvertible {
 /// A binary tree's **maximum depth** is the number of nodes along the longest
 /// path from the root node down to the farthest leaf node.
 func maxDepth(_ root: TreeNode?) -> Int {
-	0
+	guard let root else {
+		return 0
+	}
+
+	var levels = 0
+	var currentLevel = [root]
+
+	while !currentLevel.isEmpty {
+		levels += 1
+		var nextLevel = [TreeNode]()
+
+		for node in currentLevel {
+			if let left = node.left {
+				nextLevel.append(left)
+			}
+			if let right = node.right {
+				nextLevel.append(right)
+			}
+		}
+
+		currentLevel = nextLevel
+	}
+
+	return levels
 }
