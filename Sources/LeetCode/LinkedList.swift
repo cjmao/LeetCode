@@ -439,7 +439,27 @@ func rotateRight(_ head: ListNode?, _ k: Int) -> ListNode? {
 /// You should **preserve** the original relative order of the nodes in each of
 /// the two partitions.
 func partition(_ head: ListNode?, _ x: Int) -> ListNode? {
-	nil
+	let dummy = ListNode(x - 1, head)
+	var left: _? = dummy
+
+	while (left?.next?.val ?? x) < x {
+		left = left?.next
+	}
+
+	var right = left
+
+	while let next = right?.next {
+		if next.val < x {
+			right?.next = next.next
+			next.next = left?.next
+			left?.next = next
+			left = next
+		} else {
+			right = right?.next
+		}
+	}
+
+	return dummy.next
 }
 
 /// LRU cache

@@ -212,6 +212,10 @@ struct LinkedListTests {
 	@Test("Partition list", arguments: [
 		TestCase(given: Pair([1, 4, 3, 2, 5, 2], 3), expected: [1, 2, 2, 4, 3, 5]),
 		TestCase(given: Pair([2, 1], 2), expected: [1, 2]),
+		TestCase(
+			given: Pair([1, 4, 3, 0, 2, 5, 2], 3),
+			expected: [1, 0, 2, 2, 4, 3, 5]
+		),
 	])
 	func testPartition(c: TestCase<Pair<[Int], Int>, [Int]>) throws {
 		let ((head, x), expected) = (c.given.values, c.expected)
