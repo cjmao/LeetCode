@@ -194,6 +194,8 @@ struct LinkedListTests {
 	@Test("Rotate list", arguments: [
 		TestCase(given: Pair([1, 2, 3, 4, 5], 2), expected: [4, 5, 1, 2, 3]),
 		TestCase(given: Pair([0, 1, 2], 4), expected: [2, 0, 1]),
+		TestCase(given: Pair([1], 0), expected: [1]),
+		TestCase(given: Pair([1], 1), expected: [1]),
 	])
 	func testRotateRight(c: TestCase<Pair<[Int], Int>, [Int]>) throws {
 		let ((head, k), expected) = (c.given.values, c.expected)

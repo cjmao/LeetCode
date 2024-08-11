@@ -401,7 +401,33 @@ func deleteDuplicates(_ head: ListNode?) -> ListNode? {
 /// Given the `head` of a linked list, rotate the list to the right by `k`
 /// places.
 func rotateRight(_ head: ListNode?, _ k: Int) -> ListNode? {
-	nil
+	let dummy = ListNode(0, head)
+	var tail: _? = dummy
+	var n = 0
+
+	while let t = tail?.next {
+		n += 1
+		tail = t
+	}
+
+	guard n > 0, k % n > 0 else {
+		return head
+	}
+
+	let indexOfNewTail = n - k % n - 1
+	var beforeNewHead: _? = head
+	var i = 0
+
+	while i < indexOfNewTail {
+		i += 1
+		beforeNewHead = beforeNewHead?.next
+	}
+
+	let newHead = beforeNewHead?.next
+	beforeNewHead?.next = nil
+	tail?.next = head
+
+	return newHead
 }
 
 /// Partition list
