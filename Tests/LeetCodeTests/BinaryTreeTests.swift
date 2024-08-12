@@ -14,4 +14,18 @@ struct BinaryTreeTests {
 		let root = TreeNode(given)
 		#expect(maxDepth(root) == expected)
 	}
+
+	@Test("Same tree", arguments: [
+		TestCase(given: Pair([1, 2, 3], [1, 2, 3]), expected: true),
+		TestCase(given: Pair([1, 2], [1, nil, 2]), expected: false),
+		TestCase(given: Pair([1, 2, 1], [1, 1, 2]), expected: false),
+	])
+	func testIsSameTree(c: TestCase<Pair<[Int?], [Int?]>, Bool>) throws {
+		let ((p, q), expected) = (c.given.values, c.expected)
+		let t1 = TreeNode(p)
+		let t2 = TreeNode(q)
+		try #require(t1 == nil || t1!.size <= 100)
+		try #require(t2 == nil || t2!.size <= 100)
+		#expect(isSameTree(t1, t2) == expected)
+	}
 }
