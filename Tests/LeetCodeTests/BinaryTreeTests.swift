@@ -28,4 +28,27 @@ struct BinaryTreeTests {
 		try #require(t2 == nil || t2!.size <= 100)
 		#expect(isSameTree(t1, t2) == expected)
 	}
+
+	@Test("Invert binary tree", arguments: [
+		TestCase(given: [4, 2, 7, 1, 3, 6, 9], expected: [4, 7, 2, 9, 6, 3, 1]),
+		TestCase(given: [2,1,3], expected: [2,3,1]),
+		TestCase(given: [], expected: []),
+	])
+	func testInvertTree(c: TestCase<[Int], [Int]>) throws {
+		let (given, expected) = (c.given, c.expected)
+
+		try #require(given.count <= 100 && expected.count <= 100)
+		try #require(
+			[given, expected].allSatisfy {
+				$0.allSatisfy {
+					$0 >= -100 && $0 <= 100
+				}
+			}
+		)
+
+		let inverted = invertTree(TreeNode(given))
+		let expectedInverted = TreeNode(expected)
+
+		#expect(isSameTree(inverted, expectedInverted))
+	}
 }

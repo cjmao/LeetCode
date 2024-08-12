@@ -125,3 +125,10 @@ func isSameTree(_ p: TreeNode?, _ q: TreeNode?) -> Bool {
 
 	return true
 }
+
+/// Invert binary tree
+///
+/// Given the `root` of a binary tree, invert the tree, and return _its root_.
+func invertTree(_ root: TreeNode?) -> TreeNode? {
+	nil
+}
