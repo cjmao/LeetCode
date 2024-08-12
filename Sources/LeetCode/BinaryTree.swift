@@ -95,5 +95,33 @@ func maxDepth(_ root: TreeNode?) -> Int {
 /// Two binary trees are considered the same if they are structurally identical,
 /// and the nodes have the same value.
 func isSameTree(_ p: TreeNode?, _ q: TreeNode?) -> Bool {
-	false
+	guard let p, let q else {
+		return p == nil && q == nil
+	}
+
+	var currentLevel = [(p, q)]
+
+	while !currentLevel.isEmpty {
+		var nextLevel = [(TreeNode, TreeNode)]()
+
+		for (p, q) in currentLevel {
+			if p.val != q.val {
+				return false
+			}
+			if let pLeft = p.left, let qLeft = q.left {
+				nextLevel.append((pLeft, qLeft))
+			} else if !(p.left == nil && q.left == nil) {
+				return false
+			}
+			if let pRight = p.right, let qRight = q.right {
+				nextLevel.append((pRight, qRight))
+			} else if !(p.right == nil && q.right == nil) {
+				return false
+			}
+		}
+
+		currentLevel = nextLevel
+	}
+
+	return true
 }
