@@ -55,6 +55,7 @@ struct BinaryTreeTests {
 	@Test("Symmetric tree", arguments: [
 		TestCase(given: [1, 2, 2, 3, 4, 4, 3], expected: true),
 		TestCase(given: [1, 2, 2, nil, 3, nil, 3], expected: false),
+		TestCase(given: [1, 2, 3], expected: false),
 	])
 	func testIsSymmetric(c: TestCase<[Int?], Bool>) throws {
 		let (given, expected) = (c.given, c.expected)
