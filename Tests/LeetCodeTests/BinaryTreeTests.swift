@@ -51,4 +51,16 @@ struct BinaryTreeTests {
 
 		#expect(isSameTree(inverted, expectedInverted))
 	}
+
+	@Test("Symmetric tree", arguments: [
+		TestCase(given: [1, 2, 2, 3, 4, 4, 3], expected: true),
+		TestCase(given: [1, 2, 2, nil, 3, nil, 3], expected: false),
+	])
+	func testIsSymmetric(c: TestCase<[Int?], Bool>) throws {
+		let (given, expected) = (c.given, c.expected)
+		try #require(given.count >= 1 && given.count <= 1000)
+		try #require(given.compactMap(\.self).allSatisfy { $0 >= -100 && $0 <= 100 })
+		let root = TreeNode(given)
+		#expect(isSymmetric(root) == expected)
+	}
 }

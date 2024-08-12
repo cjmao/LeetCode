@@ -159,3 +159,11 @@ func invertTree(_ root: TreeNode?) -> TreeNode? {
 
 	return root
 }
+
+/// Symmetric tree
+///
+/// Given the `root` of a binary tree, check _whether it is a mirror of itself_
+/// (i.e., symmetric around its center).
+func isSymmetric(_ root: TreeNode?) -> Bool {
+	false
+}
