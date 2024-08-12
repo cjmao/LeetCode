@@ -130,5 +130,32 @@ func isSameTree(_ p: TreeNode?, _ q: TreeNode?) -> Bool {
 ///
 /// Given the `root` of a binary tree, invert the tree, and return _its root_.
 func invertTree(_ root: TreeNode?) -> TreeNode? {
-	nil
+	guard let root else {
+		return nil
+	}
+
+	var currentLevel = [root]
+
+	while !currentLevel.isEmpty {
+		var nextLevel = [TreeNode]()
+
+		for node in currentLevel {
+			let left = node.left
+			let right = node.right
+
+			node.left = right
+			node.right = left
+			
+			if let left {
+				nextLevel.append(left)
+			}
+			if let right {
+				nextLevel.append(right)
+			}
+		}
+
+		currentLevel = nextLevel
+	}
+
+	return root
 }
