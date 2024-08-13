@@ -153,4 +153,27 @@ struct BinaryTreeTests {
 			}
 		}
 	}
+
+	@Test("Flatten binary tree to linked list", arguments: [
+		TestCase(
+			given: [1, 2, 5, 3, 4, nil, 6],
+			expected: [1, nil, 2, nil, 3, nil, 4, nil, 5, nil, 6]
+		),
+		TestCase(given: [], expected: []),
+		TestCase(given: [0], expected: [0]),
+	])
+	func testFlatten(c: TestCase<[Int?], [Int?]>) throws {
+		let (root, expected) = (c.given, c.expected)
+
+		try #require(root.compactMap(\.self).count <= 2000)
+		try #require(root.compactMap(\.self).allSatisfy {
+			$0 >= -100 && $0 <= 100
+		})
+
+		let rootNode = TreeNode(root)
+		let expectedList = TreeNode(expected)
+		flatten(rootNode)
+
+		#expect(isSameTree(rootNode, expectedList))
+	}
 }

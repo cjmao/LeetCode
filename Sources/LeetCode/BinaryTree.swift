@@ -30,8 +30,7 @@ class TreeNode: CustomDebugStringConvertible {
 		self.size = 1
 
 		for i in nodes[1...].indices {
-			if let node = nodes[i] {
-				let parent = nodes[(i - 1) / 2]!
+			if let node = nodes[i], let parent = nodes[(i - 1) / 2] {
 				if i % 2 == 1 {
 					parent.left = node
 				} else {
@@ -317,3 +316,16 @@ func connect(_ root: TreeNode?) -> TreeNode? {
 }
 
 fileprivate typealias Node = TreeNode
+
+/// Flatten binary tree to linked list
+///
+/// Given the `root` of a binary tree, flatten the tree into a "linked list":
+///
+/// - The "linked list" should use the same `TreeNode` class where the `right`
+///   child pointer points to the next node in the list and the `left` child
+///   pointer is always `null`.
+/// - The "linked list" should be in the same order as a **pre-order traversal**
+///   of the binary tree.
+func flatten(_ root: TreeNode?) {
+
+}
