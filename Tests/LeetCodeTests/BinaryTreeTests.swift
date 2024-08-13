@@ -73,6 +73,7 @@ struct BinaryTreeTests {
 				expected: [3, 9, 20, nil, nil, 15, 7]
 			),
 			TestCase(given: Pair([-1], [-1]), expected: [-1]),
+			TestCase(given: Pair([1, 2], [1, 2]), expected: [1, nil, 2]),
 		]
 	)
 	func testBuildTreeFromPreorderAndInorder(

@@ -186,7 +186,42 @@ func buildTreeFromPreorderAndInorder(
 	_ preorder: [Int],
 	_ inorder: [Int]
 ) -> TreeNode? {
-	nil
+	let inorderIndicies: [Int: Int] = inorder.enumerated()
+		.reduce(into: [:]) { result, ix in
+			let (i, x) = ix
+			result[x] = i
+		}
+
+	func buildSubtree(
+		_ preorderRoot: Int, _ startIndex: Int, _ endIndex: Int
+	) -> TreeNode? {
+		let rootValue = preorder[preorderRoot]
+		let inorderRoot = inorderIndicies[rootValue]!
+		let root = TreeNode(rootValue)
+
+		if startIndex < inorderRoot {
+			root.left = buildSubtree(
+				preorderRoot + 1,
+				startIndex,
+				inorderRoot
+			)
+		}
+		if inorderRoot + 1 < endIndex {
+			root.right = buildSubtree(
+				preorderRoot + 1 + inorderRoot - startIndex,
+				inorderRoot + 1,
+				endIndex
+			)
+		}
+
+		return root
+	}
+
+	return buildSubtree(
+		preorder.startIndex,
+		inorder.startIndex,
+		inorder.endIndex
+	)
 }
 
 /// Construct binary tree from inorder and postorder traversal
