@@ -233,5 +233,40 @@ func buildTreeFromInorderAndPostorder(
 	_ inorder: [Int],
 	_ postorder: [Int]
 ) -> TreeNode? {
-	nil
+	let inorderIndicies: [Int: Int] = inorder.enumerated()
+		.reduce(into: [:]) { result, ix in
+			let (i, x) = ix
+			result[x] = i
+		}
+
+	func buildSubtree(
+		_ postorderRoot: Int, _ firstIndex: Int, _ lastIndex: Int
+	) -> TreeNode? {
+		let rootValue = postorder[postorderRoot]
+		let inorderRoot = inorderIndicies[rootValue]!
+		let root = TreeNode(rootValue)
+
+		if lastIndex > inorderRoot {
+			root.right = buildSubtree(
+				postorderRoot - 1,
+				inorderRoot + 1,
+				lastIndex
+			)
+		}
+		if inorderRoot > firstIndex {
+			root.left = buildSubtree(
+				postorderRoot - 1 - lastIndex + inorderRoot,
+				firstIndex,
+				inorderRoot - 1
+			)
+		}
+
+		return root
+	}
+
+	return buildSubtree(
+		postorder.endIndex - 1,
+		inorder.startIndex,
+		inorder.endIndex - 1
+	)
 }
