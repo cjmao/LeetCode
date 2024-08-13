@@ -2,6 +2,7 @@ class TreeNode: CustomDebugStringConvertible {
 	var val: Int
 	var left: TreeNode?
 	var right: TreeNode?
+	var next: TreeNode?
 	var size: Int
 
 	init(
@@ -51,6 +52,29 @@ class TreeNode: CustomDebugStringConvertible {
 			.split(separator: "\n")
 
 		return (["\(val)"] + left + right).joined(separator: "\n\t")
+	}
+
+	func levels() -> some Sequence<[TreeNode?]> {
+		sequence(first: [self]) { level in
+			guard !level.isEmpty else {
+				return nil
+			}
+
+			var count = 0
+			var nextLevel = [TreeNode?]()
+
+			for node in level {
+				nextLevel.append(node?.left)
+				nextLevel.append(node?.right)
+				count += (
+					node?.left == nil ? 0 : 1
+				) + (
+					node?.right == nil ? 0 : 1
+				)
+			}
+
+			return count == 0 ? nil : nextLevel
+		}
 	}
 }
 
@@ -270,3 +294,26 @@ func buildTreeFromInorderAndPostorder(
 		inorder.endIndex - 1
 	)
 }
+
+/// Populating next right pointers in each node II
+///
+/// Given a binary tree
+///
+/// ```c
+/// struct Node {
+/// 	int val;
+/// 	Node *left;
+/// 	Node *right;
+/// 	Node *next;
+/// }
+/// ```
+///
+/// Populate each next pointer to point to its next right node. If there is no
+/// next right node, the next pointer should be set to `NULL`.
+///
+/// Initially, all next pointers are set to `NULL`.
+func connect(_ root: TreeNode?) -> TreeNode? {
+	nil
+}
+
+fileprivate typealias Node = TreeNode

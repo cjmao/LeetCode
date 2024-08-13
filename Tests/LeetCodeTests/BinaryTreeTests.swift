@@ -125,4 +125,32 @@ struct BinaryTreeTests {
 		let tree = buildTreeFromInorderAndPostorder(inorder, postorder)
 		#expect(isSameTree(tree, TreeNode(expected)))
 	}
+
+	@Test("Populating next right pointers in each node II", arguments: [
+		TestCase(
+			given: [1, 2, 3, 4, 5, nil, 7],
+			expected: [[1], [2, 3], [4, 5, 7]]
+		),
+		TestCase(given: [], expected: []),
+	])
+	func testConnect(c: TestCase<[Int?], [[Int]]>) throws {
+		let (root, expected) = (c.given, c.expected)
+
+		try #require(root.count <= 6000)
+		try #require(root.compactMap(\.self).allSatisfy {
+			$0 >= -100 && $0 <= 100
+		})
+
+		let rootNode = TreeNode(root)
+		let tree = connect(rootNode)
+
+		if expected.isEmpty {
+			#expect(tree == nil)
+		} else {
+			try #require(tree != nil)
+			for (level, expectedLevel) in zip(tree!.levels(), expected) {
+				#expect(level.map { $0?.val } == expectedLevel)
+			}
+		}
+	}
 }
