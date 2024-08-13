@@ -75,7 +75,9 @@ struct BinaryTreeTests {
 			TestCase(given: Pair([-1], [-1]), expected: [-1]),
 		]
 	)
-	func testBuildTree(c: TestCase<Pair<[Int], [Int]>, [Int?]>) throws {
+	func testBuildTreeFromPreorderAndInorder(
+		c: TestCase<Pair<[Int], [Int]>, [Int?]>
+	) throws {
 		let ((preorder, inorder), expected) = (c.given.values, c.expected)
 
 		try #require(preorder.count >= 1 && preorder.count <= 3000)
@@ -89,7 +91,37 @@ struct BinaryTreeTests {
 		try #require(items.count == preorder.count)
 		try #require(Set(inorder).allSatisfy { items.contains($0) })
 
-		let tree = buildTree(preorder, inorder)
+		let tree = buildTreeFromPreorderAndInorder(preorder, inorder)
+		#expect(isSameTree(tree, TreeNode(expected)))
+	}
+
+	@Test(
+		"Construct binary tree from inorder and postorder traversal",
+		arguments: [
+			TestCase(
+				given: Pair([9, 3, 15, 20, 7], [9, 15, 7, 20, 3]),
+				expected: [3, 9, 20, nil, nil, 15, 7]
+			),
+			TestCase(given: Pair([-1], [-1]), expected: [-1]),
+		]
+	)
+	func testBuildTreeFromInorderAndPostorder(
+		c: TestCase<Pair<[Int], [Int]>, [Int?]>
+	) throws {
+		let ((inorder, postorder), expected) = (c.given.values, c.expected)
+
+		try #require(inorder.count >= 1 && inorder.count <= 3000)
+		try #require(postorder.count == inorder.count)
+		try #require([inorder, postorder].allSatisfy {
+			$0.allSatisfy {
+				$0 >= -3000 && $0 <= 3000
+			}
+		})
+		let items = Set(inorder)
+		try #require(items.count == inorder.count)
+		try #require(Set(postorder).allSatisfy { items.contains($0) })
+
+		let tree = buildTreeFromInorderAndPostorder(inorder, postorder)
 		#expect(isSameTree(tree, TreeNode(expected)))
 	}
 }

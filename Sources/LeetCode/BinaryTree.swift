@@ -145,7 +145,7 @@ func invertTree(_ root: TreeNode?) -> TreeNode? {
 
 			node.left = right
 			node.right = left
-			
+
 			if let left {
 				nextLevel.append(left)
 			}
@@ -182,6 +182,21 @@ func isSymmetric(_ root: TreeNode?) -> Bool {
 /// Given two integer arrays `preorder` and `inorder` where `preorder` is the
 /// preorder traversal of a binary tree and `inorder` is the inorder traversal
 /// of the same tree, construct and return _the binary tree_.
-func buildTree(_ preorder: [Int], _ inorder: [Int]) -> TreeNode? {
+func buildTreeFromPreorderAndInorder(
+	_ preorder: [Int],
+	_ inorder: [Int]
+) -> TreeNode? {
+	nil
+}
+
+/// Construct binary tree from inorder and postorder traversal
+///
+/// Given two integer arrays `inorder` and `postorder` where `inorder` is the
+/// inorder traversal of a binary tree and `postorder` is the postorder
+/// traversal of the same tree, construct and return _the binary tree_.
+func buildTreeFromInorderAndPostorder(
+	_ inorder: [Int],
+	_ postorder: [Int]
+) -> TreeNode? {
 	nil
 }
