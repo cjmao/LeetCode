@@ -64,4 +64,32 @@ struct BinaryTreeTests {
 		let root = TreeNode(given)
 		#expect(isSymmetric(root) == expected)
 	}
+
+	@Test(
+		"Construct binary tree from preorder and inorder traversal",
+		arguments: [
+			TestCase(
+				given: Pair([3, 9, 20, 15, 7], [9, 3, 15, 20, 7]),
+				expected: [3, 9, 20, nil, nil, 15, 7]
+			),
+			TestCase(given: Pair([-1], [-1]), expected: [-1]),
+		]
+	)
+	func testBuildTree(c: TestCase<Pair<[Int], [Int]>, [Int?]>) throws {
+		let ((preorder, inorder), expected) = (c.given.values, c.expected)
+
+		try #require(preorder.count >= 1 && preorder.count <= 3000)
+		try #require(inorder.count == preorder.count)
+		try #require([preorder, inorder].allSatisfy {
+			$0.allSatisfy {
+				$0 >= -3000 && $0 <= 3000
+			}
+		})
+		let items = Set(preorder)
+		try #require(items.count == preorder.count)
+		try #require(Set(inorder).allSatisfy { items.contains($0) })
+
+		let tree = buildTree(preorder, inorder)
+		#expect(isSameTree(tree, TreeNode(expected)))
+	}
 }
