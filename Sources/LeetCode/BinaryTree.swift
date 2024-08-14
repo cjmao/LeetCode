@@ -415,14 +415,46 @@ func hasPathSum(_ root: TreeNode?, _ targetSum: Int) -> Bool {
 /// Each root-to-leaf path in the tree represents a number.
 ///
 /// - For example, the root-to-leaf path `1 -> 2 -> 3` represents the number
-/// `123`.
+///   `123`.
 ///
 /// Return _the total sum of all root-to-leaf numbers_. Test cases are generated
 /// so that the answer will fit in a **32-bit** integer.
 ///
 /// A **leaf** node is a node with no children.
 func sumNumbers(_ root: TreeNode?) -> Int {
-	0
+	var sum = 0
+	var k = 0
+
+	var path = [TreeNode]()
+	var current = root
+	var previous: TreeNode?
+
+	while let node = current {
+		if previous === path.last {
+			k = k * 10 + node.val
+		}
+
+		let next: TreeNode?
+
+		if let left = node.left, previous === path.last {
+			next = left
+			path.append(node)
+		} else if let right = node.right, previous !== right {
+			next = right
+			path.append(node)
+		} else {
+			next = path.popLast()
+			if node.left == nil, node.right == nil {
+				sum += k
+			}
+			k /= 10
+		}
+
+		previous = current
+		current = next
+	}
+
+	return sum
 }
 
 /// Binary tree maximum path sum
