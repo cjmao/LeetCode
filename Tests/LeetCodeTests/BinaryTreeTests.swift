@@ -191,7 +191,7 @@ struct BinaryTreeTests {
 	@Test("Path sum", arguments: [
 		TestCase(
 			given: Pair(
-				[5, 4, 8, 11, nil, 13, 4, 7, 2, nil, nil, nil, 1],
+				[5, 4, 8, 11, nil, 13, 4, 7, 2, nil, nil, nil, nil, nil, 1],
 				22
 			),
 			expected: true
