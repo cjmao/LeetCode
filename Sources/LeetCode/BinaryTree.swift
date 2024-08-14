@@ -350,5 +350,17 @@ fileprivate typealias Node = TreeNode
 /// - The "linked list" should be in the same order as a **pre-order traversal**
 ///   of the binary tree.
 func flatten(_ root: TreeNode?) {
+	var current = root
 
+	while let node = current {
+		if var left = node.left {
+			while left.right != nil {
+				left = left.right!
+			}
+			left.right = node.right
+			node.right = node.left
+			node.left = nil
+		}
+		current = node.right
+	}
 }

@@ -174,9 +174,17 @@ struct BinaryTreeTests {
 		})
 
 		let rootNode = TreeNode(root)
-		let expectedList = TreeNode(expected)
+		let expectedTree = expected
+			.reduce(into: [.init(0)] as [TreeNode?]) { nodes, x in
+				if let x {
+					let node = TreeNode(x)
+					nodes.last??.right = node
+					nodes.append(node)
+				}
+			}
+
 		flatten(rootNode)
 
-		#expect(isSameTree(rootNode, expectedList))
+		#expect(isSameTree(rootNode, expected.isEmpty ? nil : expectedTree[1]))
 	}
 }
