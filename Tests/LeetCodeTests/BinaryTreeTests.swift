@@ -226,4 +226,18 @@ struct BinaryTreeTests {
 
 		#expect(sumNumbers(tree) == expected)
 	}
+
+	@Test("Binary tree maximum path sum", arguments: [
+		TestCase(given: [1, 2, 3], expected: 6),
+		TestCase(given: [-10, 9, 20, nil, nil, 15, 7], expected: 42),
+	])
+	func testMaxPathSum(c: TestCase<[Int?], Int>) throws {
+		let (root, expected) = (c.given, c.expected)
+
+		let nodes = root.compactMap(\.self)
+		try #require(!nodes.isEmpty && nodes.allSatisfy( { $0 >= -1000 && $0 <= 1000 }))
+
+		let tree = TreeNode(root)!
+		#expect(maxPathSum(tree) == expected)
+	}
 }
