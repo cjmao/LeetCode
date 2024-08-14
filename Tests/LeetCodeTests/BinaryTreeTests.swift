@@ -149,7 +149,10 @@ struct BinaryTreeTests {
 		} else {
 			try #require(tree != nil)
 			for (level, expectedLevel) in zip(tree!.levels(), expected) {
-				#expect(level.map { $0?.val } == expectedLevel)
+				try #require(!level.isEmpty)
+				let nodes = sequence(first: level.first!, next: { $0?.next })
+					.compactMap(\.?.val)
+				#expect(nodes == expectedLevel)
 			}
 		}
 	}
