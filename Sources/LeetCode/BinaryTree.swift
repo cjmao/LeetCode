@@ -369,5 +369,40 @@ func flatten(_ root: TreeNode?) {
 ///
 /// A **leaf** is a node with no children.
 func hasPathSum(_ root: TreeNode?, _ targetSum: Int) -> Bool {
-	false
+	var path = [TreeNode]()
+
+	var current = root
+	var previous: TreeNode?
+	var sum = 0
+
+	while let node = current {
+		let next: TreeNode?
+
+		if let previous, previous === node.left {
+			if let right = node.right {
+				next = right
+				path.append(node)
+			} else {
+				next = path.popLast()
+				sum -= node.val
+			}
+		} else if let previous, previous === node.right {
+			next = path.popLast()
+			sum -= node.val
+		} else if node.left != nil || node.right != nil {
+			next = node.left ?? node.right
+			path.append(node)
+			sum += node.val
+		} else {
+			next = path.popLast()
+			if sum + node.val == targetSum {
+				return true
+			}
+		}
+
+		previous = current
+		current = next
+	}
+
+	return false
 }
