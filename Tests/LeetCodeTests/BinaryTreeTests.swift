@@ -187,4 +187,26 @@ struct BinaryTreeTests {
 
 		#expect(isSameTree(rootNode, expected.isEmpty ? nil : expectedTree[1]))
 	}
+
+	@Test("Path sum", arguments: [
+		TestCase(
+			given: Pair(
+				[5, 4, 8, 11, nil, 13, 4, 7, 2, nil, nil, nil, 1],
+				22
+			),
+			expected: true
+		),
+		TestCase(given: Pair([1, 2, 3], 5), expected: false),
+		TestCase(given: Pair([], 0), expected: false),
+	])
+	func testHasPathSum(c: TestCase<Pair<[Int?], Int>, Bool>) throws {
+		let ((root, targetSum), expected) = (c.given.values, c.expected)
+
+		try #require(root.compactMap(\.self).count <= 5000)
+		try #require(root.compactMap(\.self).allSatisfy { $0 >= -1000 && $0 <= 1000 })
+		try #require(targetSum >= -1000 && targetSum <= 1000)
+
+		let tree = TreeNode(root)
+		#expect(hasPathSum(tree, targetSum) == expected)
+	}
 }
