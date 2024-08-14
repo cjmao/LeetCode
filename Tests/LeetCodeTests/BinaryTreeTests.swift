@@ -289,6 +289,18 @@ struct BinaryTreeTests {
 			}
 		}
 	}
+
+	@Test("Count complete tree nodes", arguments: [
+		TestCase(given: [1, 2, 3, 4, 5, 6], expected: 6),
+		TestCase(given: [], expected: 0),
+		TestCase(given: [1], expected: 1),
+	])
+	func testCountNodes(c: TestCase<[Int?], Int>) throws {
+		let (root, expected) = (c.given, c.expected)
+		try #require(root.compactMap(\.self).allSatisfy { $0 >= 0 })
+		let tree = TreeNode(root)
+		#expect(countNodes(tree) == expected)
+	}
 }
 
 enum BSTIteratorOperation: Encodable {
