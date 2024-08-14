@@ -240,4 +240,74 @@ struct BinaryTreeTests {
 		let tree = TreeNode(root)!
 		#expect(maxPathSum(tree) == expected)
 	}
+
+	@Test("Binary search tree iterator", arguments: [
+		TestCase(
+			given: [
+				.initialize([7, 3, 15, nil, nil, 9, 20]),
+				.next, .next, .hasNext,
+				.next, .hasNext,
+				.next, .hasNext,
+				.next, .hasNext,
+			] as [BSTIteratorOperation],
+			expected: [
+				.none,
+				.int(3), .int(7), .bool(true),
+				.int(9), .bool(true),
+				.int(15), .bool(true),
+				.int(20), .bool(false),
+			] as [BSTIteratorOperationResult]
+		),
+	])
+	func testBSTIterator(
+		c: TestCase<[BSTIteratorOperation], [BSTIteratorOperationResult]>
+	) throws {
+		let (operations, expected) = (c.given, c.expected)
+
+		try #require(operations.count == expected.count)
+
+		var tree: TreeNode?
+		var iterator: BSTIterator?
+
+		for operation in zip(operations, expected) {
+			switch operation {
+				case let (.initialize(root), .none):
+					let nodes = root.compactMap(\.self)
+					try #require(!nodes.isEmpty)
+					try #require(nodes.allSatisfy { $0 >= 0 })
+					tree = .init(root)
+					iterator = .init(tree)
+				case let (.next, .int(expected)):
+					let next = try #require(iterator?.next())
+					#expect(next == expected)
+				case let (.hasNext, .bool(expected)):
+					let hasNext = try #require(iterator?.hasNext() as Bool?)
+					#expect(hasNext == expected)
+				default:
+					let (operation, result) = operation
+					try #require(operation.canBeAssociatedWith(result))
+			}
+		}
+	}
+}
+
+enum BSTIteratorOperation: Encodable {
+	case initialize([Int?])
+	case next
+	case hasNext
+
+	func canBeAssociatedWith(_ result: BSTIteratorOperationResult) -> Bool {
+		switch (self, result) {
+			case (.initialize, .none): true
+			case (.next, .int(_)): true
+			case (.hasNext, .bool(_)): true
+			default: false
+		}
+	}
+}
+
+enum BSTIteratorOperationResult: Encodable {
+	case none
+	case int(Int)
+	case bool(Bool)
 }
