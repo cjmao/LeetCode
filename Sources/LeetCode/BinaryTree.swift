@@ -312,7 +312,30 @@ func buildTreeFromInorderAndPostorder(
 ///
 /// Initially, all next pointers are set to `NULL`.
 func connect(_ root: TreeNode?) -> TreeNode? {
-	nil
+	var currentLevel = root
+	var nextLevelHead: Node?
+	var nextLevelTail: Node?
+
+	while let current = currentLevel {
+		current.left?.next = current.right
+		let child = current.left ?? current.right
+		if let child {
+			if nextLevelHead == nil {
+				nextLevelHead = child
+			}
+			nextLevelTail?.next = child
+			nextLevelTail = child.next ?? child
+		}
+		if let next = currentLevel?.next {
+			currentLevel = next
+		} else {
+			currentLevel = nextLevelHead
+			nextLevelHead = nil
+			nextLevelTail = nil
+		}
+	}
+
+	return root
 }
 
 fileprivate typealias Node = TreeNode
