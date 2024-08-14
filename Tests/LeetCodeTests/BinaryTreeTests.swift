@@ -209,4 +209,21 @@ struct BinaryTreeTests {
 		let tree = TreeNode(root)
 		#expect(hasPathSum(tree, targetSum) == expected)
 	}
+
+	@Test("Sum root to leaf numbers", arguments: [
+		TestCase(given: [1, 2, 3], expected: 25),
+		TestCase(given: [4, 9, 0, 5, 1], expected: 1026),
+	])
+	func testSumNumbers(c: TestCase<[Int?], Int>) throws {
+		let (root, expected) = (c.given, c.expected)
+
+		let nodes = root.compactMap(\.self)
+		try #require(1 <= nodes.count && nodes.count <= 1000)
+		try #require(nodes.allSatisfy( { $0 >= 0 && $0 <= 9 }))
+
+		let tree = TreeNode(root)!
+		try #require(Array(tree.levels()).count <= 10)
+
+		#expect(sumNumbers(tree) == expected)
+	}
 }
