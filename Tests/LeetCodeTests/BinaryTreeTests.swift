@@ -24,8 +24,8 @@ struct BinaryTreeTests {
 		let ((p, q), expected) = (c.given.values, c.expected)
 		let t1 = TreeNode(p)
 		let t2 = TreeNode(q)
-		try #require(t1 == nil || t1!.size <= 100)
-		try #require(t2 == nil || t2!.size <= 100)
+		try #require(p.compactMap(\.self).count <= 100)
+		try #require(q.compactMap(\.self).count <= 100)
 		#expect(isSameTree(t1, t2) == expected)
 	}
 

@@ -3,7 +3,6 @@ class TreeNode: CustomDebugStringConvertible {
 	var left: TreeNode?
 	var right: TreeNode?
 	var next: TreeNode?
-	var size: Int
 
 	init(
 		_ val: Int = 0,
@@ -13,7 +12,6 @@ class TreeNode: CustomDebugStringConvertible {
 		self.val = val
 		self.left = left
 		self.right = right
-		self.size = 1 + (left?.size ?? 0) + (right?.size ?? 0)
 	}
 
 	init?(_ array: [Int?]) {
@@ -27,16 +25,14 @@ class TreeNode: CustomDebugStringConvertible {
 		}
 
 		self.val = nodes[0]!.val
-		self.size = 1
 
-		for i in nodes[1...].indices {
+		for i in 1..<nodes.endIndex {
 			if let node = nodes[i], let parent = nodes[(i - 1) / 2] {
 				if i % 2 == 1 {
 					parent.left = node
 				} else {
 					parent.right = node
 				}
-				self.size += 1
 			}
 		}
 
