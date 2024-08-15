@@ -509,16 +509,27 @@ func maxPathSum(_ root: TreeNode?) -> Int {
 /// You may assume that `next()` calls will always be valid. That is, there will
 /// be at least a next number in the in-order traversal when `next()` is called.
 class BSTIterator {
-	init(_ root: TreeNode?) {
+	private var node: TreeNode?
+	private var path: [TreeNode]
 
+	init(_ root: TreeNode?) {
+		node = root
+		path = []
 	}
 
 	func next() -> Int {
-		0
+		while let current = node {
+			path.append(current)
+			node = current.left
+		}
+
+		let next = path.removeLast()
+		node = next.right
+		return next.val
 	}
 
 	func hasNext() -> Bool {
-		false
+		node != nil || !path.isEmpty
 	}
 }
 

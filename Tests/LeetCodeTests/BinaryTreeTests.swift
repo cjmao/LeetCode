@@ -264,6 +264,24 @@ struct BinaryTreeTests {
 				.int(20), .bool(false),
 			] as [BSTIteratorOperationResult]
 		),
+		TestCase(
+			given: [
+				.initialize([3, 1, 4, nil, 2]),
+				.hasNext, .next,
+				.hasNext, .next,
+				.hasNext, .next,
+				.hasNext, .next,
+				.hasNext,
+			] as [BSTIteratorOperation],
+			expected: [
+				.none,
+				.bool(true), .int(1),
+				.bool(true), .int(2),
+				.bool(true), .int(3),
+				.bool(true), .int(4),
+				.bool(false),
+			] as [BSTIteratorOperationResult]
+		),
 	])
 	func testBSTIterator(
 		c: TestCase<[BSTIteratorOperation], [BSTIteratorOperationResult]>
