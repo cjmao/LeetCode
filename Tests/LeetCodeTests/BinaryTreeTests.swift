@@ -230,6 +230,12 @@ struct BinaryTreeTests {
 	@Test("Binary tree maximum path sum", arguments: [
 		TestCase(given: [1, 2, 3], expected: 6),
 		TestCase(given: [-10, 9, 20, nil, nil, 15, 7], expected: 42),
+		TestCase(
+			given: [5, 4, 8, 11, nil, 13, 4, 7, 2, nil, nil, nil, nil, nil, 1],
+			expected: 48
+		),
+		TestCase(given: [-3], expected: -3),
+		TestCase(given: [1, -2, 3], expected: 4),
 	])
 	func testMaxPathSum(c: TestCase<[Int?], Int>) throws {
 		let (root, expected) = (c.given, c.expected)

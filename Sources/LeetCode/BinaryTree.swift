@@ -469,7 +469,24 @@ func sumNumbers(_ root: TreeNode?) -> Int {
 /// Given the `root` of a binary tree, return _the maximum **path sum** of any
 /// **non-empty** path_.
 func maxPathSum(_ root: TreeNode?) -> Int {
-	0
+	var maxSum = root?.val ?? 0
+
+	func maxSubtreeSum(_ subtreeRoot: TreeNode?) -> Int {
+		guard let root = subtreeRoot else {
+			return 0
+		}
+
+		let leftSum = max(0, maxSubtreeSum(root.left))
+		let rightSum = max(0, maxSubtreeSum(root.right))
+
+		maxSum = max(maxSum, root.val + leftSum + rightSum)
+
+		return root.val + max(0, leftSum, rightSum)
+	}
+
+	_ = maxSubtreeSum(root)
+
+	return maxSum
 }
 
 /// Binary search tree iterator
