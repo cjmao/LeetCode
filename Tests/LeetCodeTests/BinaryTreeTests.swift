@@ -325,6 +325,38 @@ struct BinaryTreeTests {
 		let tree = TreeNode(root)
 		#expect(countNodes(tree) == expected)
 	}
+
+	@Test("Lowest common ancestor of a binary tree", arguments: [
+		TestCase(
+			given: Pair([3, 5, 1, 6, 2, 0, 8, nil, nil, 7, 4], Pair(5, 1)),
+			expected: 3
+		),
+		TestCase(
+			given: Pair([3, 5, 1, 6, 2, 0, 8, nil, nil, 7, 4], Pair(5, 4)),
+			expected: 5
+		),
+		TestCase(
+			given: Pair([1, 2], Pair(1, 2)),
+			expected: 1
+		),
+	])
+	func testLowestCommonAncestor(
+		c: TestCase<Pair<[Int?], Pair<Int, Int>>, Int>
+	) throws {
+		let ((root, pq), expected) = (c.given.values, c.expected)
+		let (p, q) = pq.values
+
+		let nodes = root.compactMap(\.self)
+		try #require(nodes.count >= 2)
+		try #require(Set(nodes).count == nodes.count)
+		try #require(p != q && nodes.contains(p) && nodes.contains(q))
+
+		let tree = TreeNode(root)
+		let pNode = tree?.find(p)
+		let qNode = tree?.find(q)
+		let lowestCommonAncestor = lowestCommonAncestor(tree, pNode, qNode)
+		#expect(lowestCommonAncestor?.val == expected)
+	}
 }
 
 enum BSTIteratorOperation: Encodable {
