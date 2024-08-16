@@ -545,5 +545,35 @@ class BSTIterator {
 ///
 /// Design an algorithm that runs in less than `O(n)` time complexity.
 func countNodes(_ root: TreeNode?) -> Int {
-	0
+	func maxHeight(of node: TreeNode?) -> Int {
+		var depth = 0
+		var node = node
+
+		while let next = node?.left {
+			depth += 1
+			node = next
+		}
+
+		return depth
+	}
+
+	var count = root == nil ? 0 : 1
+	var next = root
+
+	while let current = next {
+		let leftHeight = maxHeight(of: current.left)
+		let rightHeight = maxHeight(of: current.right)
+
+		if leftHeight == rightHeight, let right = current.right {
+			next = right
+			count = (count << 1) + 1
+		} else if let left = current.left {
+			next = left
+			count = count << 1
+		} else {
+			next = nil
+		}
+	}
+
+	return count
 }
