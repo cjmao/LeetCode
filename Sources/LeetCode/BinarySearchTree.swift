@@ -32,7 +32,26 @@ func getMinimumDifference(_ root: TreeNode?) -> Int {
 /// `kth` smallest value (**1-indexed**) of all the values of the nodes in the
 /// tree_.
 func kthSmallest(_ root: TreeNode?, _ k: Int) -> Int {
-	0
+	var index = 0
+
+	func explore(_ node: TreeNode?) -> TreeNode? {
+		guard let node else {
+			return nil
+		}
+
+		if let left = explore(node.left) {
+			return left
+		}
+
+		index += 1
+		if index == k {
+			return node
+		}
+
+		return explore(node.right)
+	}
+
+	return explore(root)?.val ?? .max
 }
 
 /// Validate binary search tree
