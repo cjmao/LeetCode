@@ -32,4 +32,23 @@ struct BinaryTreeBFSTests {
 		let tree = TreeNode(root)
 		#expect(averageOfLevels(tree) == expected)
 	}
+
+	@Test("Binary tree level order traversal", arguments: [
+		TestCase(
+			given: [3, 9, 20, nil, nil, 15, 7],
+			expected: [[3], [9, 20], [15, 7]]
+		),
+		TestCase(given: [1], expected: [[1]]),
+		TestCase(given: [], expected: []),
+	])
+	func testLevelOrder(c: TestCase<[Int?], [[Int]]>) throws {
+		let (root, expected) = (c.given, c.expected)
+
+		let nodes = root.compactMap(\.self)
+		try #require(nodes.count <= 2000)
+		try #require(nodes.allSatisfy { $0 >= -1000 && $0 <= 1000 })
+
+		let tree = TreeNode(root)
+		#expect(levelOrder(tree) == expected)
+	}
 }

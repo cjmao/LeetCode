@@ -15,3 +15,11 @@ func rightSideView(_ root: TreeNode?) -> [Int] {
 func averageOfLevels(_ root: TreeNode?) -> [Double] {
 	[]
 }
+
+/// Binary tree level order traversal
+///
+/// Given the `root` of a binary tree, return _the level order traversal of its
+/// nodes' values_. (i.e., from left to right, level by level).
+func levelOrder(_ root: TreeNode?) -> [[Int]] {
+	[]
+}
