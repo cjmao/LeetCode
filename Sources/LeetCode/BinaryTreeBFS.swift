@@ -37,7 +37,38 @@ func rightSideView(_ root: TreeNode?) -> [Int] {
 /// each level in the form of an array_. Answers within `10^(-5)` of the actual
 /// answer will be accepted.
 func averageOfLevels(_ root: TreeNode?) -> [Double] {
-	[]
+	var averages = [Double]()
+
+	var currentLevel = [TreeNode]()
+	if let root {
+		currentLevel.append(root)
+		averages.append(.init(root.val))
+	}
+
+	while !currentLevel.isEmpty {
+		var nextLevel = [TreeNode]()
+		var sum = 0, count = 0
+
+		for node in currentLevel {
+			if let left = node.left {
+				nextLevel.append(left)
+				sum += left.val
+				count += 1
+			}
+			if let right = node.right {
+				nextLevel.append(right)
+				sum += right.val
+				count += 1
+			}
+		}
+
+		if count > 0 {
+			averages.append(.init(sum) / .init(count))
+		}
+		currentLevel = nextLevel
+	}
+
+	return averages
 }
 
 /// Binary tree level order traversal
