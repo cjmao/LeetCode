@@ -14,3 +14,19 @@ func getMinimumDifference(_ root: TreeNode?) -> Int {
 func kthSmallest(_ root: TreeNode?, _ k: Int) -> Int {
 	0
 }
+
+/// Validate binary search tree
+///
+/// Given the `root` of a binary tree, _determine if it is a valid binary search
+/// tree (BST)_.
+///
+/// A valid BST is defined as follows:
+///
+/// - The left subtree of a node contains only nodes with keys **less than** the
+///   node's key.
+/// - The right subtree of a node contains only nodes with keys **greater than**
+///   the node's key.
+/// - Both the left and right subtrees must also be binary search trees.
+func isValidBST(_ root: TreeNode?) -> Bool {
+	false
+}

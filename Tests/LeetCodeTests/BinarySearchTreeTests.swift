@@ -32,4 +32,15 @@ struct BinarySearchTreeTests {
 		let tree = TreeNode(root)
 		#expect(kthSmallest(tree, k) == expected)
 	}
+
+	@Test("Validate binary search tree", arguments: [
+		TestCase(given: [2, 1, 3], expected: true),
+		TestCase(given: [5, 1, 4, nil, nil, 3, 6], expected: false),
+	])
+	func testIsValidBST(c: TestCase<[Int?], Bool>) throws {
+		let (root, expected) = (c.given, c.expected)
+		try #require(!root.compactMap(\.self).isEmpty)
+		let tree = TreeNode(root)
+		#expect(isValidBST(tree) == expected)
+	}
 }
