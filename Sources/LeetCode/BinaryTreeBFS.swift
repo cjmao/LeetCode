@@ -76,7 +76,32 @@ func averageOfLevels(_ root: TreeNode?) -> [Double] {
 /// Given the `root` of a binary tree, return _the level order traversal of its
 /// nodes' values_. (i.e., from left to right, level by level).
 func levelOrder(_ root: TreeNode?) -> [[Int]] {
-	[]
+	var levels = [[Int]]()
+
+	var currentLevel = [TreeNode]()
+	if let root {
+		currentLevel.append(root)
+	}
+
+	while !currentLevel.isEmpty {
+		var nextLevel = [TreeNode]()
+		var values = [Int]()
+
+		for node in currentLevel {
+			values.append(node.val)
+			if let left = node.left {
+				nextLevel.append(left)
+			}
+			if let right = node.right {
+				nextLevel.append(right)
+			}
+		}
+
+		levels.append(values)
+		currentLevel = nextLevel
+	}
+
+	return levels
 }
 
 /// Binary tree zigzag level order traversal
