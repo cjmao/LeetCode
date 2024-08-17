@@ -108,5 +108,33 @@ func levelOrder(_ root: TreeNode?) -> [[Int]] {
 ///
 /// Given the root of a binary tree, return the zigzag level order traversal of its nodes' values. (i.e., from left to right, then right to left for the next level and alternate between).
 func zigzagLevelOrder(_ root: TreeNode?) -> [[Int]] {
-	[]
+	var levels = [[Int]]()
+
+	var currentLevel = [TreeNode]()
+	if let root {
+		currentLevel.append(root)
+	}
+
+	var reverse = false
+
+	while !currentLevel.isEmpty {
+		var nextLevel = [TreeNode]()
+		var values = [Int]()
+
+		for node in currentLevel {
+			values.append(node.val)
+			if let left = node.left {
+				nextLevel.append(left)
+			}
+			if let right = node.right {
+				nextLevel.append(right)
+			}
+		}
+
+		levels.append(reverse ? values.reversed() : values)
+		reverse.toggle()
+		currentLevel = nextLevel
+	}
+
+	return levels
 }
