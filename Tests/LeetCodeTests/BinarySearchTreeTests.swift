@@ -17,4 +17,19 @@ struct BinarySearchTreeTests {
 		let tree = TreeNode(root)
 		#expect(getMinimumDifference(tree) == expected)
 	}
+
+	@Test("Kth smallest element in a BST", arguments: [
+		TestCase(given: Pair([3, 1, 4, nil, 2], 1), expected: 1),
+		TestCase(given: Pair([5, 3, 6, 2, 4, nil, nil, 1], 3), expected: 3),
+	])
+	func testKthSmallest(c: TestCase<Pair<[Int?], Int>, Int>) throws {
+		let ((root, k), expected) = (c.given.values, c.expected)
+
+		let nodes = root.compactMap(\.self)
+		try #require(1 <= k && k <= nodes.count)
+		try #require(nodes.allSatisfy { $0 >= 0 })
+
+		let tree = TreeNode(root)
+		#expect(kthSmallest(tree, k) == expected)
+	}
 }
