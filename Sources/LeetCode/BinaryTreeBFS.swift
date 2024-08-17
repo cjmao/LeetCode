@@ -6,3 +6,12 @@
 func rightSideView(_ root: TreeNode?) -> [Int] {
 	[]
 }
+
+/// Average of levels in binary tree
+///
+/// Given the `root` of a binary tree, return _the average value of the nodes on
+/// each level in the form of an array_. Answers within `10^(-5)` of the actual
+/// answer will be accepted.
+func averageOfLevels(_ root: TreeNode?) -> [Double] {
+	[]
+}
