@@ -6,6 +6,8 @@ struct BinarySearchTreeTests {
 	@Test("Minimum absolute difference in BST", arguments: [
 		TestCase(given: [4, 2, 6, 1, 3], expected: 1),
 		TestCase(given: [1, 0, 48, nil, nil, 12, 49], expected: 1),
+		TestCase(given: [1, nil, 3, nil, nil, 2], expected: 1),
+		TestCase(given: [236, 104, 701, nil, 227, nil, 911], expected: 9),
 	])
 	func testGetMinimumDifference(c: TestCase<[Int?], Int>) throws {
 		let (root, expected) = (c.given, c.expected)

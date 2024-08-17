@@ -3,7 +3,27 @@
 /// Given the `root` of a Binary Search Tree (BST), return _the minimum absolute
 /// difference between the values of any two different nodes in the tree_.
 func getMinimumDifference(_ root: TreeNode?) -> Int {
-	0
+	var minDiff = Int.max
+
+	var path = [TreeNode]()
+	var node = root
+	var previous: Int?
+
+	while node != nil || !path.isEmpty {
+		while let current = node {
+			path.append(current)
+			node = current.left
+		}
+
+		let next = path.popLast()
+		if let previous, let next, next.val - previous < minDiff {
+			minDiff = next.val - previous
+		}
+		previous = next?.val
+		node = next?.right
+	}
+
+	return minDiff
 }
 
 /// Kth smallest element in a BST
