@@ -4,7 +4,31 @@
 /// side** of it, return _the values of the nodes you can see ordered from top
 /// to bottom_.
 func rightSideView(_ root: TreeNode?) -> [Int] {
-	[]
+	var view = [Int]()
+
+	var currentLevel = [TreeNode]()
+	if let root {
+		currentLevel.append(root)
+	}
+
+	while !currentLevel.isEmpty {
+		view.append(currentLevel.last!.val)
+
+		var nextLevel = [TreeNode]()
+
+		for node in currentLevel {
+			if let left = node.left {
+				nextLevel.append(left)
+			}
+			if let right = node.right {
+				nextLevel.append(right)
+			}
+		}
+
+		currentLevel = nextLevel
+	}
+
+	return view
 }
 
 /// Average of levels in binary tree
