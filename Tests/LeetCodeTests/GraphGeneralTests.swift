@@ -39,4 +39,38 @@ struct GraphGeneralTests {
 		let map = grid.map { $0.map(Character.init) }
 		#expect(numIslands(map) == expected)
 	}
+
+	@Test("Surrounded regions", arguments: [
+		TestCase(
+			given: [
+				["X", "X", "X", "X"],
+				["X", "O", "O", "X"],
+				["X", "X", "O", "X"],
+				["X", "O", "X", "X"]
+			],
+			expected: [
+				["X", "X", "X", "X"],
+				["X", "X", "X", "X"],
+				["X", "X", "X", "X"],
+				["X", "O", "X", "X"]
+			]
+		),
+		TestCase(given: [["X"]], expected: [["X"]]),
+	])
+	func testSolve(c: TestCase<[[String]], [[String]]>) throws {
+		var (grid, expected) = (c.given.map { $0.map(Character.init) }, c.expected)
+
+		let m = grid.count
+		try #require(1 <= m && m <= 200)
+		let n = grid[0].count
+		try #require(1 <= n && n <= 200)
+		try #require(grid.allSatisfy { row in
+			row.allSatisfy { cell in
+				cell == "O" || cell == "X"
+			}
+		})
+
+		solve(&grid)
+		#expect(grid == expected.map { $0.map(Character.init) })
+	}
 }
