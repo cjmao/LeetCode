@@ -67,5 +67,16 @@ func kthSmallest(_ root: TreeNode?, _ k: Int) -> Int {
 ///   the node's key.
 /// - Both the left and right subtrees must also be binary search trees.
 func isValidBST(_ root: TreeNode?) -> Bool {
-	false
+	func isValidBST(_ node: TreeNode?, _ min: Int, _ max: Int) -> Bool {
+		guard let node else {
+			return true
+		}
+		return node.val > min && node.val < max && isValidBST(
+			node.left, min, node.val
+		) && isValidBST(
+			node.right, node.val, max
+		)
+	}
+
+	return isValidBST(root, .min, .max)
 }

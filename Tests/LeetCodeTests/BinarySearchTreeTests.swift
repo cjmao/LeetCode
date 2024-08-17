@@ -38,6 +38,7 @@ struct BinarySearchTreeTests {
 	@Test("Validate binary search tree", arguments: [
 		TestCase(given: [2, 1, 3], expected: true),
 		TestCase(given: [5, 1, 4, nil, nil, 3, 6], expected: false),
+		TestCase(given: [5, 4, 6, nil, nil, 3, 7], expected: false),
 	])
 	func testIsValidBST(c: TestCase<[Int?], Bool>) throws {
 		let (root, expected) = (c.given, c.expected)
