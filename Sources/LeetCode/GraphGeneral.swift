@@ -7,7 +7,38 @@
 /// lands horizontally or vertically. You may assume all four edges of the grid
 /// are all surrounded by water.
 func numIslands(_ grid: [[Character]]) -> Int {
-	0
+	let m = grid.count, n = grid[0].count
+
+	var count = 0
+	var visited = Set<Int>()
+
+	func explore(_ i: Int, _ j: Int) {
+		let c = i * n + j
+
+		guard
+			0 <= i, i < m, 0 <= j, j < n,
+			grid[i][j] == "1", !visited.contains(c)
+		else {
+			return
+		}
+
+		visited.insert(c)
+
+		[
+			(i - 1, j), (i + 1, j),
+			(i, j - 1), (i, j + 1)
+		].forEach(explore)
+	}
+
+	for i in grid.indices {
+		for j in grid[i].indices
+		where grid[i][j] == "1" && !visited.contains(i * n + j) {
+			count += 1
+			explore(i, j)
+		}
+	}
+
+	return count
 }
 
 /// Surrounded regions
