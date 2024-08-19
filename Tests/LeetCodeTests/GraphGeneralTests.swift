@@ -176,4 +176,62 @@ struct GraphGeneralTests {
 			#expect(a.neighbours.map(\.val) == b.neighbours.map(\.val))
 		}
 	}
+
+	@Test("Evaluate division", arguments: [
+		TestCase(
+			given: Pair(
+				[["a", "b"], ["b", "c"]],
+				Pair(
+					[2, 3],
+					[["a", "c"], ["b", "a"], ["a", "e"], ["a", "a"], ["x", "x"]]
+				)
+			),
+			expected: [6, 0.5, -1, 1, -1]
+		),
+		TestCase(
+			given: Pair(
+				[["a", "b"], ["b", "c"], ["bc", "cd"]],
+				Pair(
+					[1.5, 2.5, 5],
+					[["a", "c"], ["c", "b"], ["bc", "cd"], ["cd", "bc"]]
+				)
+			),
+			expected: [3.75, 0.4, 5, 0.2]
+		),
+		TestCase(
+			given: Pair(
+				[["a", "b"]],
+				Pair(
+					[0.5],
+					[["a", "b"], ["b", "a"], ["a", "c"], ["x", "y"]]
+				)
+			),
+			expected: [0.5, 2, -1, -1]
+		),
+	])
+	func testCalcEquation(
+		c: TestCase<Pair<[[String]], Pair<[Double], [[String]]>>, [Double]>
+	) throws {
+		let (given, expected) = (c.given, c.expected)
+		let (equations, rest) = given.values
+		let (values, queries) = rest.values
+
+		try #require(1 <= equations.count && equations.count <= 20)
+		try #require(1 <= queries.count && queries.count <= 20)
+		try #require([equations, queries].allSatisfy { equations in
+			equations.allSatisfy { equation in
+				equation.count == 2 && equation.allSatisfy { variable in
+					1 <= variable.count && variable.count <= 5
+					&& Array(variable).allSatisfy { c in
+						c.isWholeNumber || c.isLetter && c.isLowercase
+					}
+				}
+			}
+		})
+		try #require(values.count == equations.count)
+		try #require(values.allSatisfy { 0 < $0 && $0 <= 20 })
+
+		let result = calcEquation(equations, values, queries)
+		#expect(result == expected)
+	}
 }
