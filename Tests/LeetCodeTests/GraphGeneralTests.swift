@@ -81,21 +81,57 @@ struct GraphGeneralTests {
 			]
 		),
 		TestCase(given: [["X"]], expected: [["X"]]),
+		TestCase(
+			given: [
+				["O", "O", "O", "O", "X", "X"],
+				["O", "O", "O", "O", "O", "O"],
+				["O", "X", "O", "X", "O", "O"],
+				["O", "X", "O", "O", "X", "O"],
+				["O", "X", "O", "X", "O", "O"],
+				["O", "X", "O", "O", "O", "O"]
+			],
+			expected: [
+				["O", "O", "O", "O", "X", "X"],
+				["O", "O", "O", "O", "O", "O"],
+				["O", "X", "O", "X", "O", "O"],
+				["O", "X", "O", "O", "X", "O"],
+				["O", "X", "O", "X", "O", "O"],
+				["O", "X", "O", "O", "O", "O"]
+			]
+		),
+		TestCase(
+			given: [
+				["O", "X", "O", "O", "O", "X"],
+				["O", "O", "X", "X", "X", "O"],
+				["X", "X", "X", "X", "X", "O"],
+				["O", "O", "O", "O", "X", "X"],
+				["X", "X", "O", "O", "X", "O"],
+				["O", "O", "X", "X", "X", "X"]
+			],
+			expected: [
+				["O", "X", "O", "O", "O", "X"],
+				["O", "O", "X", "X", "X", "O"],
+				["X", "X", "X", "X", "X", "O"],
+				["O", "O", "O", "O", "X", "X"],
+				["X", "X", "O", "O", "X", "O"],
+				["O", "O", "X", "X", "X", "X"]
+			]
+		),
 	])
 	func testSolve(c: TestCase<[[String]], [[String]]>) throws {
-		var (grid, expected) = (c.given.map { $0.map(Character.init) }, c.expected)
+		var (board, expected) = (c.given.map { $0.map(Character.init) }, c.expected)
 
-		let m = grid.count
+		let m = board.count
 		try #require(1 <= m && m <= 200)
-		let n = grid[0].count
+		let n = board[0].count
 		try #require(1 <= n && n <= 200)
-		try #require(grid.allSatisfy { row in
+		try #require(board.allSatisfy { row in
 			row.allSatisfy { cell in
 				cell == "O" || cell == "X"
 			}
 		})
 
-		solve(&grid)
-		#expect(grid == expected.map { $0.map(Character.init) })
+		solve(&board)
+		#expect(board == expected.map { $0.map(Character.init) })
 	}
 }

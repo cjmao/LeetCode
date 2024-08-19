@@ -56,5 +56,36 @@ func numIslands(_ grid: [[Character]]) -> Int {
 /// A **surrounded region is captured** by replacing all `'O'`s with `'X'`s in
 /// the input matrix `board`.
 func solve(_ board: inout [[Character]]) {
+	let m = board.count, n = board[0].count
 
+	func formRegion(_ i: Int, _ j: Int) {
+		guard 0 <= i, i < m, 0 <= j, j < n, board[i][j] == "O" else {
+			return
+		}
+
+		board[i][j] = "."
+
+		[
+			(i - 1, j), (i + 1, j),
+			(i, j - 1), (i, j + 1)
+		].forEach(formRegion)
+	}
+
+	for i in [0, m - 1] {
+		for j in board[i].indices where board[i][j] == "O" {
+			formRegion(i, j)
+		}
+	}
+
+	for j in [0, n - 1] {
+		for i in board.indices where board[i][j] == "O" {
+			formRegion(i, j)
+		}
+	}
+
+	for i in 0..<m {
+		for j in 0..<n {
+			board[i][j] = board[i][j] == "." ? "O" : "X"
+		}
+	}
 }
