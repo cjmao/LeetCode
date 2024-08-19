@@ -134,4 +134,46 @@ struct GraphGeneralTests {
 		solve(&board)
 		#expect(board == expected.map { $0.map(Character.init) })
 	}
+
+	@Test("Clone graph", arguments: [
+		TestCase(
+			given: [[2, 4], [1, 3], [2, 4], [1, 3]],
+			expected: [[2, 4], [1, 3], [2, 4], [1, 3]]
+		),
+		TestCase(given: [[]], expected: [[]]),
+		TestCase(given: [], expected: []),
+	])
+	func testCloneGraph(c: TestCase<[[Int]], [[Int]]>) throws {
+		let (adjList, expected) = (c.given, c.expected)
+
+		try #require(adjList.count == expected.count)
+
+		guard !expected.isEmpty else {
+			let graph = GraphNode(adjList)
+			let cloned = cloneGraph(graph)
+			#expect(graph == nil)
+			#expect(cloned == nil)
+			return
+		}
+
+		let graph = try #require(GraphNode(adjList))
+		let expectedGraph = try #require(GraphNode(expected))
+		let nodes = graph.breadthFirstTraversal().flatMap(\.self)
+
+		try #require(nodes.count <= 100)
+		try #require(nodes.allSatisfy { 1 <= $0.val && $0.val <= 100 })
+		try #require(Set(nodes.map(\.val)).count == nodes.count)
+
+		let cloned = cloneGraph(graph)
+		_ = try #require(cloned)
+
+		for (a, b) in zip(
+			cloned!.breadthFirstTraversal().flatMap(\.self),
+			expectedGraph.breadthFirstTraversal().flatMap(\.self)
+		) {
+			#expect(a !== b)
+			#expect(a.val == b.val)
+			#expect(a.neighbours.map(\.val) == b.neighbours.map(\.val))
+		}
+	}
 }

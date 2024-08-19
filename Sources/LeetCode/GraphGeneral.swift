@@ -1,3 +1,52 @@
+class GraphNode: CustomDebugStringConvertible {
+	let val: Int
+	var neighbours: [GraphNode]
+
+	init(_ val: Int) {
+		self.val = val
+		self.neighbours = []
+	}
+
+	init?(_ adjacencyList: [[Int]]) {
+		guard !adjacencyList.isEmpty else {
+			return nil
+		}
+
+		let nodes = adjacencyList.indices.map { GraphNode($0 + 1) }
+
+		for (i, neighbours) in adjacencyList.enumerated() {
+			for neighbour in neighbours.sorted() {
+				nodes[i].neighbours.append(nodes[neighbour - 1])
+			}
+		}
+
+		self.val = nodes[0].val
+		self.neighbours = nodes[0].neighbours
+	}
+
+	var debugDescription: String {
+		"\(val)"
+	}
+
+	func breadthFirstTraversal() -> some Sequence<[GraphNode]> {
+		var visited = [val] as Set
+
+		return sequence(first: [self]) { previous in
+			var next = [GraphNode]()
+
+			for node in previous {
+				for neighbour in node.neighbours
+				where !visited.contains(neighbour.val) {
+					visited.insert(neighbour.val)
+					next.append(neighbour)
+				}
+			}
+
+			return next.isEmpty ? nil : next
+		}
+	}
+}
+
 /// Number of islands
 ///
 /// Given an `m x n` 2D binary grid `grid` which represents a map of `'1'`s
@@ -89,3 +138,38 @@ func solve(_ board: inout [[Character]]) {
 		}
 	}
 }
+
+/// Clone graph
+///
+/// Given a reference of a node in a **connected** undirected graph.
+///
+/// Return a **deep copy** (clone) of the graph.
+///
+/// Each node in the graph contains a value (`int`) and a list (`List[Node]`) of
+/// its neighbors.
+///
+/// ```java
+/// class Node {
+/// 	public int val;
+/// 	public List<Node> neighbors;
+/// }
+/// ```
+///
+/// ## Test case format:
+///
+/// For simplicity, each node's value is the same as the node's index
+/// (1-indexed). For example, the first node with `val == 1`, the second node
+/// with `val == 2`, and so on. The graph is represented in the test case using
+/// an adjacency list.
+///
+/// **An adjacency list** is a collection of unordered **lists** used to
+/// represent a finite graph. Each list describes the set of neighbors of a node
+/// in the graph.
+///
+/// The given node will always be the first node with `val = 1`. You must return
+/// the **copy of the given node** as a reference to the cloned graph.
+func cloneGraph(_ node: GraphNode?) -> GraphNode? {
+	nil
+}
+
+private typealias Node = GraphNode
