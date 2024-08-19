@@ -234,4 +234,23 @@ struct GraphGeneralTests {
 		let result = calcEquation(equations, values, queries)
 		#expect(result == expected)
 	}
+
+	@Test("Course schedule", arguments: [
+		TestCase(given: Pair(2, [[1, 0]]), expected: true),
+		TestCase(given: Pair(2, [[1, 0], [0, 1]]), expected: false),
+	])
+	func testCanFinish(c: TestCase<Pair<Int, [[Int]]>, Bool>) throws {
+		let ((numCourses, prerequisites), expected) = (c.given.values, c.expected)
+
+		try #require(1 <= numCourses && numCourses <= 2000)
+		try #require(prerequisites.count <= 5000)
+		try #require(prerequisites.allSatisfy {
+			$0.count == 2 && $0.allSatisfy {
+				0 <= $0 && $0 < numCourses
+			}
+		})
+		try #require(Set(prerequisites).count == prerequisites.count)
+
+		#expect(canFinish(numCourses, prerequisites) == expected)
+	}
 }
