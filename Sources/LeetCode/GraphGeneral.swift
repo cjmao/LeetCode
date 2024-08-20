@@ -1,10 +1,10 @@
 class GraphNode: CustomDebugStringConvertible {
 	let val: Int
-	var neighbours: [GraphNode]
+	var neighbors: [GraphNode?]
 
 	init(_ val: Int) {
 		self.val = val
-		self.neighbours = []
+		self.neighbors = []
 	}
 
 	init?(_ adjacencyList: [[Int]]) {
@@ -16,12 +16,12 @@ class GraphNode: CustomDebugStringConvertible {
 
 		for (i, neighbours) in adjacencyList.enumerated() {
 			for neighbour in neighbours.sorted() {
-				nodes[i].neighbours.append(nodes[neighbour - 1])
+				nodes[i].neighbors.append(nodes[neighbour - 1])
 			}
 		}
 
 		self.val = nodes[0].val
-		self.neighbours = nodes[0].neighbours
+		self.neighbors = nodes[0].neighbors
 	}
 
 	var debugDescription: String {
@@ -35,10 +35,10 @@ class GraphNode: CustomDebugStringConvertible {
 			var next = [GraphNode]()
 
 			for node in previous {
-				for neighbour in node.neighbours
-				where !visited.contains(neighbour.val) {
-					visited.insert(neighbour.val)
-					next.append(neighbour)
+				for neighbor in node.neighbors
+				where neighbor != nil && !visited.contains(neighbor!.val) {
+					visited.insert(neighbor!.val)
+					next.append(neighbor!)
 				}
 			}
 
@@ -169,7 +169,34 @@ func solve(_ board: inout [[Character]]) {
 /// The given node will always be the first node with `val = 1`. You must return
 /// the **copy of the given node** as a reference to the cloned graph.
 func cloneGraph(_ node: GraphNode?) -> GraphNode? {
-	nil
+	guard let node = node else {
+		return nil
+	}
+
+	var current = [node]
+	var copies = [Int: Node]()
+
+	while !current.isEmpty {
+		var next = [Node]()
+
+		for node in current {
+			let copy = copies[node.val] ?? Node(node.val)
+			copies[node.val] = copy
+			guard copy.neighbors.count != node.neighbors.count else {
+				continue
+			}
+			for neighbor in node.neighbors where neighbor != nil {
+				let copyOfNeighbor = copies[neighbor!.val] ?? Node(neighbor!.val)
+				copy.neighbors.append(copyOfNeighbor)
+				copies[neighbor!.val] = copyOfNeighbor
+				next.append(neighbor!)
+			}
+		}
+
+		current = next
+	}
+
+	return copies[node.val]
 }
 
 private typealias Node = GraphNode

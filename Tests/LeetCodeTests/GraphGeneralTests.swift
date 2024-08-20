@@ -173,7 +173,7 @@ struct GraphGeneralTests {
 		) {
 			#expect(a !== b)
 			#expect(a.val == b.val)
-			#expect(a.neighbours.map(\.val) == b.neighbours.map(\.val))
+			#expect(a.neighbors.map(\.?.val) == b.neighbors.map(\.?.val))
 		}
 	}
 
