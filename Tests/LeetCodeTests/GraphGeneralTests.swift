@@ -259,4 +259,27 @@ struct GraphGeneralTests {
 
 		#expect(canFinish(numCourses, prerequisites) == expected)
 	}
+
+	@Test("Course schedule II", arguments: [
+		TestCase(given: Pair(2, [[1, 0]]), expected: [0, 1]),
+		TestCase(
+			given: Pair(4, [[1, 0], [2, 0], [3, 1], [3, 2]]),
+			expected: [0, 2, 1, 3]
+		),
+		TestCase(given: Pair(1, []), expected: [0]),
+	])
+	func testFindOrder(c: TestCase<Pair<Int, [[Int]]>, [Int]>) throws {
+		let ((numCourses, prerequisites), expected) = (c.given.values, c.expected)
+
+		try #require(1 <= numCourses && numCourses <= 2000)
+		try #require(prerequisites.count <= numCourses * (numCourses - 1))
+		try #require(prerequisites.allSatisfy {
+			$0.count == 2 && $0.allSatisfy {
+				0 <= $0 && $0 < numCourses
+			}
+		})
+		try #require(Set(prerequisites).count == prerequisites.count)
+
+		#expect(findOrder(numCourses, prerequisites) == expected)
+	}
 }
