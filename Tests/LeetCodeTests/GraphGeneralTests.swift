@@ -238,6 +238,12 @@ struct GraphGeneralTests {
 	@Test("Course schedule", arguments: [
 		TestCase(given: Pair(2, [[1, 0]]), expected: true),
 		TestCase(given: Pair(2, [[1, 0], [0, 1]]), expected: false),
+		TestCase(
+			given: Pair(7, [
+				[1, 0], [0, 3], [0, 2], [3, 2], [2, 5], [4, 5], [5, 6], [2, 4]
+			]),
+			expected: true
+		),
 	])
 	func testCanFinish(c: TestCase<Pair<Int, [[Int]]>, Bool>) throws {
 		let ((numCourses, prerequisites), expected) = (c.given.values, c.expected)

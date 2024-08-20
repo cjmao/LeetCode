@@ -281,5 +281,31 @@ func calcEquation(
 ///
 /// Return `true` if you can finish all courses. Otherwise, return `false`.
 func canFinish(_ numCourses: Int, _ prerequisites: [[Int]]) -> Bool {
-	false
+	var prerequisiteCounts = [Int](repeating: 0, count: numCourses)
+	var followingCourses = [Int: Set<Int>]()
+
+	for prerequisite in prerequisites {
+		let (a, b) = (prerequisite[0], prerequisite[1])
+		prerequisiteCounts[a] += 1
+		followingCourses[b, default: []].insert(a)
+	}
+
+	var coursesToTake = Set<Int>()
+	var coursesTaken = 0
+
+	for (course, count) in prerequisiteCounts.enumerated() where count == 0 {
+		coursesToTake.insert(course)
+	}
+
+	while let course = coursesToTake.popFirst() {
+		coursesTaken += 1
+		for course in followingCourses[course, default: []] {
+			prerequisiteCounts[course] -= 1
+			if prerequisiteCounts[course] == 0 {
+				coursesToTake.insert(course)
+			}
+		}
+	}
+
+	return coursesTaken == numCourses
 }
