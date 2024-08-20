@@ -201,7 +201,6 @@ func cloneGraph(_ node: GraphNode?) -> GraphNode? {
 
 private typealias Node = GraphNode
 
-
 /// Evaluate division
 ///
 /// You are given an array of variable pairs `equations` and an array of real
@@ -226,7 +225,48 @@ func calcEquation(
 	_ values: [Double],
 	_ queries: [[String]]
 ) -> [Double] {
-	[]
+	var edges = [String: [String: Double]]()
+
+	for (i, equation) in equations.enumerated() {
+		let (a, b, x) = (equation[0], equation[1], values[i])
+		edges[a, default: [:]][b] = x
+		edges[b, default: [:]][a] = 1 / x
+	}
+
+	var result = [Double]()
+
+	for q in queries {
+		let (start, end) = (q[0], q[1])
+
+		guard edges[start] != nil, edges[end] != nil else {
+			result.append(-1)
+			continue
+		}
+
+		var weights = [1.0]
+		var path = [start]
+		var visited = [start] as Set
+
+		while let v = path.last, v != end {
+			if let outEdges = edges[v],
+			   let next = outEdges.keys
+				.first(where: { visited.insert($0).inserted }),
+			   let weight = outEdges[next]
+			{
+				weights.append(weight)
+				path.append(next)
+			} else {
+				weights.removeLast()
+				path.removeLast()
+			}
+		}
+
+		result.append(
+			path.isEmpty ? -1 : weights.reduce(into: 1, *=)
+		)
+	}
+
+	return result
 }
 
 /// Course schedule
