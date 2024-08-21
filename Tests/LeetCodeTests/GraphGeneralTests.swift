@@ -311,4 +311,39 @@ struct GraphGeneralTests {
 
 		#expect(snakesAndLadders(board) == expected)
 	}
+
+	@Test("Minimum genetic mutation", arguments: [
+		TestCase(
+			given: Pair(
+				Pair("AACCGGTT", "AACCGGTA"),
+				["AACCGGTA"]
+			),
+			expected: 1
+		),
+		TestCase(
+			given: Pair(
+				Pair("AACCGGTT", "AAACGGTA"),
+				["AACCGGTA", "AACCGCTA", "AAACGGTA"]
+			),
+			expected: 1
+		),
+	])
+	func testMinMutation(
+		c: TestCase<Pair<Pair<String, String>, [String]>, Int>
+	) throws {
+		let (genesAndBank, expected) = (c.given, c.expected)
+		let (genes, bank) = genesAndBank.values
+		let (startGene, endGene) = genes.values
+
+		try #require(bank.count <= 10)
+		try #require(startGene.count == endGene.count && startGene.count == 8)
+		try #require(bank.allSatisfy { $0.count == 8 })
+		try #require(([startGene, endGene] + bank).allSatisfy {
+			$0.allSatisfy {
+				(["A", "C", "G", "T"] as Set).contains($0)
+			}
+		})
+
+		#expect(minMutation(startGene, endGene, bank) == expected)
+	}
 }
