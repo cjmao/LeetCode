@@ -267,6 +267,7 @@ struct GraphGeneralTests {
 			expected: [0, 2, 1, 3]
 		),
 		TestCase(given: Pair(1, []), expected: [0]),
+		TestCase(given: Pair(3, [[1, 0], [1, 2], [0, 1]]), expected: []),
 	])
 	func testFindOrder(c: TestCase<Pair<Int, [[Int]]>, [Int]>) throws {
 		let ((numCourses, prerequisites), expected) = (c.given.values, c.expected)

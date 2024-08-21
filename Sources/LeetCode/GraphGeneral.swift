@@ -324,7 +324,33 @@ func canFinish(_ numCourses: Int, _ prerequisites: [[Int]]) -> Bool {
 /// there are many valid answers, return **any** of them. If it is impossible to
 /// finish all courses, return **an empty array**.
 func findOrder(_ numCourses: Int, _ prerequisites: [[Int]]) -> [Int] {
-	[]
+	var prerequisiteCounts = [Int](repeating: 0, count: numCourses)
+	var followingCourses = [Int: Set<Int>]()
+
+	for prerequisite in prerequisites {
+		let (a, b) = (prerequisite[0], prerequisite[1])
+		prerequisiteCounts[a] += 1
+		followingCourses[b, default: []].insert(a)
+	}
+
+	var coursesToTake = Set<Int>()
+	var plan = [Int]()
+
+	for (course, count) in prerequisiteCounts.enumerated() where count == 0 {
+		coursesToTake.insert(course)
+	}
+
+	while let course = coursesToTake.popFirst() {
+		plan.append(course)
+		for course in followingCourses[course, default: []] {
+			prerequisiteCounts[course] -= 1
+			if prerequisiteCounts[course] == 0 {
+				coursesToTake.insert(course)
+			}
+		}
+	}
+
+	return plan.count == numCourses ? plan : []
 }
 
 /// Snakes and ladders
