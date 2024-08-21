@@ -282,4 +282,33 @@ struct GraphGeneralTests {
 
 		#expect(findOrder(numCourses, prerequisites) == expected)
 	}
+
+	@Test("Snakes and ladders", arguments: [
+		TestCase(
+			given: [
+				[-1, -1, -1, -1, -1, -1],
+				[-1, -1, -1, -1, -1, -1],
+				[-1, -1, -1, -1, -1, -1],
+				[-1, 35, -1, -1, 13, -1],
+				[-1, -1, -1, -1, -1, -1],
+				[-1, 15, -1, -1, -1, -1]
+			],
+			expected: 4
+		),
+		TestCase(given: [[-1, -1], [-1, 3]], expected: 1),
+	])
+	func testSnakesAndLadders(c: TestCase<[[Int]], Int>) throws {
+		let (board, expected) = (c.given, c.expected)
+
+		let n = board.count
+		try #require(board.allSatisfy { $0.count == n })
+		try #require(2 <= n && n <= 20)
+		try #require(board.allSatisfy { row in
+			row.allSatisfy { cell in
+				cell == -1 || (1...(n * n)).contains(cell)
+			}
+		})
+
+		#expect(snakesAndLadders(board) == expected)
+	}
 }
