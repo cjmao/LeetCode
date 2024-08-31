@@ -74,7 +74,7 @@ struct LeetCodeSwiftTests {
 				Pair("AACCGGTT", "AAACGGTA"),
 				["AACCGGTA", "AACCGCTA", "AAACGGTA"]
 			),
-			expected: 1
+			expected: 2
 		),
 	])
 	func testMinMutation(

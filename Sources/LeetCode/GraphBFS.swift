@@ -86,5 +86,39 @@ func snakesAndLadders(_ board: [[Int]]) -> Int {
 /// Note that the starting point is assumed to be valid, so it might not be
 /// included in the bank.
 func minMutation(_ startGene: String, _ endGene: String, _ bank: [String]) -> Int {
-	0
+	let bank = Set(bank)
+	let characters = Set("ACGT")
+
+	var mutations = 0
+	var current = [startGene] as Set
+	var checked = current
+
+	while !current.isEmpty, !current.contains(endGene) {
+		var next = Set<String>()
+
+		for gene in current {
+			for i in gene.indices {
+				for c in characters {
+					var mutated = gene
+					let range = i ..< mutated.index(after: i)
+					mutated.replaceSubrange(range, with: [c])
+
+					guard
+						mutated != gene,
+						bank.contains(mutated),
+						checked.insert(mutated).inserted
+					else {
+						continue
+					}
+
+					next.insert(mutated)
+				}
+			}
+		}
+
+		mutations += 1
+		current = next
+	}
+
+	return current.contains(endGene) ? mutations : -1
 }
