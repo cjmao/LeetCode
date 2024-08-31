@@ -61,6 +61,58 @@ struct TrieTests {
 			}
 		}
 	}
+
+	@Test("Design add and search words data structure", arguments: [
+		TestCase(
+			given: Pair(
+				[
+					.initialize, .addWord, .addWord, .addWord,
+					.search, .search, .search, .search
+				] as [WordDictionaryOperation],
+				[
+					nil, "bad", "dad", "mad",
+					"pad", "bad", ".ad", "b..",
+				]
+			),
+			expected: [
+				nil, nil, nil, nil,
+				false, true, true, true,
+			]
+		),
+	])
+	func testWordDictionary(
+		c: TestCase<Pair<[WordDictionaryOperation], [String?]>, [Bool?]>
+	) throws {
+		let (given, expected) = (c.given.values, c.expected)
+		let operations = zip(given.0, given.1)
+
+		var dictionary: WordDictionary?
+
+		for ((operation, argument), expected) in zip(operations, expected) {
+			switch operation {
+				case .initialize:
+					try #require(argument == nil && expected == nil)
+					dictionary = WordDictionary()
+				case .addWord:
+					try #require(expected == nil)
+					let word = try #require(argument)
+					try #require(
+						1 <= word.count && word.count <= 25
+						&& word.allSatisfy { $0.isLetter && $0.isLowercase }
+					)
+				case .search:
+					let word = try #require(argument)
+					let expected = try #require(expected as Bool?)
+
+					try #require(
+						1 <= word.count && word.count <= 25
+						&& word.allSatisfy { $0 == "." || $0.isLetter && $0.isLowercase }
+						&& word.count(where: { $0 == "." }) <= 2
+					)
+					#expect(dictionary?.search(word) == expected)
+			}
+		}
+	}
 }
 
 enum TrieOperation: Encodable {
@@ -68,4 +120,10 @@ enum TrieOperation: Encodable {
 	case insert
 	case search
 	case startsWith
+}
+
+enum WordDictionaryOperation: Encodable {
+	case initialize
+	case addWord
+	case search
 }
