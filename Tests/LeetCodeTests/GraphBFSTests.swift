@@ -95,4 +95,40 @@ struct LeetCodeSwiftTests {
 
 		#expect(minMutation(startGene, endGene, bank) == expected)
 	}
+
+	@Test("Word ladder", arguments: [
+		TestCase(
+			given: Pair(
+				Pair("hit", "cog"),
+				["hot", "dot", "dog", "lot", "log", "cog"]
+			),
+			expected: 5
+		),
+		TestCase(
+			given: Pair(
+				Pair("hit", "cog"),
+				["hot", "dot", "dog", "lot", "log"]
+			),
+			expected: 0
+		),
+	])
+	func testLadderLength(c: TestCase<Pair<Pair<String, String>, [String]>, Int>) throws {
+		let (words, expected) = (c.given, c.expected)
+		let (beginAndEnd, wordList) = words.values
+		let (beginWord, endWord) = beginAndEnd.values
+
+		try #require(1 <= beginWord.count && beginWord.count <= 10)
+		try #require(endWord.count == beginWord.count)
+		try #require(1 <= wordList.count && wordList.count <= 5000)
+		try #require(wordList.allSatisfy { $0.count == beginWord.count })
+		try #require(([beginWord, endWord] + wordList).allSatisfy { word in
+			word.allSatisfy { c in
+				c.isLetter && c.isLowercase
+			}
+		})
+		try #require(beginWord != endWord)
+		try #require(Set(wordList).count == wordList.count)
+
+		#expect(ladderLength(beginWord, endWord, wordList) == expected)
+	}
 }
