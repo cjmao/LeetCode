@@ -31,7 +31,38 @@
 /// Return _the least number of moves required to reach the square `n^2`. If it
 /// is not possible to reach the square, return `-1`_.
 func snakesAndLadders(_ board: [[Int]]) -> Int {
-	0
+	let n = board.count
+	let nn = n * n
+
+	var count = 0
+	var current = [1] as Set
+	var visited = current
+
+	while !current.isEmpty, !current.contains(nn) {
+		var next = Set<Int>()
+
+		for cell in current {
+			let lower = cell + 1
+			let upper = min(nn, cell + 6)
+
+			for var nextStep in lower ..< (upper + 1) {
+				let r = (nn - nextStep) / n
+				var c = (nextStep - 1) % n
+				c = (r % 2) == (n % 2) ? (n - 1) - c : c
+
+				nextStep = board[r][c] == -1 ? nextStep : board[r][c]
+
+				if visited.insert(nextStep).inserted {
+					next.insert(nextStep)
+				}
+			}
+		}
+
+		count += 1
+		current = next
+	}
+
+	return current.contains(nn) ? count : -1
 }
 
 /// Minimum genetic mutation
