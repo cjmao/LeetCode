@@ -169,6 +169,46 @@ struct TrieTests {
 			}
 		}
 	}
+
+	@Test("Word search II", arguments: [
+		TestCase(
+			given: Pair([
+				["o", "a", "a", "n"],
+				["e", "t", "a", "e"],
+				["i", "h", "k", "r"],
+				["i", "f", "l", "v"],
+			], ["oath", "pea", "eat", "rain"]),
+			expected: ["eat", "oath"]
+		),
+		TestCase(
+			given: Pair([
+				["a", "b"],
+				["c", "d"],
+			], ["abcb"]),
+			expected: []
+		),
+	])
+	func testFindWords(c: TestCase<Pair<[[String]], [String]>, [String]>) throws {
+		let ((board, words), expected) = (c.given.values, c.expected)
+
+		let (m, n) = (board.count, board[0].count)
+		try #require([m, n].allSatisfy { 1 <= $0 && $0 <= 12 })
+		try #require(board.allSatisfy {
+			$0.allSatisfy {
+				$0.count == 1 && $0.allSatisfy {
+					$0.isLetter && $0.isLowercase
+				}
+			}
+		})
+		try #require(!words.isEmpty && words.allSatisfy {
+			!$0.isEmpty && $0.allSatisfy {
+				$0.isLetter && $0.isLowercase
+			}
+		})
+		try #require(Set(words).count == words.count)
+
+		#expect(findWords(board.map { $0.map(Character.init) }, words) == expected)
+	}
 }
 
 enum TrieOperation: Encodable {
