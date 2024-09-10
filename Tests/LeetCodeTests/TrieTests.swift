@@ -23,6 +23,13 @@ struct TrieTests {
 				true, nil, true,
 			]
 		),
+		TestCase(
+			given: Pair(
+				[.initialize, .startsWith],
+				[nil, "a"]
+			),
+			expected: [nil, false]
+		),
 	])
 	func testTrieImplementation(
 		c: TestCase<Pair<[TrieOperation], [String?]>, [Bool?]>
@@ -46,6 +53,7 @@ struct TrieTests {
 					try #require(expected == nil)
 					let word = try #require(argument)
 					try #require(isValidWord(word))
+					trie?.insert(word)
 				case .search:
 					let word = try #require(argument)
 					let expected = try #require(expected as Bool?)
@@ -57,7 +65,7 @@ struct TrieTests {
 					let expected = try #require(expected as Bool?)
 
 					try #require(isValidWord(word))
-					#expect(trie?.search(word) == expected)
+					#expect(trie?.startsWith(word) == expected)
 			}
 		}
 	}

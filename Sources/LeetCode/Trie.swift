@@ -15,20 +15,41 @@
 ///   previously inserted string `word` that has the prefix `prefix`, and
 ///   `false` otherwise.
 class Trie {
-	init() {
-
+	private class Node {
+		var isWord = false
+		var children: [Character: Node] = [:]
 	}
 
-	func insert(_ word: String) {
+	private let root = Node()
 
+	func insert(_ word: String) {
+		var current = root
+
+		for c in word {
+			let next = current.children[c, default: .init()]
+			current.children[c] = next
+			current = next
+		}
+
+		current.isWord = true
 	}
 
 	func search(_ word: String) -> Bool {
-		false
+		traverse(path: word)?.isWord ?? false
 	}
 
 	func startsWith(_ prefix: String) -> Bool {
-		false
+		traverse(path: prefix) != nil
+	}
+
+	private func traverse(path: String) -> Node? {
+		var node: _? = root
+
+		for c in path where node != nil {
+			node = node?.children[c]
+		}
+
+		return node
 	}
 }
 
