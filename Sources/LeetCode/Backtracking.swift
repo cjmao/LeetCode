@@ -8,3 +8,13 @@
 func letterCombinations(_ digits: String) -> [String] {
 	[]
 }
+
+/// Combinations
+///
+/// Given two integers `n` and `k`, return _all possible combinations of `k`
+/// numbers chosen from the range `[1, n]`_.
+///
+/// You may return the answer in **any order**.
+func combine(_ n: Int, _ k: Int) -> [[Int]] {
+	[]
+}
