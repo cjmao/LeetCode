@@ -142,5 +142,48 @@ func ladderLength(
 	_ endWord: String,
 	_ wordList: [String]
 ) -> Int {
-	0
+	let dummy: Character = "."
+	var words: [String: Set<Character>] = [:]
+
+	for word in wordList {
+		for i in word.indices {
+			let pattern = word.replacingCharacter(at: i, with: dummy)
+			words[pattern, default: []].insert(word[i])
+		}
+	}
+
+	var steps = 0
+	var current = [beginWord] as Set
+
+	while !current.isEmpty, !current.contains(endWord) {
+		var next = Set<String>()
+
+		for word in current {
+			for i in word.indices {
+				let pattern = word.replacingCharacter(at: i, with: dummy)
+				words[pattern]?.remove(word[i])
+
+				for replacement in words[pattern] ?? [] {
+					let nextWord = word.replacingCharacter(at: i, with: replacement)
+					if !current.contains(nextWord) {
+						next.insert(nextWord)
+					}
+				}
+			}
+		}
+
+		steps += 1
+		current = next
+	}
+
+	return current.contains(endWord) ? 1 + steps : 0
+}
+
+extension String {
+	func replacingCharacter(
+		at index: Index,
+		with replacement: Character
+	) -> String {
+		self[..<index] + String(replacement) + self[self.index(after: index)...]
+	}
 }
