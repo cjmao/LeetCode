@@ -75,7 +75,7 @@ struct TrieTests {
 			given: Pair(
 				[
 					.initialize, .addWord, .addWord, .addWord,
-					.search, .search, .search, .search
+					.search, .search, .search, .search,
 				] as [WordDictionaryOperation],
 				[
 					nil, "bad", "dad", "mad",
@@ -85,6 +85,53 @@ struct TrieTests {
 			expected: [
 				nil, nil, nil, nil,
 				false, true, true, true,
+			]
+		),
+		TestCase(
+			given: Pair(
+				[
+					.initialize, .addWord, .addWord,
+					.search, .search, .search,
+					.search, .search, .search,
+				],
+				[
+					nil, "a", "a",
+					".", "a", "aa",
+					"a", ".a", "a.",
+				]
+			),
+			expected: [
+				nil, nil, nil,
+				true, true, false,
+				true, false, false,
+			]
+		),
+		TestCase(
+			given: Pair(
+				[
+					.initialize,
+					.addWord, .addWord, .addWord, .addWord,
+					.search, .search,
+					.addWord,
+					.search, .search, .search,
+					.search, .search, .search,
+				],
+				[
+					nil,
+					"at", "and", "an", "add",
+					"a", ".at",
+					"bat",
+					".at", "an.", "a.d.",
+					"b.", "a.d", ".",
+				]
+			),
+			expected: [
+				nil,
+				nil, nil, nil, nil,
+				false, false,
+				nil,
+				true, true, false,
+				false, true, false,
 			]
 		),
 	])
@@ -108,6 +155,7 @@ struct TrieTests {
 						1 <= word.count && word.count <= 25
 						&& word.allSatisfy { $0.isLetter && $0.isLowercase }
 					)
+					dictionary?.addWord(word)
 				case .search:
 					let word = try #require(argument)
 					let expected = try #require(expected as Bool?)

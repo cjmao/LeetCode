@@ -66,15 +66,44 @@ class Trie {
 ///   structure that matches `word` or `false` otherwise. `word` may contain
 ///   dots '.' where dots can be matched with any letter.
 class WordDictionary {
-	init() {
-
+	private class Node {
+		var isWord = false
+		var children: [Character: Node] = [:]
 	}
 
-	func addWord(_ word: String) {
+	private let root = Node()
 
+	func addWord(_ word: String) {
+		var current = root
+		for c in word {
+			let next = current.children[c, default: .init()]
+			current.children[c] = next
+			current = next
+		}
+		current.isWord = true
 	}
 
 	func search(_ word: String) -> Bool {
-		false
+		search(word, from: root)
+	}
+
+	private func search(_ word: some StringProtocol, from node: Node) -> Bool {
+		let head = word.first!
+		let indexAfter = word.index(after: word.startIndex)
+		let tail = word[indexAfter...]
+
+		if head != "." {
+			return if let next = node.children[head] {
+				tail.isEmpty ? next.isWord : search(tail, from: next)
+			} else {
+				false
+			}
+		}
+
+		let match = node.children.first { _, next in
+			tail.isEmpty ? next.isWord : search(tail, from: next)
+		}
+
+		return match != nil
 	}
 }
