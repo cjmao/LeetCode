@@ -19,7 +19,7 @@ struct BacktrackingTests {
 			$0.isWholeNumber && $0 != "0" && $0 != "1"
 		})
 
-		#expect(letterCombinations(digits) == expected)
+		#expect(letterCombinations(digits).sorted() == expected.sorted())
 	}
 
 	@Test("Combinations", arguments: [
