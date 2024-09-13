@@ -187,6 +187,32 @@ struct TrieTests {
 			], ["abcb"]),
 			expected: []
 		),
+		TestCase(
+			given: Pair([
+				["o", "a", "a", "n"],
+				["e", "t", "a", "e"],
+				["i", "h", "k", "r"],
+				["i", "f", "l", "v"],
+			], [
+				"oath", "pea", "eat", "rain", "hklf", "hf"
+			]),
+			expected: ["oath", "eat", "hklf", "hf"]
+		),
+		TestCase(
+			given: Pair([["a"]], ["a"]),
+			expected: ["a"]
+		),
+		TestCase(
+			given: Pair([
+				["o", "a", "b", "n"],
+				["o", "t", "a", "e"],
+				["a", "h", "k", "r"],
+				["a", "f", "l", "v"],
+			], [
+				"oa", "oaa"
+			]),
+			expected: ["oa", "oaa"]
+		),
 	])
 	func testFindWords(c: TestCase<Pair<[[String]], [String]>, [String]>) throws {
 		let ((board, words), expected) = (c.given.values, c.expected)
@@ -207,7 +233,8 @@ struct TrieTests {
 		})
 		try #require(Set(words).count == words.count)
 
-		#expect(findWords(board.map { $0.map(Character.init) }, words) == expected)
+		let wordsFound = findWords(board.map { $0.map(Character.init)}, words)
+		#expect(wordsFound.sorted() == expected.sorted())
 	}
 }
 

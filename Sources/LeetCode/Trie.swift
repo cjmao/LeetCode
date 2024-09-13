@@ -117,5 +117,71 @@ class WordDictionary {
 /// where **adjacent cells** are horizontally or vertically neighboring. The
 /// same letter cell may not be used more than once in a word.
 func findWords(_ board: [[Character]], _ words: [String]) -> [String] {
-	[]
+	let trie = TrieNode()
+	for word in words {
+		trie.insert(word)
+	}
+
+	let (m, n) = (board.count, board[0].count)
+
+	var wordsFound = [String]()
+	var visited = Set<Int>()
+
+	func search(node: TrieNode, row: Int, column: Int) {
+		guard 0 <= row, row < m, 0 <= column, column < n else {
+			return
+		}
+
+		let index = row * n + column
+		let letter = board[row][column]
+
+		guard !visited.contains(index), let next = node.children[letter] else {
+			return
+		}
+
+		visited.insert(index)
+
+		if let word = next.word {
+			wordsFound.append(word)
+			next.word = nil
+		}
+
+		for (r, c) in [
+			(row - 1, column), (row + 1, column),
+			(row, column - 1), (row, column + 1)
+		] {
+			search(node: next, row: r, column: c)
+		}
+
+		visited.remove(index)
+
+		if next.children.isEmpty {
+			node.children.removeValue(forKey: letter)
+		}
+	}
+
+	for i in 0 ..< m * n {
+		let (r, c) = i.quotientAndRemainder(dividingBy: n)
+		search(node: trie, row: r, column: c)
+		visited.removeAll()
+	}
+
+	return wordsFound
+}
+
+private class TrieNode {
+	var word: String?
+	var children: [Character: TrieNode] = [:]
+
+	func insert(_ word: String) {
+		var current = self
+
+		for c in word {
+			let next = current.children[c, default: .init()]
+			current.children[c] = next
+			current = next
+		}
+
+		current.word = word
+	}
 }
