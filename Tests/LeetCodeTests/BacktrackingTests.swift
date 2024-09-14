@@ -57,4 +57,30 @@ struct BacktrackingTests {
 
 		#expect(combinations == expected)
 	}
+
+	@Test("Permutations", arguments: [
+		TestCase(
+			given: [1, 2, 3],
+			expected: [
+				[1, 2, 3],
+				[1, 3, 2],
+				[2, 1, 3],
+				[2, 3, 1],
+				[3, 1, 2],
+				[3, 2, 1],
+			]
+		),
+		TestCase(given: [0, 1], expected: [[0, 1], [1, 0],]),
+		TestCase(given: [1], expected: [[1]]),
+	])
+	func testPermute(c: TestCase<[Int], [[Int]]>) throws {
+		let (nums, expected) = (c.given, Set(c.expected))
+
+		try #require(1 <= nums.count && nums.count <= 6)
+		try #require(nums.allSatisfy { -10 <= $0 && $0 <= 10 })
+		try #require(Set(nums).count == nums.count)
+
+		let permutations = Set(permute(nums))
+		#expect(permutations == expected)
+	}
 }

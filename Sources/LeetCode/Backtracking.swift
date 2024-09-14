@@ -67,3 +67,11 @@ func combine(_ n: Int, _ k: Int) -> [[Int]] {
 
 	return combinations
 }
+
+/// Permutations
+///
+/// Given an array `nums` of distinct integers, return _all the possible
+/// permutations_. You can return the answer in **any order**.
+func permute(_ nums: [Int]) -> [[Int]] {
+	[]
+}
