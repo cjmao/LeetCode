@@ -47,5 +47,23 @@ func letterCombinations(_ digits: String) -> [String] {
 ///
 /// You may return the answer in **any order**.
 func combine(_ n: Int, _ k: Int) -> [[Int]] {
-	[]
+	var combinations = [[Int]]()
+	var combination = [Int]()
+
+	func backtrack(from i: Int) {
+		guard combination.count < k else {
+			combinations.append(combination)
+			return
+		}
+
+		for j in i..<(n + 1) {
+			combination.append(j)
+			backtrack(from: j + 1)
+			combination.removeLast()
+		}
+	}
+
+	backtrack(from: 1)
+
+	return combinations
 }
