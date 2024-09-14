@@ -109,4 +109,14 @@ struct BacktrackingTests {
 		let combinations = Set(combinationSum(candidates, target))
 		#expect(combinations == expected)
 	}
+
+	@Test("N-Queens II", arguments: [
+		TestCase(given: 4, expected: 2),
+		TestCase(given: 1, expected: 1),
+	])
+	func testTotalNQueens(c: TestCase<Int, Int>) throws {
+		let (n, expected) = (c.given, c.expected)
+		try #require(1 <= n && n <= 9)
+		#expect(totalNQueens(n) == expected)
+	}
 }

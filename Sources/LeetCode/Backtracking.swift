@@ -92,3 +92,14 @@ func permute(_ nums: [Int]) -> [[Int]] {
 func combinationSum(_ candidates: [Int], _ target: Int) -> [[Int]] {
 	[]
 }
+
+/// N-Queens II
+///
+/// The **n-queens** puzzle is the problem of placing `n` queens on an `n x n`
+/// chessboard such that no two queens attack each other.
+///
+/// Given an integer `n`, return _the number of distinct solutions to the
+/// **n-queens puzzle**_.
+func totalNQueens(_ n: Int) -> Int {
+	0
+}
