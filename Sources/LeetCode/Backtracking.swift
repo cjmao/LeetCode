@@ -73,7 +73,25 @@ func combine(_ n: Int, _ k: Int) -> [[Int]] {
 /// Given an array `nums` of distinct integers, return _all the possible
 /// permutations_. You can return the answer in **any order**.
 func permute(_ nums: [Int]) -> [[Int]] {
-	[]
+	var nums = nums
+	var permutations = [[Int]]()
+
+	func backtrack(from startIndex: Int) {
+		guard startIndex < nums.endIndex else {
+			permutations.append(nums)
+			return
+		}
+
+		for index in startIndex..<nums.endIndex {
+			nums.swapAt(startIndex, index)
+			backtrack(from: startIndex + 1)
+			nums.swapAt(startIndex, index)
+		}
+	}
+
+	backtrack(from: 0)
+
+	return permutations
 }
 
 /// Combination sum
