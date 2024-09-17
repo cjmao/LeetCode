@@ -108,7 +108,26 @@ func permute(_ nums: [Int]) -> [[Int]] {
 /// The test cases are generated such that the number of unique combinations
 /// that sum up to `target` is less than `150` combinations for the given input.
 func combinationSum(_ candidates: [Int], _ target: Int) -> [[Int]] {
-	[]
+	var combinations = [[Int]]()
+	var combination = [Int]()
+
+	func backtrack(target: Int) {
+		guard target > 0 else {
+			combinations.append(combination)
+			return
+		}
+
+		for candidate in candidates
+		where target >= candidate && candidate >= combination.last ?? .min {
+			combination.append(candidate)
+			backtrack(target: target - candidate)
+			combination.removeLast()
+		}
+	}
+
+	backtrack(target: target)
+
+	return combinations
 }
 
 /// N-Queens II
