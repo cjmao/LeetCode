@@ -111,8 +111,15 @@ struct BacktrackingTests {
 	}
 
 	@Test("N-Queens II", arguments: [
-		TestCase(given: 4, expected: 2),
 		TestCase(given: 1, expected: 1),
+		TestCase(given: 2, expected: 0),
+		TestCase(given: 3, expected: 0),
+		TestCase(given: 4, expected: 2),
+		TestCase(given: 5, expected: 10),
+		TestCase(given: 6, expected: 4),
+		TestCase(given: 7, expected: 40),
+		TestCase(given: 8, expected: 92),
+		TestCase(given: 9, expected: 352),
 	])
 	func testTotalNQueens(c: TestCase<Int, Int>) throws {
 		let (n, expected) = (c.given, c.expected)

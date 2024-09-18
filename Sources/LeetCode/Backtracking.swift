@@ -138,5 +138,56 @@ func combinationSum(_ candidates: [Int], _ target: Int) -> [[Int]] {
 /// Given an integer `n`, return _the number of distinct solutions to the
 /// **n-queens puzzle**_.
 func totalNQueens(_ n: Int) -> Int {
-	0
+	var count = 0
+
+	func backtrack(
+		fromRow row: Int,
+		availableColumns: Int,
+		usedDiagonals: Int,
+		usedAntidiagonals: Int
+	) {
+		guard row < n else {
+			count += 1
+			return
+		}
+
+		var uncheckedColumns = availableColumns
+
+		// find the right most 1-bit
+		var nextAvailableColumn = uncheckedColumns & -uncheckedColumns
+
+		while nextAvailableColumn != 0 {
+			let column = nextAvailableColumn.trailingZeroBitCount
+
+			// set the current column bit to 0
+			uncheckedColumns &= ~(1 << column)
+			nextAvailableColumn = uncheckedColumns & -uncheckedColumns
+
+			let diagonal = row + column
+			let antidiagonal = row + (n - column - 1) // flip column
+
+			guard
+				usedDiagonals & (1 << diagonal) == 0,
+				usedAntidiagonals & (1 << antidiagonal) == 0
+			else {
+				continue
+			}
+
+			backtrack(
+				fromRow: row + 1, // from next row
+				availableColumns: availableColumns & ~(1 << column), // excluding current column
+				usedDiagonals: usedDiagonals | (1 << diagonal), // including current diagonal
+				usedAntidiagonals: usedAntidiagonals | (1 << antidiagonal) // including current antidiagonal
+			)
+		}
+	}
+
+	backtrack(
+		fromRow: 0,
+		availableColumns: (1 << n) - 1,
+		usedDiagonals: 0,
+		usedAntidiagonals: 0
+	)
+
+	return count
 }
