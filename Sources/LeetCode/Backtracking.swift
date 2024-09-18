@@ -199,3 +199,15 @@ func totalNQueens(_ n: Int) -> Int {
 func generateParenthesis(_ n: Int) -> [String] {
 	[]
 }
+
+/// Word search
+///
+/// Given an `m x n` grid of characters `board` and a string `word`, return
+/// _`true` if `word` exists in the grid_.
+///
+/// The word can be constructed from letters of sequentially adjacent cells,
+/// where adjacent cells are horizontally or vertically neighboring. The same
+/// letter cell may not be used more than once.
+func exist(_ board: [[Character]], _ word: String) -> Bool {
+	false
+}

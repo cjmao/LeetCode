@@ -136,4 +136,49 @@ struct BacktrackingTests {
 		try #require(1 <= n && n <= 8)
 		#expect(generateParenthesis(n) == expected)
 	}
+
+	@Test("Word search", arguments: [
+		TestCase(
+			given: Pair([
+				["A", "B", "C", "E"],
+				["S", "F", "C", "S"],
+				["A", "D", "E", "E"]
+			], "ABCCED"),
+			expected: true
+		),
+		TestCase(
+			given: Pair([
+				["A", "B", "C", "E"],
+				["S", "F", "C", "S"],
+				["A", "D", "E", "E"]
+			], "SEE"),
+			expected: true
+		),
+		TestCase(
+			given: Pair([
+				["A", "B", "C", "E"],
+				["S", "F", "C", "S"],
+				["A", "D", "E", "E"]
+			], "ABCB"),
+			expected: false
+		),
+	])
+	func testExist(c: TestCase<Pair<[[String]], String>, Bool>) throws {
+		let ((board, word), expected) = (c.given.values, c.expected)
+		let (m, n) = (board.count, board[0].count)
+
+		try #require([m, n].allSatisfy { 1 <= $0 && $0 <= 6 })
+		try #require(1 <= word.count && word.count <= 15)
+		try #require(
+			board.allSatisfy {
+				$0.allSatisfy {
+					$0.count == 1 && $0.first!.isLetter
+				}
+			}
+			&& word.allSatisfy(\.isLetter)
+		)
+
+		let b = board.map { $0.map(\.first!) }
+		#expect(exist(b, word) == expected)
+	}
 }
