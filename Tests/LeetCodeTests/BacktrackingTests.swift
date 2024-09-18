@@ -126,4 +126,14 @@ struct BacktrackingTests {
 		try #require(1 <= n && n <= 9)
 		#expect(totalNQueens(n) == expected)
 	}
+
+	@Test("Generate parentheses", arguments: [
+		TestCase(given: 3, expected: ["((()))","(()())","(())()","()(())","()()()"]),
+		TestCase(given: 1, expected: ["()"]),
+	])
+	func testGenerateParenthesis(c: TestCase<Int, [String]>) throws {
+		let (n, expected) = (c.given, c.expected)
+		try #require(1 <= n && n <= 8)
+		#expect(generateParenthesis(n) == expected)
+	}
 }

@@ -191,3 +191,11 @@ func totalNQueens(_ n: Int) -> Int {
 
 	return count
 }
+
+/// Generate parentheses
+///
+/// Given `n` pairs of parentheses, write a function to _generate all
+/// combinations of well-formed parentheses_.
+func generateParenthesis(_ n: Int) -> [String] {
+	[]
+}
