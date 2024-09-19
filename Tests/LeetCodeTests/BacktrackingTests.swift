@@ -128,8 +128,34 @@ struct BacktrackingTests {
 	}
 
 	@Test("Generate parentheses", arguments: [
-		TestCase(given: 3, expected: ["((()))","(()())","(())()","()(())","()()()"]),
 		TestCase(given: 1, expected: ["()"]),
+		TestCase(given: 2, expected: ["(())", "()()"]),
+		TestCase(
+			given: 3,
+			expected: [
+				"((()))",
+				"(()())",
+				"(())()",
+				"()(())",
+				"()()()"
+			]
+		),
+		TestCase(given: 4, expected: [
+			"(((())))",
+			"((()()))",
+			"((())())",
+			"((()))()",
+			"(()(()))",
+			"(()()())",
+			"(()())()",
+			"(())(())",
+			"(())()()",
+			"()((()))",
+			"()(()())",
+			"()(())()",
+			"()()(())",
+			"()()()()"
+		]),
 	])
 	func testGenerateParenthesis(c: TestCase<Int, [String]>) throws {
 		let (n, expected) = (c.given, c.expected)

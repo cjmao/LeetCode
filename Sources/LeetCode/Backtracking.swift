@@ -197,7 +197,26 @@ func totalNQueens(_ n: Int) -> Int {
 /// Given `n` pairs of parentheses, write a function to _generate all
 /// combinations of well-formed parentheses_.
 func generateParenthesis(_ n: Int) -> [String] {
-	[]
+	var parentheses = [String]()
+
+	func backtrack(_ pairs: String, _ open: Int, _ close: Int) {
+		guard pairs.count < 2 * n else {
+			parentheses.append(pairs)
+			return
+		}
+
+		if open < n {
+			backtrack(pairs + "(", open + 1, close)
+		}
+
+		if close < open {
+			backtrack(pairs + ")", open, close + 1)
+		}
+	}
+
+	backtrack("(", 1, 0)
+
+	return parentheses
 }
 
 /// Word search
