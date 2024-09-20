@@ -188,6 +188,29 @@ struct BacktrackingTests {
 			], "ABCB"),
 			expected: false
 		),
+		TestCase(
+			given: Pair([["a"]], "a"),
+			expected: true
+		),
+		TestCase(
+			given: Pair([
+				["a", "b"],
+				["c", "d"],
+			], "acdb"),
+			expected: true
+		),
+		TestCase(
+			given: Pair([
+				["a", "a"],
+			], "aaa"),
+			expected: false
+		),
+		TestCase(
+			given: Pair([
+				["a", "b"],
+			], "ba"),
+			expected: true
+		),
 	])
 	func testExist(c: TestCase<Pair<[[String]], String>, Bool>) throws {
 		let ((board, word), expected) = (c.given.values, c.expected)

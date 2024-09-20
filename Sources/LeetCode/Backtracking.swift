@@ -228,5 +228,43 @@ func generateParenthesis(_ n: Int) -> [String] {
 /// where adjacent cells are horizontally or vertically neighboring. The same
 /// letter cell may not be used more than once.
 func exist(_ board: [[Character]], _ word: String) -> Bool {
-	false
+	let (m, n) = (board.count, board[0].count)
+	var found = false
+
+	let directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+	var checked = Set<Int>()
+
+	func backtrack(_ row: Int, _ column: Int, _ index: String.Index) {
+		let boardIndex = row * n + column
+
+		guard
+			!found,
+			0 <= row, row < m,
+			0 <= column, column < n,
+			!checked.contains(boardIndex),
+			word.startIndex <= index, index < word.endIndex,
+			board[row][column] == word[index]
+		else {
+			if index == word.endIndex {
+				found = true
+			}
+			return
+		}
+
+		let indexAfter = word.index(after: index)
+
+		checked.insert(boardIndex)
+		for (dr, dc) in directions {
+			backtrack(row + dr, column + dc, indexAfter)
+		}
+		checked.remove(boardIndex)
+	}
+
+	for i in 0 ..< (m * n) {
+		guard !found else { break }
+		let (r, c) = i.quotientAndRemainder(dividingBy: n)
+		backtrack(r, c, word.startIndex)
+	}
+
+	return found
 }
