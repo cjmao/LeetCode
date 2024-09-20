@@ -23,4 +23,18 @@ struct DivideAndConquerTests {
 
 		#expect(isSameTree(tree, expectedTree))
 	}
+
+	@Test("Sort list", arguments: [
+		TestCase(given: [4, 2, 1, 3], expected: [1, 2, 3, 4]),
+		TestCase(given: [-1, 5, 3, 4, 0], expected: [-1, 0, 3, 4, 5]),
+		TestCase(given: [], expected: []),
+	])
+	func testSortList(c: TestCase<[Int], [Int]>) throws {
+		let (nums, expected) = (c.given, c.expected)
+
+		let givenList = LinkedList(nums)
+		let expectedList = LinkedList(expected)
+
+		#expect(givenList == expectedList)
+	}
 }

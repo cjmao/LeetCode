@@ -17,3 +17,11 @@ func sortedArrayToBST(_ nums: [Int]) -> TreeNode? {
 
 	return convert(from: nums.startIndex, to: nums.endIndex - 1)
 }
+
+/// Sort list
+///
+/// Given the `head` of a linked list, return _the list after sorting it in
+/// **ascending order**_.
+func sortList(_ head: ListNode?) -> ListNode? {
+	nil
+}

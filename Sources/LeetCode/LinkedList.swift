@@ -1,4 +1,4 @@
-struct LinkedList: CustomDebugStringConvertible {
+struct LinkedList: CustomDebugStringConvertible, Equatable {
 	var head: ListNode?
 	var tail: ListNode?
 	var count = 0
@@ -52,6 +52,23 @@ struct LinkedList: CustomDebugStringConvertible {
 			current = current?.next
 		}
 		return s
+	}
+
+	static func ==(lhs: LinkedList, rhs: LinkedList) -> Bool {
+		guard lhs.count == rhs.count else {
+			return false
+		}
+
+		let s1 = sequence(first: lhs.head, next: \.?.next)
+		let s2 = sequence(first: rhs.head, next: \.?.next)
+
+		for (n1, n2) in zip(s1, s2) {
+			guard let v1 = n1?.val, let v2 = n2?.val, v1 == v2 else {
+				return n1 == nil && n2 == nil
+			}
+		}
+
+		return true
 	}
 }
 
