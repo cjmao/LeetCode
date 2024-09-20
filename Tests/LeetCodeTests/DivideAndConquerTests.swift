@@ -1,4 +1,5 @@
 import Testing
+import Foundation
 @testable import LeetCode
 
 @Suite("Divide & Conquer")
@@ -36,5 +37,55 @@ struct DivideAndConquerTests {
 		let expectedList = LinkedList(expected)
 
 		#expect(givenList == expectedList)
+	}
+
+	@Test("Construct quad tree", arguments: [
+		TestCase(
+			given: [
+				[0, 1],
+				[1, 0]
+			],
+			expected: [
+				[0, 1],
+				[1, 0], [1, 1],
+				[1, 1], [1, 0]
+			]
+		),
+		TestCase(
+			given: [
+				[1, 1, 1, 1,  0, 0, 0, 0],
+				[1, 1, 1, 1,  0, 0, 0, 0],
+				[1, 1, 1, 1,  1, 1, 1, 1],
+				[1, 1, 1, 1,  1, 1, 1, 1],
+
+				[1, 1, 1, 1,  0, 0, 0, 0],
+				[1, 1, 1, 1,  0, 0, 0, 0],
+				[1, 1, 1, 1,  0, 0, 0, 0],
+				[1, 1, 1, 1,  0, 0, 0, 0],
+			],
+			expected: [
+				[0, 1],
+				[1, 1], [0, 1],
+				[1, 1], [1, 0],
+				[1, 0], [1, 0],
+				[1, 1], [1, 1]
+			]
+		),
+	])
+	func testConstruct(c: TestCase<[[Int]], [[Int]]>) throws {
+		let (grid, expected) = (c.given, c.expected)
+		let n = grid.count, x = log2(Double(n))
+
+		try #require(grid.allSatisfy { $0.count == n })
+		try #require(0 <= x && x <= 6)
+
+		let levels = try #require(construct(grid)).levels()
+			.flatMap { level in
+				level.map { node in
+					[node.isLeaf ? 1 : 0, node.val ? 1 : 0]
+				}
+			}
+
+		#expect(levels == expected)
 	}
 }
