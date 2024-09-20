@@ -88,4 +88,37 @@ struct DivideAndConquerTests {
 
 		#expect(levels == expected)
 	}
+
+	@Test("Merge k sorted lists", arguments: [
+		TestCase(
+			given: [[1, 4, 5], [1, 3, 4], [2, 6]],
+			expected: [1, 1, 2, 3, 4, 4, 5, 6]
+		),
+		TestCase(
+			given: [],
+			expected: []
+		),
+		TestCase(
+			given: [[]],
+			expected: []
+		),
+	])
+	func testMergeKLists(c: TestCase<[[Int]], [Int]>) throws {
+		let (nodes, expected) = (c.given, c.expected)
+
+		try #require(nodes.allSatisfy {
+			0 <= $0.count && $0.count <= 500 && $0.isSorted()
+		})
+
+		let lists = nodes.map { LinkedList($0).head }
+		let merged = mergeKLists(lists)
+
+		if expected.isEmpty {
+			#expect(merged == nil)
+		} else {
+			let merged = try #require(merged)
+			let s = sequence(first: merged, next: \.next).map(\.val)
+			#expect(s == expected)
+		}
+	}
 }

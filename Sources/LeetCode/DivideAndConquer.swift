@@ -119,3 +119,13 @@ class QuadTreeNode {
 }
 
 private typealias Node = QuadTreeNode
+
+/// Merge k sorted lists
+///
+/// You are given an array of `k` linked-lists `lists`, each linked-list is
+/// sorted in ascending order.
+///
+/// _Merge all the linked-lists into one sorted linked-list and return it_.
+func mergeKLists(_ lists: [ListNode?]) -> ListNode? {
+	nil
+}
