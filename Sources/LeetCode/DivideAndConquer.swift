@@ -23,7 +23,53 @@ func sortedArrayToBST(_ nums: [Int]) -> TreeNode? {
 /// Given the `head` of a linked list, return _the list after sorting it in
 /// **ascending order**_.
 func sortList(_ head: ListNode?) -> ListNode? {
-	nil
+	guard head?.next != nil else {
+		return head
+	}
+
+	var slow = head, fast = head?.next
+
+	while let next = fast?.next {
+		fast = next.next
+		slow = slow?.next
+	}
+
+	var right = slow?.next
+	slow?.next = nil
+
+	let left = sortList(head)
+	right = sortList(right)
+
+	return merge(left, right)
+}
+
+private func merge(_ left: ListNode?, _ right: ListNode?) -> ListNode? {
+	let head = if let left, let right {
+		left.val <= right.val ? left : right
+	} else {
+		left ?? right
+	}
+
+	var tail = head
+
+	var left = tail === left ? left?.next : left
+	var right = tail === right ? right?.next : right
+
+	while let l = left, let r = right {
+		if l.val <= r.val {
+			tail?.next = l
+			tail = l
+			left = l.next
+		} else {
+			tail?.next = r
+			tail = r
+			right = r.next
+		}
+	}
+
+	tail?.next = left ?? right
+
+	return head
 }
 
 /// Construct quad tree

@@ -29,6 +29,7 @@ struct DivideAndConquerTests {
 		TestCase(given: [4, 2, 1, 3], expected: [1, 2, 3, 4]),
 		TestCase(given: [-1, 5, 3, 4, 0], expected: [-1, 0, 3, 4, 5]),
 		TestCase(given: [], expected: []),
+		TestCase(given: [3, 2, 4], expected: [2, 3, 4]),
 	])
 	func testSortList(c: TestCase<[Int], [Int]>) throws {
 		let (nums, expected) = (c.given, c.expected)
@@ -36,7 +37,8 @@ struct DivideAndConquerTests {
 		let givenList = LinkedList(nums)
 		let expectedList = LinkedList(expected)
 
-		#expect(givenList == expectedList)
+		let sorted = LinkedList(sortList(givenList.head))
+		#expect(sorted == expectedList)
 	}
 
 	@Test("Construct quad tree", arguments: [
