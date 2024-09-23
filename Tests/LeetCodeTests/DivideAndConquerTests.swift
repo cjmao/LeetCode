@@ -121,6 +121,10 @@ struct DivideAndConquerTests {
 			given: [[]],
 			expected: []
 		),
+		TestCase(
+			given: [[], [], [], [], [], [], [], [], [], [], []],
+			expected: []
+		),
 	])
 	func testMergeKLists(c: TestCase<[[Int]], [Int]>) throws {
 		let (nodes, expected) = (c.given, c.expected)

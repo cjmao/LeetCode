@@ -207,5 +207,39 @@ private typealias Node = QuadTreeNode
 ///
 /// _Merge all the linked-lists into one sorted linked-list and return it_.
 func mergeKLists(_ lists: [ListNode?]) -> ListNode? {
-	nil
+	func merge(_ lists: ArraySlice<ListNode?>) -> ListNode? {
+		guard lists.count > 1 else {
+			return lists.first ?? nil
+		}
+
+		guard lists.count > 2 else {
+			let dummy = ListNode()
+			var tail = dummy
+			var (h1, h2) = (lists[lists.startIndex], lists[lists.endIndex - 1])
+
+			while let a = h1, let b = h2 {
+				if a.val <= b.val {
+					tail.next = a
+					tail = a
+					h1 = a.next
+				} else {
+					tail.next = b
+					tail = b
+					h2 = b.next
+				}
+			}
+
+			tail.next = h1 ?? h2
+
+			return dummy.next
+		}
+
+		let midpoint = (lists.startIndex + lists.endIndex) / 2
+		let l1 = merge(lists[..<midpoint])
+		let l2 = merge(lists[midpoint...])
+
+		return merge([l1, l2][...])
+	}
+
+	return merge(lists[...])
 }
