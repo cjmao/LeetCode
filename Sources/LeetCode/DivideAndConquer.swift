@@ -126,7 +126,41 @@ private func merge(_ left: ListNode?, _ right: ListNode?) -> ListNode? {
 /// list `[isLeaf, val]` and if the value of `isLeaf` or `val` is False we
 /// represent it as **0**.
 func construct(_ grid: [[Int]]) -> QuadTreeNode? {
-	nil
+	func isLeaf(_ rows: Range<Int>, _ columns: Range<Int>) -> Bool {
+		var previous: Int?
+		for row in rows {
+			for column in columns {
+				let current = grid[row][column]
+				if let previous, previous != current {
+					return false
+				}
+				previous = current
+			}
+		}
+		return true
+	}
+
+	func construct(_ rows: Range<Int>, _ columns: Range<Int>) -> Node {
+		guard !isLeaf(rows, columns) else {
+			return .init(grid[rows.lowerBound][columns.lowerBound] == 1, true)
+		}
+
+		let node = Node(true, false)
+
+		let mr = (rows.lowerBound + rows.upperBound) / 2
+		let mc = (columns.lowerBound + columns.upperBound) / 2
+		let (top, bottom) = (rows.lowerBound..<mr, mr..<rows.upperBound)
+		let (left, right) = (columns.lowerBound..<mc, mc..<columns.upperBound)
+
+		node.topLeft = construct(top, left)
+		node.topRight = construct(top, right)
+		node.bottomLeft = construct(bottom, left)
+		node.bottomRight = construct(bottom, right)
+
+		return node
+	}
+
+	return construct(0..<grid.count, 0..<grid.count)
 }
 
 class QuadTreeNode {

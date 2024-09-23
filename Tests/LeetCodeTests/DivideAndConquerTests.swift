@@ -73,6 +73,23 @@ struct DivideAndConquerTests {
 				[1, 1], [1, 1]
 			]
 		),
+		TestCase(
+			given: [
+				[1, 1,  0, 0],
+				[0, 0,  1, 1],
+
+				[1, 1,  0, 0],
+				[0, 0,  1, 1],
+			],
+			expected: [
+				[0, 1],
+				[0, 1], [0, 1], [0, 1], [0, 1],
+				[1, 1], [1, 1], [1, 0], [1, 0],
+				[1, 0], [1, 0], [1, 1], [1, 1],
+				[1, 1], [1, 1], [1, 0], [1, 0],
+				[1, 0], [1, 0], [1, 1], [1, 1],
+			]
+		),
 	])
 	func testConstruct(c: TestCase<[[Int]], [[Int]]>) throws {
 		let (grid, expected) = (c.given, c.expected)
