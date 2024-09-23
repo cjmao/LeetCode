@@ -13,4 +13,15 @@ struct KadanesAlgorithmTests {
 		try #require(!nums.isEmpty)
 		#expect(maxSubArray(nums) == expected)
 	}
+
+	@Test("Maximum sum circular subarray", arguments: [
+		TestCase(given: [1, -2, 3, -2], expected: 3),
+		TestCase(given: [5, -3, 5], expected: 10),
+		TestCase(given: [-3, -2, -3], expected: -2),
+	])
+	func testMaxSubarraySumCircular(c: TestCase<[Int], Int>) throws {
+		let (nums, expected) = (c.given, c.expected)
+		try #require(!nums.isEmpty)
+		#expect(maxSubarraySumCircular(nums) == expected)
+	}
 }
