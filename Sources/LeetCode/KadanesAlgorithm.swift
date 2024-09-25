@@ -3,7 +3,15 @@
 /// Given an integer array `nums`, find the subarray with the largest sum, and
 /// return _its sum_.
 func maxSubArray(_ nums: [Int]) -> Int {
-	0
+	var sum = nums[0]
+	var maxSum = sum
+
+	for num in nums[1...] {
+		sum = sum > 0 ? sum + num : num
+		maxSum = sum > maxSum ? sum : maxSum
+	}
+
+	return maxSum
 }
 
 /// Maximum sum circular subarray

@@ -7,6 +7,8 @@ struct KadanesAlgorithmTests {
 		TestCase(given: [-2, 1, -3, 4, -1, 2, 1, -5, 4], expected: 6),
 		TestCase(given: [1], expected: 1),
 		TestCase(given: [5, 4, -1, 7, 8], expected: 23),
+		TestCase(given: [-1], expected: -1),
+		TestCase(given: [-2, 1], expected: 1),
 	])
 	func testMaxSubArray(c: TestCase<[Int], Int>) throws {
 		let (nums, expected) = (c.given, c.expected)
