@@ -53,4 +53,15 @@ struct BinarySearchTests {
 		try #require(zip(nums, nums[1...]).allSatisfy { $0.0 != $0.1 })
 		#expect(findPeakElement(nums) == expected)
 	}
+
+	@Test("Search in rotated sorted array", arguments: [
+		TestCase(given: Pair([4, 5, 6, 7, 0, 1, 2], 0), expected: 4),
+		TestCase(given: Pair([4, 5, 6, 7, 0, 1, 2], 3), expected: -1),
+		TestCase(given: Pair([1], 0), expected: -1),
+	])
+	func testSearch(c: TestCase<Pair<[Int], Int>, Int>) throws {
+		let ((nums, target), expected) = (c.given.values, c.expected)
+		try #require(!nums.isEmpty && Set(nums).count == nums.count)
+		#expect(search(nums, target) == expected)
+	}
 }
