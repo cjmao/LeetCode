@@ -46,6 +46,9 @@ struct BinarySearchTests {
 	@Test("Find peak element", arguments: [
 		TestCase(given: [1, 2, 3, 1], expected: 2),
 		TestCase(given: [1, 2, 1, 3, 5, 6, 4], expected: 5),
+		TestCase(given: [1, 2, 3, 4, 3], expected: 3),
+		TestCase(given: [3, 4, 3, 2, 1], expected: 1),
+		TestCase(given: [1, 2, 1, 2, 1], expected: 1),
 	])
 	func testFindPeakElement(c: TestCase<[Int], Int>) throws {
 		let (nums, expected) = (c.given, c.expected)

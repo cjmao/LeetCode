@@ -70,7 +70,24 @@ func searchMatrix(_ matrix: [[Int]], _ target: Int) -> Bool {
 ///
 /// You must write an algorithm that runs in `O(log n)` time.
 func findPeakElement(_ nums: [Int]) -> Int {
-	0
+	var (i, j) = (nums.startIndex, nums.endIndex)
+
+	while i < j {
+		let m = (i + j) / 2
+
+		let leftUp = (m == 0 || nums[m - 1] < nums[m])
+		let rightDown = (m == nums.endIndex - 1 || nums[m] > nums[m + 1])
+
+		if leftUp, rightDown {
+			return m
+		} else if leftUp {
+			i = m + 1
+		} else {
+			j = m
+		}
+	}
+
+	return -1
 }
 
 /// Search in rotated sorted array
