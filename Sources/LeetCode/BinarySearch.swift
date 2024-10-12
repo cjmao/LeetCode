@@ -37,7 +37,23 @@ func searchInsert(_ nums: [Int], _ target: Int) -> Int {
 ///
 /// You must write a solution in `O(log(m * n))` time complexity.
 func searchMatrix(_ matrix: [[Int]], _ target: Int) -> Bool {
-	false
+	let (m, n) = (matrix.count, matrix[0].count)
+
+	var i = 0, j = m * n
+
+	while i < j {
+		let k = (i + j) / 2
+		let num = matrix[k / n][k % n]
+		if num < target {
+			i = k + 1
+		} else if num > target {
+			j = k
+		} else {
+			return true
+		}
+	}
+
+	return false
 }
 
 /// Find peak element
