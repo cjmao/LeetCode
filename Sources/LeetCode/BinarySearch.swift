@@ -22,3 +22,20 @@ func searchInsert(_ nums: [Int], _ target: Int) -> Int {
 
 	return i
 }
+
+/// Search a 2D matrix
+///
+/// You are given an `m x n` integer matrix `matrix` with the following two
+/// properties:
+///
+/// - Each row is sorted in non-decreasing order.
+/// - The first integer of each row is greater than the last integer of the
+///   previous row.
+///
+/// Given an integer `target`, return _`true` if `target` is in `matrix` or
+/// `false` otherwise_.
+///
+/// You must write a solution in `O(log(m * n))` time complexity.
+func searchMatrix(_ matrix: [[Int]], _ target: Int) -> Bool {
+	false
+}

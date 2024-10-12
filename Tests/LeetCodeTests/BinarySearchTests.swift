@@ -17,4 +17,29 @@ struct BinarySearchTests {
 
 		#expect(searchInsert(nums, target) == expected)
 	}
+
+	@Test("Search a 2D matrix", arguments: [
+		TestCase(
+			given: Pair([
+				[ 1,  3,  5,  7],
+				[10, 11, 16, 20],
+				[23, 30, 34, 60]
+			], 3),
+			expected: true
+		),
+		TestCase(
+			given: Pair([
+				[ 1,  3,  5,  7],
+				[10, 11, 16, 20],
+				[23, 30, 34, 60]
+			], 13),
+			expected: false
+		),
+	])
+	func testSearchMatrix(c: TestCase<Pair<[[Int]], Int>, Bool>) throws {
+		let ((matrix, target), expected) = (c.given.values, c.expected)
+		let (m, n) = (matrix.count, matrix[0].count)
+		try #require([m, n].allSatisfy { 1 <= $0 && $0 <= 100 })
+		#expect(searchMatrix(matrix, target) == expected)
+	}
 }
