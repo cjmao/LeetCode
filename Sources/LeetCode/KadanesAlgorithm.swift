@@ -27,5 +27,21 @@ func maxSubArray(_ nums: [Int]) -> Int {
 /// most once. Formally, for a subarray `nums[i], nums[i + 1], ..., nums[j]`,
 /// there does not exist `i <= k1, k2 <= j` with `k1 % n == k2 % n`.
 func maxSubarraySumCircular(_ nums: [Int]) -> Int {
-	0
+	var upperSum = nums[0], lowerSum = nums[0], totalSum = nums[0]
+	var maxSum = upperSum, minSum = lowerSum
+
+	for num in nums[1...] {
+		totalSum += num
+		upperSum = upperSum > 0 ? upperSum + num : num
+		lowerSum = lowerSum < 0 ? lowerSum + num : num
+		maxSum = upperSum > maxSum ? upperSum : maxSum
+		minSum = lowerSum < minSum ? lowerSum : minSum
+	}
+
+	let remainder = totalSum - minSum
+	if remainder > maxSum, remainder > 0 {
+		maxSum = remainder
+	}
+
+	return maxSum
 }
