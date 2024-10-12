@@ -42,4 +42,15 @@ struct BinarySearchTests {
 		try #require([m, n].allSatisfy { 1 <= $0 && $0 <= 100 })
 		#expect(searchMatrix(matrix, target) == expected)
 	}
+
+	@Test("Find peak element", arguments: [
+		TestCase(given: [1, 2, 3, 1], expected: 2),
+		TestCase(given: [1, 2, 1, 3, 5, 6, 4], expected: 5),
+	])
+	func testFindPeakElement(c: TestCase<[Int], Int>) throws {
+		let (nums, expected) = (c.given, c.expected)
+		try #require(!nums.isEmpty)
+		try #require(zip(nums, nums[1...]).allSatisfy { $0.0 != $0.1 })
+		#expect(findPeakElement(nums) == expected)
+	}
 }
