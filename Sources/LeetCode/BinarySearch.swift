@@ -169,3 +169,13 @@ func searchRange(_ nums: [Int], _ target: Int) -> [Int] {
 func findMin(_ nums: [Int]) -> Int {
 	0
 }
+
+/// Median of two sorted arrays
+///
+/// Given two sorted arrays `nums1` and `nums2` of size `m` and `n`
+/// respectively, return **the median** of the two sorted arrays.
+///
+/// The overall run time complexity should be `O(log (m+n))`.
+func findMedianSortedArrays(_ nums1: [Int], _ nums2: [Int]) -> Double {
+	0
+}

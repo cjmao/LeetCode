@@ -92,4 +92,14 @@ struct BinarySearchTests {
 		try #require(!nums.isEmpty && Set(nums).count == nums.count)
 		#expect(findMin(nums) == expected)
 	}
+
+	@Test("Median of two sorted arrays", arguments: [
+		TestCase(given: Pair([1, 3], [2]), expected: 2),
+		TestCase(given: Pair([1, 2], [3, 4]), expected: 2.5),
+	])
+	func testFindMedianSortedArrays(c: TestCase<Pair<[Int], [Int]>, Double>) throws {
+		let ((nums1, nums2), expected) = (c.given.values, c.expected)
+		try #require(!(nums1.isEmpty && nums2.isEmpty))
+		#expect(findMedianSortedArrays(nums1, nums2) == expected)
+	}
 }
