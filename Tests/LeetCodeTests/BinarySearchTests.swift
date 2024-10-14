@@ -81,4 +81,15 @@ struct BinarySearchTests {
 		try #require(nums.isSorted())
 		#expect(searchRange(nums, target) == expected)
 	}
+
+	@Test("Find minimum in rotated sorted array", arguments: [
+		TestCase(given: [3, 4, 5, 1, 2], expected: 1),
+		TestCase(given: [4, 5, 6, 7, 0, 1, 2], expected: 0),
+		TestCase(given: [11, 13, 15, 17], expected: 11),
+	])
+	func testFindMin(c: TestCase<[Int], Int>) throws {
+		let (nums, expected) = (c.given, c.expected)
+		try #require(!nums.isEmpty && Set(nums).count == nums.count)
+		#expect(findMin(nums) == expected)
+	}
 }
