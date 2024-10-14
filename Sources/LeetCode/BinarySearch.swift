@@ -107,5 +107,33 @@ func findPeakElement(_ nums: [Int]) -> Int {
 ///
 /// You must write an algorithm with `O(log n)` runtime complexity.
 func search(_ nums: [Int], _ target: Int) -> Int {
-	-1
+	var i = 0, j = nums.endIndex - 1
+
+	if nums[i] > nums[j] {
+		while i < j - 1 {
+			let k = (i + j) / 2
+			if nums[i] < nums[k] {
+				i = k
+			} else {
+				j = k
+			}
+		}
+		i = j
+	}
+
+	j = i + nums.count - 1
+
+	while i <= j {
+		let k = (i + j) / 2
+		let num = nums[k % nums.count]
+		if num < target {
+			i = k + 1
+		} else if num > target {
+			j = k - 1
+		} else {
+			return k % nums.count
+		}
+	}
+
+	return -1
 }
