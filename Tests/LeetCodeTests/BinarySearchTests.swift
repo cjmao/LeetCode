@@ -70,4 +70,15 @@ struct BinarySearchTests {
 		try #require(!nums.isEmpty && Set(nums).count == nums.count)
 		#expect(search(nums, target) == expected)
 	}
+
+	@Test("Find first and last position of element in sorted array", arguments: [
+		TestCase(given: Pair([5, 7, 7, 8, 8, 10], 8), expected: [3, 4]),
+		TestCase(given: Pair([5, 7, 7, 8, 8, 10], 6), expected: [-1, -1]),
+		TestCase(given: Pair([], 0), expected: [-1, -1]),
+	])
+	func testSearchRange(c: TestCase<Pair<[Int], Int>, [Int]>) throws {
+		let ((nums, target), expected) = (c.given.values, c.expected)
+		try #require(nums.isSorted())
+		#expect(searchRange(nums, target) == expected)
+	}
 }
