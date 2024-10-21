@@ -75,6 +75,7 @@ struct BinarySearchTests {
 		TestCase(given: Pair([5, 7, 7, 8, 8, 10], 8), expected: [3, 4]),
 		TestCase(given: Pair([5, 7, 7, 8, 8, 10], 6), expected: [-1, -1]),
 		TestCase(given: Pair([], 0), expected: [-1, -1]),
+		TestCase(given: Pair([1], 1), expected: [0, 0]),
 	])
 	func testSearchRange(c: TestCase<Pair<[Int], Int>, [Int]>) throws {
 		let ((nums, target), expected) = (c.given.values, c.expected)

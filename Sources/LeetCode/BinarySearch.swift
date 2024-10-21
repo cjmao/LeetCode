@@ -147,7 +147,49 @@ func search(_ nums: [Int], _ target: Int) -> Int {
 ///
 /// You must write an algorithm with `O(log n)` runtime complexity.
 func searchRange(_ nums: [Int], _ target: Int) -> [Int] {
-	[]
+	var i = 0, j = nums.endIndex - 1
+
+	guard !nums.isEmpty, nums[i] <= target, target <= nums[j] else {
+		return [-1, -1]
+	}
+
+	if nums[i] < target {
+		// find i such that nums[i - 1] < target and nums[i] == target
+		while i < j {
+			let k = (i + j) / 2
+
+			if i == k { // j - i == 1
+				if nums[j] > target { // nums[i] < target
+					return [-1, -1]
+				}
+				// nums[j] == target
+				i = j
+			} else if nums[k] < target {
+				i = k
+			} else { // nums[k] >= target
+				j = k
+			}
+		}
+		j = nums.endIndex - 1
+	}
+
+	if nums[j] > target {
+		// find j such that nums[j] == target and nums[j + 1] > target
+		var i = i
+		while i < j {
+			let k = (i + j) / 2
+
+			if i == k { // j - i == 1
+				j = i
+			} else if nums[k] <= target {
+				i = k
+			} else { // nums[k] > target
+				j = k
+			}
+		}
+	}
+
+	return [i, j]
 }
 
 /// Find minimum in rotated sorted array
