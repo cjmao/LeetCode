@@ -209,7 +209,19 @@ func searchRange(_ nums: [Int], _ target: Int) -> [Int] {
 ///
 /// You must write an algorithm that runs in `O(log n)` time.
 func findMin(_ nums: [Int]) -> Int {
-	0
+	var i = 0, j = nums.endIndex - 1
+
+	while i < j {
+		let k = (i + j) / 2
+
+		if nums[k] > nums[j] {
+			i = k + 1
+		} else {
+			j = k
+		}
+	}
+
+	return nums[i]
 }
 
 /// Median of two sorted arrays
